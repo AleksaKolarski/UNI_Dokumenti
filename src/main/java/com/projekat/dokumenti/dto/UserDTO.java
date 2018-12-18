@@ -9,21 +9,21 @@ public class UserDTO {
 	private String lastname;
 	private String username;
 	//private String password;
-	private String type;
+	private String role;
 	
 	
 	public UserDTO() {}
 	
-	public UserDTO(Integer id, String firstname, String lastname, String username, String type) {
+	public UserDTO(Integer id, String firstname, String lastname, String username, String role) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
-		this.type = type;
+		this.role = role;
 	}
 	
 	public UserDTO(User user) {
-		this(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername(), user.getType());
+		this(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername(), user.getRole());
 	}
 	
 
@@ -58,13 +58,13 @@ public class UserDTO {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-	public String getType() {
-		return type;
+	
+	public String getRole() {
+		return role;
 	}
-
-	public void setType(String type) {
-		this.type = type;
+	
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	
@@ -76,7 +76,7 @@ public class UserDTO {
 				+ "lastname=" + lastname + ", "
 				+ "username=" + username + ", "
 				//+ "password=" + password + ", "
-				+ "type=" + type
+				+ "role=" + role
 				+ "]";
 	}
 }

@@ -35,8 +35,8 @@ public class User {
 	@Column(name = "user_password", unique = false, nullable = false, length = 10)
 	private String password;
 	
-	@Column(name = "user_type", unique = false, nullable = false, length = 30)
-	private String type;
+	@Column(name = "user_role", unique = false, nullable = false, length = 30)
+	private String role;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<EBook> ebooks = new ArrayList<>();
@@ -89,12 +89,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getType() {
-		return type;
+	public String getRole() {
+		return role;
 	}
-
-	public void setType(String type) {
-		this.type = type;
+	
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public List<EBook> getEbooks() {
@@ -105,6 +105,15 @@ public class User {
 		this.ebooks = ebooks;
 	}
 	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+
 	@Override
 	public String toString() {
 		return "User ["
@@ -113,7 +122,8 @@ public class User {
 				+ "lastname=" + lastname + ", "
 				+ "username=" + username + ", "
 				+ "password=" + password + ", "
-				+ "type=" + type
+				+ "role=" + role + ", "
+				+ "category=" + category.getName()
 				+ "]";
 	}
 }
