@@ -15,37 +15,37 @@ public class EBook {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ebook_id", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 	
-	@Column(name = "ebook_title", unique = false, nullable = false, length = 80)
+	@Column(name = "title", unique = false, nullable = false, length = 80)
 	private String title;
 	
-	@Column(name = "ebook_author", unique = false, nullable = true, length = 120)
+	@Column(name = "author", unique = false, nullable = true, length = 120)
 	private String author;
 	
-	@Column(name = "ebook_keywords", unique = false, nullable = true, length = 120)
+	@Column(name = "keywords", unique = false, nullable = true, length = 120)
 	private String keywords;
 	
-	@Column(name = "ebook_publication_year", unique = false, nullable = true)
+	@Column(name = "publication_year", unique = false, nullable = true)
 	private Integer publicationYear;
 	
-	@Column(name = "ebook_filename", unique = false, nullable = false, length = 200)
+	@Column(name = "filename", unique = false, nullable = false, length = 200)
 	private String filename;
 	
-	@Column(name = "ebook_mime", unique = false, nullable = true, length = 100)
+	@Column(name = "mime", unique = false, nullable = true, length = 100)
 	private String mime;
 	
 	@ManyToOne
-	@JoinColumn(name = "language_id", referencedColumnName = "language_id", unique = false, nullable = false)
+	@JoinColumn(name = "language_id", referencedColumnName = "id", unique = false, nullable = false)
 	private Language language;
 	
 	@ManyToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "category_id", unique = false, nullable = false)
+	@JoinColumn(name = "category_id", referencedColumnName = "id", unique = false, nullable = false)
 	private Category category;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "user_id", unique = false, nullable = false)
+	@JoinColumn(name = "user_id", referencedColumnName = "id", unique = false, nullable = false)
 	private User user;
 	
 	

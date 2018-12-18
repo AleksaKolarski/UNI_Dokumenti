@@ -18,10 +18,10 @@ public class Category {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "category_id", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 	
-	@Column(name = "category_name", unique = false, nullable = false, length = 30)
+	@Column(name = "name", unique = false, nullable = false, length = 30)
 	private String name;
 	
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)

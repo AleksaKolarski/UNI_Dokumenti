@@ -20,29 +20,29 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 	
-	@Column(name = "user_firstname", unique = false, nullable = false, length = 30)
+	@Column(name = "firstname", unique = false, nullable = false, length = 30)
 	private String firstname;
 	
-	@Column(name = "user_lastname", unique = false, nullable = false, length = 30)
+	@Column(name = "lastname", unique = false, nullable = false, length = 30)
 	private String lastname;
 	
-	@Column(name = "user_username", unique = true, nullable = false, length = 10)
+	@Column(name = "username", unique = true, nullable = false, length = 10)
 	private String username;
 	
-	@Column(name = "user_password", unique = false, nullable = false, length = 10)
+	@Column(name = "password", unique = false, nullable = false, length = 10)
 	private String password;
 	
-	@Column(name = "user_role", unique = false, nullable = false, length = 30)
+	@Column(name = "role", unique = false, nullable = false, length = 30)
 	private String role;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<EBook> ebooks = new ArrayList<>();
 	
 	@ManyToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "category_id", unique = false, nullable = true)
+	@JoinColumn(name = "category_id", referencedColumnName = "id", unique = false, nullable = true)
 	private Category category;
 	
 	

@@ -18,10 +18,10 @@ public class Language {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "language_id", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 	
-	@Column(name = "language_name", unique = false, nullable = false, length = 30)
+	@Column(name = "name", unique = false, nullable = false, length = 30)
 	private String name;
 	
 	@OneToMany(mappedBy = "language", cascade = CascadeType.ALL)
