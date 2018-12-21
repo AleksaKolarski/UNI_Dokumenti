@@ -42,24 +42,24 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             if (username != null) {
                 // uzmi user-a na osnovu username-a
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                logger.info("User " + username + " is trying to log in");
+                logger.info("User " + username + " is accessing with token");
                 //proveri da li je prosledjeni token validan
                 if (tokenHelper.validateToken(authToken, userDetails)) {
                     // kreiraj autentifikaciju
                     TokenBasedAuthentication authentication = new TokenBasedAuthentication(authToken, userDetails);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                    logger.info("User " + username + " successfully logged in");
+                    logger.info("User " + username + " accessed with valid token");
                 }
                 else {
-                	logger.info("User " + username + " failed to log in");
+                	logger.info("User " + username + " tried to access with invalid token");
                 }
             }
             else{
-            	logger.warn("AuthToken has no username");
+            	logger.info("AuthToken has no username");
             }
         }
         else {
-        	logger.warn("Request without AuthToken");
+        	logger.info("Request without AuthToken");
         }
         chain.doFilter(request, response);
     }

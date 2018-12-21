@@ -2,7 +2,6 @@ package com.projekat.dokumenti.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,6 +21,7 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -41,17 +41,20 @@ public class User implements UserDetails {
 	@Column(name = "username", unique = true, nullable = false, length = 10)
 	private String username;
 	
+	@JsonIgnore
 	@Column(name = "password", unique = false, nullable = false, length = 65)
 	private String password;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<EBook> ebooks = new ArrayList<>();
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id", unique = false, nullable = true)
 	private Category category;
 	
-	
+	@JsonIgnore
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.MERGE}, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
@@ -124,36 +127,36 @@ public class User implements UserDetails {
 		this.roles = roles;
 	}
 	
+	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities(){
 		return this.roles;
 	}
 	
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 	
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 	
+	@JsonIgnore
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 	
+	@JsonIgnore
 	@Override
 	public boolean isEnabled() {
 		return true;
 	}
 	
-	//TODO: DELETE
-	public Date getLastPasswordResetDate() {
-		return new Date();
-	}
-
 	
 	@Override
 	public String toString() {

@@ -1,5 +1,7 @@
 package com.projekat.dokumenti.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.entity.User;
 import com.projekat.dokumenti.security.CustomUserDetailsService;
 import com.projekat.dokumenti.security.TokenHelper;
@@ -26,6 +29,8 @@ import java.util.Map;
 @RestController
 @RequestMapping( value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE )
 public class AuthenticationController {
+	
+	protected final Logger logger = LogManager.getLogger(DokumentiApplication.class);
 
     @Autowired
     TokenHelper tokenHelper;
@@ -38,7 +43,6 @@ public class AuthenticationController {
     
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
-    	
         // Izvrsavanje security dela
     	Authentication authentication;
     	try {
@@ -48,7 +52,9 @@ public class AuthenticationController {
                             authenticationRequest.password
                     )
             );
+    		logger.info("User " + authenticationRequest.username + " successfully logged in");
     	}catch (AuthenticationException e) {
+    		logger.info("Someone tried to log in with wrong credentials");
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Wrong username/password.");
 		}
         
