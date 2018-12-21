@@ -33,6 +33,18 @@
     		<artifactId>log4j-api</artifactId>
   		</dependency>
   		
+  		<!-- JWT -->
+  		<dependency>
+    		<groupId>com.auth0</groupId>
+    		<artifactId>java-jwt</artifactId>
+    		<version>3.4.0</version>
+		</dependency>
+		<dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+  		
   		<!-- SPRING -->
   		<!-- Exclude Spring Boot's Default Logging -->
 		<dependency>

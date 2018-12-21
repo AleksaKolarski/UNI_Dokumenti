@@ -11,10 +11,18 @@ INSERT INTO categories (name) VALUES ('business');
 INSERT INTO categories (name) VALUES ('history');
 INSERT INTO categories (name) VALUES ('cooking');
 
-INSERT INTO users (firstname, lastname, username, password, role, category_id) VALUES ('User1firstname', 'User1lastname', 'user1', 'user1', 'ADMIN', null);
-INSERT INTO users (firstname, lastname, username, password, role, category_id) VALUES ('User2firstname', 'User2lastname', 'user2', 'user2', 'USER', null);
-INSERT INTO users (firstname, lastname, username, password, role, category_id) VALUES ('User3firstname', 'User3lastname', 'user3', 'user3', 'USER', 3);
-INSERT INTO users (firstname, lastname, username, password, role, category_id) VALUES ('User4firstname', 'User4lastname', 'user4', 'user4', 'USER', 4);
+INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
+INSERT INTO roles (name) VALUES ('ROLE_USER');
+
+INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User1firstname', 'User1lastname', 'user1', 'user1', null);
+INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User2firstname', 'User2lastname', 'user2', 'user2', null);
+INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User3firstname', 'User3lastname', 'user3', 'user3', 3);
+INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User4firstname', 'User4lastname', 'user4', 'user4', 4);
+
+INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
+INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);
+INSERT INTO users_roles (user_id, role_id) VALUES (3, 2);
+INSERT INTO users_roles (user_id, role_id) VALUES (4, 2);
 
 INSERT INTO ebooks (title, author, keywords, publication_year, filename, mime, language_id, category_id, user_id) VALUES ('art0', 'author0', 'keywords0', 1950, 'filename0', 'pdf', 1, 2, 3);
 INSERT INTO ebooks (title, author, keywords, publication_year, filename, mime, language_id, category_id, user_id) VALUES ('art1', 'author1', 'keywords1', 1951, 'filename1', 'pdf', 2, 3, 4);

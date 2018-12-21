@@ -1,22 +1,31 @@
 package com.projekat.dokumenti.entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +41,8 @@ public class User {
 	@Column(name = "username", unique = true, nullable = false, length = 10)
 	private String username;
 	
-	@Column(name = "password", unique = false, nullable = false, length = 10)
+	@Column(name = "password", unique = false, nullable = false, length = 65)
 	private String password;
-	
-	@Column(name = "role", unique = false, nullable = false, length = 30)
-	private String role;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<EBook> ebooks = new ArrayList<>();
@@ -44,6 +50,11 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id", unique = false, nullable = true)
 	private Category category;
+	
+	
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private List<Role> roles;
 	
 	
 	public User() {}
@@ -89,14 +100,6 @@ public class User {
 		this.password = password;
 	}
 
-	public String getRole() {
-		return role;
-	}
-	
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 	public List<EBook> getEbooks() {
 		return ebooks;
 	}
@@ -113,7 +116,40 @@ public class User {
 		this.category = category;
 	}
 
+	public List<Role> getRoles() {
+		return roles;
+	}
 
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities(){
+		return this.roles;
+	}
+	
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "User ["
@@ -122,7 +158,6 @@ public class User {
 				+ "lastname=" + lastname + ", "
 				+ "username=" + username + ", "
 				+ "password=" + password + ", "
-				+ "role=" + role + ", "
 				+ "category=" + category.getName()
 				+ "]";
 	}

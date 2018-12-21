@@ -9,21 +9,19 @@ public class UserDTO {
 	private String lastname;
 	private String username;
 	//private String password;
-	private String role;
 	
 	
 	public UserDTO() {}
 	
-	public UserDTO(Integer id, String firstname, String lastname, String username, String role) {
+	public UserDTO(Integer id, String firstname, String lastname, String username) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
-		this.role = role;
 	}
 	
 	public UserDTO(User user) {
-		this(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername(), user.getRole());
+		this(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername());
 	}
 	
 
@@ -59,14 +57,6 @@ public class UserDTO {
 		this.username = username;
 	}
 	
-	public String getRole() {
-		return role;
-	}
-	
-	public void setRole(String role) {
-		this.role = role;
-	}
-	
 	
 	@Override
 	public String toString() {
@@ -76,7 +66,6 @@ public class UserDTO {
 				+ "lastname=" + lastname + ", "
 				+ "username=" + username + ", "
 				//+ "password=" + password + ", "
-				+ "role=" + role
 				+ "]";
 	}
 }

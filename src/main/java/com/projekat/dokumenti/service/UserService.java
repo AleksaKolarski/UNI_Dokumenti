@@ -12,14 +12,11 @@ import com.projekat.dokumenti.repository.UserRepository;
 @Service("userService")
 public class UserService implements UserServiceInterface {
 	
-	private UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
 	@Autowired
-	public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-		this.userRepository = userRepository;
-		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	}
+	private UserRepository userRepository;
+	
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
