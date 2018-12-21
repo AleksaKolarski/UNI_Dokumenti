@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.projekat.dokumenti.entity.User;
 
-@Repository("userRepository")
+@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 	User findByUsername(String username);

@@ -1,7 +1,5 @@
 package com.projekat.dokumenti.dto;
 
-import java.util.List;
-
 import com.projekat.dokumenti.entity.Category;
 
 public class CategoryDTO {

@@ -3,26 +3,16 @@ package com.projekat.dokumenti.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.projekat.dokumenti.entity.User;
 import com.projekat.dokumenti.repository.UserRepository;
 
-@Service("userService")
+@Service
 public class UserService implements UserServiceInterface {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	public void saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
-	
 	
 	@Override
 	public List<User> findAll(){
@@ -51,6 +41,6 @@ public class UserService implements UserServiceInterface {
 	
 	@Override
 	public void remove(User user) {
-		userRepository.deleteById(user.getId());
+		//userRepository.deleteById(user.getId());
 	}
 }
