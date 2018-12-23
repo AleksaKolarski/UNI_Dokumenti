@@ -14,12 +14,13 @@ INSERT INTO categories (name) VALUES ('cooking');
 INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 INSERT INTO roles (name) VALUES ('ROLE_USER');
 
-INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User1firstname', 'User1lastname', 'user1', 'user1', null);
-INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User2firstname', 'User2lastname', 'user2', 'user2', null);
-INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User3firstname', 'User3lastname', 'user3', 'user3', 3);
-INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User4firstname', 'User4lastname', 'user4', 'user4', 4);
+INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User1firstname', 'User1lastname', 'user1', '$2a$10$XMET5VEZuVzk4wJmSvPcr.G8vKTlrH.2DFXeKZp7QY0BmMJ8wlOkC', null);
+INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User2firstname', 'User2lastname', 'user2', '$2a$10$gPfPnKhxZoYHi0yVCSm1NO4AxLnVzLD75.MhblfeWrwzNO4aluwhe', null);
+INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User3firstname', 'User3lastname', 'user3', '$2a$10$ppgk/fKWr770z6eENcyfw.BAu30EP3OPzsfxVPU4uBomU8zw7OqOm', 3);
+INSERT INTO users (firstname, lastname, username, password, category_id) VALUES ('User4firstname', 'User4lastname', 'user4', '$2a$10$w/CHtqkkLMKyKxgnisaMQuVtwvFwQ..2graRZ2CMSea6gjs5Fkriu', 4);
 
 INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
+INSERT INTO users_roles (user_id, role_id) VALUES (1, 2);
 INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);
 INSERT INTO users_roles (user_id, role_id) VALUES (3, 2);
 INSERT INTO users_roles (user_id, role_id) VALUES (4, 2);
