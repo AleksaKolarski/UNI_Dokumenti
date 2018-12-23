@@ -61,10 +61,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //za neautorizovane zahteve posalji 401 gresku
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
                 .authorizeRequests()
-                //svim korisnicima dopusti da pristupe putanjama /auth/**
-                .antMatchers("/auth/**").permitAll()
-                //svaki zahtev mora biti autorizovan
-                .anyRequest().authenticated().and()
+                	//svim korisnicima dopusti da pristupe putanjama /auth/login
+                	.antMatchers("/auth/login").permitAll()
+                	//svaki zahtev mora biti autorizovan
+                	.anyRequest().authenticated().and()
                 //presretni svaki zahtev filterom
                 .addFilterBefore(new TokenAuthenticationFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class);
         http.csrf().disable();
@@ -74,19 +74,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
-        web.ignoring().antMatchers(
+        /*
+    	web.ignoring().antMatchers(
                 HttpMethod.POST,
                 "/auth/login"
         );
+        */
         web.ignoring().antMatchers(
                 HttpMethod.GET,
-                "/",
-                "/webjars/**",
-                "/*.html",
+                "/index.html",
+                "/login.html",
                 "/favicon.ico",
-                "/**/*.html",
-                "/**/*.css",
-                "/**/*.js"
+                "/lib/**",
+                "/js/**",
+                "/css/**"
             );
     }
 }

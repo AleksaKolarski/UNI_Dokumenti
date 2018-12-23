@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority{
@@ -25,6 +27,7 @@ public class Role implements GrantedAuthority{
 	@Column(name = "name")
 	private String name;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "roles", cascade = {CascadeType.MERGE, CascadeType.MERGE})
 	private List<User> users;
 	
@@ -39,6 +42,7 @@ public class Role implements GrantedAuthority{
 		this.id = id;
 	}
 
+	@JsonIgnore
 	@Override
 	public String getAuthority() {
 		return name;

@@ -24,6 +24,11 @@ public class UserController {
 	@GetMapping("/currentUser")
 	public User getCurrentUser() {
 		Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+		if(currentUser == null) {
+			User user = new User();
+			user.setFirstname("govno");
+			return user;
+		}
 		String userUsername = currentUser.getName();
 		return userService.findByUsername(userUsername);
 	}
