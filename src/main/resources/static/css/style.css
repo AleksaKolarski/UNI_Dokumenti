@@ -1,3 +1,36 @@
+#id_header h1 {
+  text-align: center;
+}
+#id_header h3 {
+  text-align: center;
+}
+#id_header #id_header_navigation {
+  text-align: center;
+}
 
+#body_login form {
+  margin: auto;
+  margin-top: 100px;
+  width: 300px;
+  height: auto;
+}
+#body_login form p {
+  margin: auto;
+  display: table;
+}
+#body_login form input {
+  display: block;
+  margin: auto;
+  width: 200px;
+}
+#body_login form button {
+  display: block;
+  width: 60px;
+  margin: auto;
+}
+#body_login p {
+  display: table;
+  margin: auto;
+}
 
 /*# sourceMappingURL=style.css.map */

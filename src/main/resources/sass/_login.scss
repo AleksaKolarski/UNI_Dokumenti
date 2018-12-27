@@ -1,0 +1,31 @@
+@mixin login {
+  #body_login{
+    form{
+      margin: auto;
+      margin-top: 100px;
+      width: 300px;
+      height: auto;
+
+      p{
+        margin: auto;
+        display: table;
+      }
+
+      input{
+        display: block;
+        margin: auto;
+        width: 200px;
+      }
+
+      button{
+        display: block;
+        width: 60px;
+        margin: auto;
+      }
+    }
+    p{
+      display: table;
+      margin: auto;
+    }
+  }
+}

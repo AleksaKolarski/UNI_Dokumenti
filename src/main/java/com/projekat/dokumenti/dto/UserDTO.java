@@ -1,14 +1,16 @@
 package com.projekat.dokumenti.dto;
 
+import java.io.Serializable;
+
 import com.projekat.dokumenti.entity.User;
 
-public class UserDTO {
+public class UserDTO implements Serializable {
 
 	private Integer id;
 	private String firstname;
 	private String lastname;
 	private String username;
-	//private String password;
+	private String password;
 	
 	
 	public UserDTO() {}
@@ -57,7 +59,15 @@ public class UserDTO {
 		this.username = username;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	
+
 	@Override
 	public String toString() {
 		return "User ["
@@ -65,7 +75,7 @@ public class UserDTO {
 				+ "firstname=" + firstname + ", "
 				+ "lastname=" + lastname + ", "
 				+ "username=" + username + ", "
-				//+ "password=" + password + ", "
+				+ "password=" + password + ", "
 				+ "]";
 	}
 }

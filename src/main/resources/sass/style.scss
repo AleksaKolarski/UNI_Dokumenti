@@ -1,3 +1,7 @@
 @import "header";
+@import "login";
+@import "register";
 
 @include header;
+@include login;
+@include register;

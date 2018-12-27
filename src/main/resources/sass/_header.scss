@@ -1,3 +1,15 @@
 @mixin header {
-  
+  #id_header{
+    h1{
+      text-align: center;
+    }
+
+    h3{
+      text-align: center;
+    }
+
+    #id_header_navigation{
+      text-align: center;
+    } 
+  }
 }

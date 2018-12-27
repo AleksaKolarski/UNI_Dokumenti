@@ -12,7 +12,7 @@ $(document).ready(function(e){
   login_log = $("#id_login_log_field");
 
   add_validation_text(login_username, 5, 10);
-  add_validation_text(login_password, 5, 10);
+  add_validation_text(login_password, 5, 20);
 
   $(login_dugme).on('click', function(event){
     var username = login_username.val();
