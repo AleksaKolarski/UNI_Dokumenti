@@ -4,19 +4,23 @@
 ** 2018
 */
 
-function customAjax(requestType, requestUrl, dataParam, successParam, completeParam){
-  customAjax(requestType, requestUrl, dataParam, successParam, completeParam, null);
-}
-
-function customAjax(requestType, requestUrl, dataParam, successParam, completeParam, responseDataType){
+function customAjax(params){
   var jwt = localStorage.getItem('jwt');
   $.ajax({
-    data: dataParam,
-    dataType: responseDataType,
-    success: successParam,
-    complete: completeParam,
-    type: requestType,
-    url: requestUrl,
+    async: params.async,
+    cache: params.cache,
+    complete: function(xhr, status){
+      console.log(params.url + ': Server returned ' + xhr.status + '; status is ' + status);
+    },
+    contentType: params.contentType,
+    data: params.data,
+    dataType: params.dataType,
+    error: params.error,
+    method: params.method,
+    mimeType: params.mimeType,
+    processData: params.processData,
+    success: params.success,
+    url: params.url,
     beforeSend: function (xhr) {
       if(jwt != null){
         xhr.setRequestHeader("Authorization", 'Bearer '+ jwt)

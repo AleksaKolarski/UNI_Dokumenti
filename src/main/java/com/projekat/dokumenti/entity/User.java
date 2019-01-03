@@ -54,6 +54,7 @@ public class User implements UserDetails {
 	@JoinColumn(name = "category_id", referencedColumnName = "id", unique = false, nullable = true)
 	private Category category;
 	
+	@JsonIgnore
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.MERGE}, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
@@ -124,6 +125,15 @@ public class User implements UserDetails {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	
+	public boolean checkRole(String roleName) {
+		for(Role role: roles) {
+			if(role.getName().equals(roleName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@JsonIgnore

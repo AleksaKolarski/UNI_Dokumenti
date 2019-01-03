@@ -1,7 +1,11 @@
 @import "header";
 @import "login";
 @import "register";
+@import "users";
+@import "users_edit";
 
 @include header;
 @include login;
 @include register;
+@include users;
+@include users_edit;

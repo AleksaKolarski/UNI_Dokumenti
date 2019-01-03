@@ -1,0 +1,14 @@
+@mixin users {
+  #id_body_users{
+    #id_table_users{
+      width: 100%;
+      border-collapse: collapse;
+
+      .class_tr_user{
+        th{
+          border: 1px solid black;
+        }
+      }
+    }
+  }
+}

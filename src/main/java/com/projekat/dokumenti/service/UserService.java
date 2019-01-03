@@ -1,6 +1,7 @@
 package com.projekat.dokumenti.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,11 @@ public class UserService implements UserServiceInterface {
 	}
 	
 	@Override
-	public User findById(Integer userID) {
-		return userRepository.getOne(userID);
+	public User findById(Integer userId) {
+		Optional<User> optional = userRepository.findById(userId);
+		if(optional.isPresent() == false)
+			return null;
+		return optional.get();
 	}
 	
 	@Override
@@ -41,6 +45,6 @@ public class UserService implements UserServiceInterface {
 	
 	@Override
 	public void remove(User user) {
-		//userRepository.deleteById(user.getId());
+		userRepository.deleteById(user.getId());
 	}
 }

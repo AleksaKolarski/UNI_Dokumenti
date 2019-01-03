@@ -1,5 +1,5 @@
-@mixin login {
-  #id_body_login{
+@mixin users_edit {
+  #id_body_users_edit{
     width: 200px;
     margin: auto;
 
@@ -11,7 +11,7 @@
         font-weight: bold;
       }
 
-      #div_input_fields{
+      #id_div_input_fields{
         width: 100%;
         margin: 5px 0px;
 
@@ -31,7 +31,24 @@
         }
       }
 
-      #div_form_submit{
+      #id_div_roles{
+        text-align: left;
+
+        p{
+          margin: 0px;
+          font-weight: normal;
+        }
+
+        div{
+          margin-left: 15px;
+
+          p{
+            display: inline-block;
+          }
+        }
+      }
+
+      #id_div_form_submit{
         width: 100%;
         margin-top: 12px;
 
