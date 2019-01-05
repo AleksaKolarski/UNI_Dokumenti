@@ -11,19 +11,20 @@ public class UserDTO implements Serializable {
 	private String lastname;
 	private String username;
 	private String password;
-	
+	private Boolean isAdmin;
 	
 	public UserDTO() {}
 	
-	public UserDTO(Integer id, String firstname, String lastname, String username) {
+	public UserDTO(Integer id, String firstname, String lastname, String username, Boolean isAdmin) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
+		this.isAdmin = isAdmin;
 	}
 	
 	public UserDTO(User user) {
-		this(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername());
+		this(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername(), user.getIsAdmin());
 	}
 	
 
@@ -67,6 +68,13 @@ public class UserDTO implements Serializable {
 		this.password = password;
 	}
 	
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	@Override
 	public String toString() {

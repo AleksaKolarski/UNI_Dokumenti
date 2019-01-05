@@ -1,4 +1,4 @@
-/* Custom jquery ajax calls that forward jwt token from localstorage:
+/* Custom jquery ajax call that forwards jwt token from localstorage:
 **
 ** Author: Aleksa Kolarski (SF 27/2016)
 ** 2018

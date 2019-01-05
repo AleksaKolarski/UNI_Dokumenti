@@ -15,41 +15,10 @@
 </head>
 
 <body id="id_body_users_edit">
-  <form>
-    <p id="form_p"></p>
+  <form id="id_form">
+    <p id="id_form_p"></p>
     <div id="id_div_input_fields">
-      <div class="class_div_input">
-        <p>Firstname:</p>
-        <input id="id_input_firstname" type="text" name="firstname">
-      </div>
-      <div class="class_div_input">
-        <p>Lastname:</p>
-        <input id="id_input_lastname" type="text" name="lastname">
-      </div>
-      <div class="class_div_input">
-        <p>Username:</p>
-        <input id="id_input_username" type="text" name="username">
-      </div>
-      <div class="class_div_input_password">
-        <p>Password:</p>
-        <input id="id_input_password1" type="password" name="password1">
-      </div>
-      <div class="class_div_input_password">
-        <p>Repeat password:</p>
-        <input id="id_input_password2" type="password" name="password2">
-      </div>
-    </div>
-    <div id="id_div_roles">
-      <!-- povuci sve role sa servera pa povuci role od trenutnog korisnika i selektuj one koje vec ima -->
-      <p>Roles:</p>
-      <div>
-        <input type="checkbox" id="id_checkbox_role_user" class="class_checkbox_roles" name="role_user" value="ROLE_USER">
-        <p>Role user</p>
-      </div>
-      <div>
-        <input type="checkbox" id="id_checkbox_role_admin" class="class_checkbox_roles" name="role_admin" value="ROLE_ADMIN">
-        <p>Role admin</p>
-      </div>
+      <!-- filled by javascript -->
     </div>
     <div id="id_div_form_submit">
       <button id="id_button_edit_user" type="button"></button>

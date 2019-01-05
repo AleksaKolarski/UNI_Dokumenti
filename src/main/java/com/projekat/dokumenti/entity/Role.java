@@ -34,6 +34,11 @@ public class Role implements GrantedAuthority{
 	
 	public Role() {}
 	
+	public Role(String name) {
+		this.name = name;
+	}
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -71,5 +76,15 @@ public class Role implements GrantedAuthority{
 				+ "id=" + id + ", "
 				+ "name=" + name
 				+ "]";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return ((Role)obj).name.equals(this.name);
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.name.hashCode();
 	}
 }

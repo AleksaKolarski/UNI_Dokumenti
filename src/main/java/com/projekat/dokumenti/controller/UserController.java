@@ -1,8 +1,8 @@
 package com.projekat.dokumenti.controller;
 
-import java.security.Principal;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +23,7 @@ import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.dto.UserDTO;
 import com.projekat.dokumenti.entity.Role;
 import com.projekat.dokumenti.entity.User;
+import com.projekat.dokumenti.security.Util;
 import com.projekat.dokumenti.service.RoleService;
 import com.projekat.dokumenti.service.UserService;
 
@@ -43,14 +42,14 @@ public class UserController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	@Autowired
+	private Util util;
+		
 	
 	@GetMapping("/currentUser")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<User> getCurrentUser(Principal principal) {
-		if (principal == null) {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		}
-		User user = userService.findByUsername(principal.getName());
+	public ResponseEntity<User> getCurrentUser() {
+		User user = util.getCurrentUser();
 		if (user == null) {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
@@ -74,13 +73,12 @@ public class UserController {
 		if(userDTO == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
-		
-		System.out.println(userDTO);
-		
+				
 		String firstname = userDTO.getFirstname();
 		String lastname = userDTO.getLastname();
 		String username = userDTO.getUsername();
 		String password = userDTO.getPassword();
+		Boolean isAdmin = userDTO.getIsAdmin();
 		
 		if(firstname == null || firstname.length() < 5 || firstname.length() > 30) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -104,8 +102,14 @@ public class UserController {
 		user.setLastname(lastname);
 		user.setUsername(username);
 		user.setPassword(bCryptPasswordEncoder.encode(password));
-		List<Role> roles = new ArrayList<Role>();
+		Set<Role> roles = new HashSet<Role>();
 		roles.add(roleService.findByName("ROLE_USER"));
+		User currentUser = util.getCurrentUser();
+		if(currentUser != null) {
+			if(isAdmin == true && currentUser.getIsAdmin()) {
+				roles.add(roleService.findByName("ROLE_ADMIN"));
+			}
+		}
 		user.setRoles(roles);
 		
 		userService.save(user);
@@ -115,16 +119,7 @@ public class UserController {
 	@RequestMapping(value = "/edit", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<UserDTO> edit(@RequestBody UserDTO userDTO){
-		Authentication currentUserAuth;
-		String userUsername;
-		User currentUser;
-		
-		currentUserAuth = SecurityContextHolder.getContext().getAuthentication();
-		if(currentUserAuth == null) {
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-		}
-		userUsername = currentUserAuth.getName();
-		currentUser = userService.findByUsername(userUsername);
+		User currentUser = util.getCurrentUser();
 		if(currentUser == null) {
 			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		}
@@ -137,7 +132,7 @@ public class UserController {
 		String firstname = userDTO.getFirstname();
 		String lastname = userDTO.getLastname();
 		String username = userDTO.getUsername();
-		String password = userDTO.getPassword();
+		boolean isAdmin = userDTO.getIsAdmin();
 		
 		if(firstname == null || firstname.length() < 5 || firstname.length() > 30) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -146,9 +141,6 @@ public class UserController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		if(username == null || username.length() < 5 || username.length() > 10) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		}
-		if(password == null || password.length() < 5) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		
@@ -161,7 +153,12 @@ public class UserController {
 		editUser.setFirstname(firstname);
 		editUser.setLastname(lastname);
 		editUser.setUsername(username);
-		editUser.setPassword(bCryptPasswordEncoder.encode(password));
+		if(isAdmin == true) {
+			editUser.getRoles().add(roleService.findByName("ROLE_ADMIN"));
+		}
+		else {
+			editUser.getRoles().remove(roleService.findByName("ROLE_ADMIN"));
+		}
 		
 		editUser = userService.save(editUser);
 		
@@ -172,29 +169,20 @@ public class UserController {
 		return new ResponseEntity<>(new UserDTO(editUser), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<String> delete(@RequestBody UserDTO userDTO){
-		Authentication currentUserAuth;
-		String userUsername;
-		User currentUser;
-		
-		currentUserAuth = SecurityContextHolder.getContext().getAuthentication();
-		if(currentUserAuth == null) {
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-		}
-		userUsername = currentUserAuth.getName();
-		currentUser = userService.findByUsername(userUsername);
+	public ResponseEntity<String> delete(@RequestParam("userId") Integer userId){
+		User currentUser = util.getCurrentUser();
 		if(currentUser == null) {
 			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-		}
+		}		
 		
-		if(userDTO.getId() != currentUser.getId() && !currentUser.checkRole("ROLE_ADMIN")) {
+		if(userId != currentUser.getId() && !currentUser.checkRole("ROLE_ADMIN")) {
 			// brise tudji profil a nije admin
 			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		}
 		
-		User removeUser = userService.findById(userDTO.getId());
+		User removeUser = userService.findById(userId);
 		
 		if(removeUser == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -202,6 +190,29 @@ public class UserController {
 		
 		userService.remove(removeUser);
 		
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = "/change-password", method = RequestMethod.PUT)
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<String> change_password(@RequestParam("userId") Integer userId, @RequestParam("password") String password){
+		User userEdit = userService.findById(userId);
+		if(userEdit == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
+		User currentUser = util.getCurrentUser();
+		if(currentUser == null) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+		}
+		
+		if(userEdit.getId() != currentUser.getId() && currentUser.getIsAdmin() == false) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+		}
+		
+		userEdit.setPassword(bCryptPasswordEncoder.encode(password));
+		userService.save(userEdit);
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 }

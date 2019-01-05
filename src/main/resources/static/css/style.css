@@ -6,6 +6,7 @@
 }
 #id_header #id_header_navigation {
   text-align: center;
+  height: 21px;
 }
 
 #id_body_login {
@@ -122,10 +123,16 @@
 #id_body_users_edit form #id_div_input_fields div p {
   margin: 0;
   font-weight: normal;
+  display: inline-block;
 }
 #id_body_users_edit form #id_div_input_fields div input {
   width: 100%;
   box-sizing: border-box;
+}
+#id_body_users_edit form #id_div_input_fields div #id_checkbox_role_admin {
+  width: auto;
+  margin: 2px 2px 2px 15px;
+  vertical-align: middle;
 }
 #id_body_users_edit form #id_div_roles {
   text-align: left;

@@ -3,6 +3,7 @@ package com.projekat.dokumenti.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -57,8 +58,8 @@ public class User implements UserDetails {
 	@JsonIgnore
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.MERGE}, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-	private List<Role> roles;
-	
+	private Set<Role> roles;
+
 	
 	public User() {}
 
@@ -119,14 +120,23 @@ public class User implements UserDetails {
 		this.category = category;
 	}
 
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 	
+	public boolean getIsAdmin() {
+		for(Role role: roles) {
+			if(role.getName().equals("ROLE_ADMIN")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean checkRole(String roleName) {
 		for(Role role: roles) {
 			if(role.getName().equals(roleName)) {

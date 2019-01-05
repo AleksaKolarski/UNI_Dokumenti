@@ -22,11 +22,18 @@
           p{
             margin: 0;
             font-weight: normal;
+            display: inline-block;
           }
 
           input{
             width: 100%;
             box-sizing: border-box;
+          }
+
+          #id_checkbox_role_admin{
+            width: auto;
+            margin: 2px 2px 2px 15px;
+            vertical-align: middle;
           }
         }
       }
