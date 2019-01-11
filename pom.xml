@@ -90,6 +90,56 @@
    			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
+		
+		<!-- APACHE LUCENE -->
+		<dependency>
+    		<groupId>org.apache.lucene</groupId>
+    		<artifactId>lucene-core</artifactId>
+    		<version>4.0.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.apache.lucene</groupId>
+    		<artifactId>lucene-analyzers-common</artifactId>
+    		<version>4.0.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.apache.lucene</groupId>
+    		<artifactId>lucene-queryparser</artifactId>
+    		<version>4.0.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.apache.lucene</groupId>
+    		<artifactId>lucene-highlighter</artifactId>
+    		<version>4.0.0</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.apache.pdfbox</groupId>
+    		<artifactId>pdfbox</artifactId>
+    		<version>1.7.1</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.apache.poi</groupId>
+    		<artifactId>poi</artifactId>
+    		<version>3.7</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.apache.poi</groupId>
+    		<artifactId>poi-ooxml</artifactId>
+    		<version>3.7</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.apache.poi</groupId>
+    		<artifactId>poi-scratchpad</artifactId>
+    		<version>3.7</version>
+		</dependency>
+		
+		
+		
+		
 	</dependencies>
 
 	<build>
