@@ -57,11 +57,11 @@ function init_form_password() {
   var html;
   html =  '<div class="class_div_input_password">' +
             '<p>Password:</p>' +
-            '<input id="id_input_password1" type="password" name="password1">' +
+            '<input id="id_input_password1" type="password">' +
           '</div>' +
           '<div class="class_div_input_password">' +
             '<p>Repeat password:</p>' +
-            '<input id="id_input_password2" type="password" name="password2">' +
+            '<input id="id_input_password2" type="password">' +
           '</div>';
   edit_user_div_input_root.html(html);
   edit_user_dugme.html('Confirm');
@@ -96,22 +96,22 @@ function init_form_password() {
 function init_form_edit(){
   edit_user_form_p.text('Edit user'); 
   var html;
-  html = '<div class="class_div_input">' + 
+  html =  '<div class="class_div_input">' + 
             '<p>Firstname:</p>' + 
-            '<input id="id_input_firstname" type="text" name="firstname">' + 
+            '<input id="id_input_firstname" type="text">' + 
           '</div>' + 
           '<div class="class_div_input">' + 
             '<p>Lastname:</p>' + 
-            '<input id="id_input_lastname" type="text" name="lastname">' + 
+            '<input id="id_input_lastname" type="text">' + 
           '</div>' + 
           '<div class="class_div_input">' + 
             '<p>Username:</p>' + 
-            '<input id="id_input_username" type="text" name="username">' + 
+            '<input id="id_input_username" type="text">' + 
           '</div>';
   if(changeRole == 'admin'){
     html += '<div class="class_div_input">' + 
               '<p>Admin</p>' + 
-              '<input id="id_checkbox_role_admin" type="checkbox" name="role_admin" value="ROLE_ADMIN">' + 
+              '<input id="id_checkbox_role_admin" type="checkbox">' + 
             '</div>';    
   }
   edit_user_div_input_root.html(html);
@@ -186,20 +186,20 @@ function init_form_delete(){
   var html;
   html = '<div class="class_div_input">' + 
             '<p>Firstname:</p>' + 
-            '<input id="id_input_firstname" type="text" name="firstname" disabled="true">' + 
+            '<input id="id_input_firstname" type="text" disabled="true">' + 
           '</div>' + 
           '<div class="class_div_input">' + 
             '<p>Lastname:</p>' + 
-            '<input id="id_input_lastname" type="text" name="lastname" disabled="true">' + 
+            '<input id="id_input_lastname" type="text" disabled="true">' + 
           '</div>' + 
           '<div class="class_div_input">' + 
             '<p>Username:</p>' + 
-            '<input id="id_input_username" type="text" name="username" disabled="true">' + 
+            '<input id="id_input_username" type="text" disabled="true">' + 
           '</div>';
   if(changeRole == 'admin'){
     html += '<div class="class_div_input">' + 
               '<p>Admin</p>' + 
-              '<input id="id_checkbox_role_admin" type="checkbox" name="role_admin" value="ROLE_ADMIN" disabled="true">' + 
+              '<input id="id_checkbox_role_admin" type="checkbox" disabled="true">' + 
             '</div>';
   }
   edit_user_div_input_root.html(html);
@@ -249,28 +249,28 @@ function init_form_register(){
   var html;
   html = '<div class="class_div_input">' + 
             '<p>Firstname:</p>' + 
-            '<input id="id_input_firstname" type="text" name="firstname">' + 
+            '<input id="id_input_firstname" type="text">' + 
           '</div>' + 
           '<div class="class_div_input">' + 
             '<p>Lastname:</p>' + 
-            '<input id="id_input_lastname" type="text" name="lastname">' + 
+            '<input id="id_input_lastname" type="text">' + 
           '</div>' + 
           '<div class="class_div_input">' + 
             '<p>Username:</p>' + 
-            '<input id="id_input_username" type="text" name="username">' + 
+            '<input id="id_input_username" type="text"">' + 
           '</div>' + 
           '<div class="class_div_input_password">' +
             '<p>Password:</p>' +
-            '<input id="id_input_password1" type="password" name="password1">' +
+            '<input id="id_input_password1" type="password">' +
           '</div>' +
           '<div class="class_div_input_password">' +
             '<p>Repeat password:</p>' +
-            '<input id="id_input_password2" type="password" name="password2">' +
+            '<input id="id_input_password2" type="password">' +
           '</div>';
   if(changeRole == 'admin'){
     html += '<div class="class_div_input">' + 
               '<p>Admin</p>' + 
-              '<input id="id_checkbox_role_admin" type="checkbox" name="role_admin" value="ROLE_ADMIN">' + 
+              '<input id="id_checkbox_role_admin" type="checkbox">' + 
             '</div>';
   }
   edit_user_div_input_root.html(html);

@@ -12,35 +12,42 @@
 
 // Add validation to text input field
 function add_validation_text(field, min, max) {
-    $(field).keyup(function (e) {
+    field.on('input', function (e) {
         check_text(field, min, max);
     });
 }
 
 // Add validation to email input field
 function add_validation_email(field, max) {
-    $(field).keyup(function (e) {
+    field.on('input', function (e) {
         check_email(field, max);
     });
 }
 
 // Add validation to two password input fields that need to match
 function add_validation_password_match(field1, field2) {
-    $(field1).keyup(function (e) {
+    field1.on('input', function (e) {
         check_password_match(field1, field2);
     });
-    $(field2).keyup(function (e) {
+    field2.on('input', function (e) {
         check_password_match(field1, field2);
     });
 }
 
 // ... plus min & max length
 function add_validation_password_match(field1, field2, min, max) {
-    $(field1).keyup(function (e) {
+    field1.on('input', function (e) {
         check_password_match(field1, field2, min, max);
     });
-    $(field2).keyup(function (e) {
+    field2.on('input', function (e) {
         check_password_match(field1, field2, min, max);
+    });
+}
+
+// Add validation to number field
+function add_validation_number(field, min, max){
+    field.on('input', function(e){
+        check_number(field, min, max);
     });
 }
 
@@ -85,5 +92,16 @@ function check_password_match(field1, field2, min, max) {
         return true;
     }
     field2.css('border', '1px solid #ff0000');
+    return false;
+}
+
+function check_number(field, min, max){
+    var content = parseInt(field.val());
+    console.log(content);
+    if(Number.isInteger(content) && content >= min && content <= max){
+        field.css('border', '1px solid #ccc');
+        return true;
+    }
+    field.css('border', '1px solid #ff0000');
     return false;
 }

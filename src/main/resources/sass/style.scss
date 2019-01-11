@@ -3,9 +3,13 @@
 @import "register";
 @import "users";
 @import "users_edit";
+@import "books";
+@import "books_edit";
 
 @include header;
 @include login;
 @include register;
 @include users;
 @include users_edit;
+@include books;
+@include books_edit;

@@ -93,11 +93,14 @@
   font-size: 0.8em;
 }
 
-#id_body_users #id_table_users {
+#id_body_users #id_div_users {
+  margin-top: 20px;
+}
+#id_body_users #id_div_users #id_table_users {
   width: 100%;
   border-collapse: collapse;
 }
-#id_body_users #id_table_users .class_tr_user th {
+#id_body_users #id_div_users #id_table_users .class_tr_user th {
   border: 1px solid black;
 }
 
@@ -158,6 +161,79 @@
   margin: 5px;
 }
 #id_body_users_edit > p {
+  text-align: center;
+  font-size: 0.8em;
+}
+
+#id_body_books #id_div_books {
+  margin-top: 20px;
+}
+#id_body_books #id_div_books #id_table_books {
+  width: 100%;
+  border-collapse: collapse;
+}
+#id_body_books #id_div_books #id_table_books .class_tr_book th {
+  border: 1px solid black;
+}
+
+#id_body_books_edit {
+  width: 200px;
+  margin: auto;
+}
+#id_body_books_edit form {
+  margin-top: 100px;
+  text-align: center;
+}
+#id_body_books_edit form p {
+  font-weight: bold;
+}
+#id_body_books_edit form #id_div_input_fields {
+  width: 100%;
+  margin: 5px 0px;
+}
+#id_body_books_edit form #id_div_input_fields #id_div_file_chooser #id_button_file_chooser {
+  margin-bottom: 5px;
+}
+#id_body_books_edit form #id_div_input_fields #id_div_file_chooser div {
+  margin: 0;
+}
+#id_body_books_edit form #id_div_input_fields #id_div_file_chooser div #id_button_upload {
+  width: 50%;
+  vertical-align: middle;
+}
+#id_body_books_edit form #id_div_input_fields #id_div_file_chooser div img {
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
+  display: none;
+}
+#id_body_books_edit form #id_div_input_fields .class_div_input {
+  text-align: left;
+  margin: 5px 0px;
+}
+#id_body_books_edit form #id_div_input_fields .class_div_input p {
+  margin: 0;
+  font-weight: normal;
+  display: inline-block;
+}
+#id_body_books_edit form #id_div_input_fields .class_div_input input {
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+#id_body_books_edit form #id_div_form_submit {
+  width: 100%;
+  margin-top: 12px;
+}
+#id_body_books_edit form #id_div_form_submit button {
+  margin: 5px;
+}
+#id_body_books_edit form #id_div_form_submit a {
+  margin: 5px;
+}
+#id_body_books_edit > p {
   text-align: center;
   font-size: 0.8em;
 }

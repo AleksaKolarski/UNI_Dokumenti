@@ -1,5 +1,8 @@
 package com.projekat.dokumenti.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.projekat.dokumenti.entity.EBook;
 
 public class EBookDTO {
@@ -11,6 +14,9 @@ public class EBookDTO {
 	private Integer publicationYear;
 	private String filename;
 	private String mime;
+	private String languageName;
+	private String categoryName;
+	private String uploaderUsername;
 	
 	
 	public EBookDTO() {}
@@ -27,6 +33,9 @@ public class EBookDTO {
 	
 	public EBookDTO(EBook ebook) {
 		this(ebook.getId(), ebook.getTitle(), ebook.getAuthor(), ebook.getKeywords(), ebook.getPublicationYear(), ebook.getFilename(), ebook.getMime());
+		this.languageName = ebook.getLanguage().getName();
+		this.categoryName = ebook.getCategory().getName();
+		this.uploaderUsername = ebook.getUser().getUsername();
 	}
 
 	
@@ -86,7 +95,31 @@ public class EBookDTO {
 		this.mime = mime;
 	}
 	
+	public String getLanguageName() {
+		return languageName;
+	}
+
+	public void setLanguageName(String languageName) {
+		this.languageName = languageName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getUploaderUsername() {
+		return uploaderUsername;
+	}
+
+	public void setUploaderUsername(String uploaderUsername) {
+		this.uploaderUsername = uploaderUsername;
+	}
 	
+
 	@Override
 	public String toString() {
 		return "EBook ["
@@ -98,5 +131,13 @@ public class EBookDTO {
 				+ "filename=" + filename + ", "
 				+ "mime=" + mime + ", "
 				+ "]";
+	}
+	
+	public static List<EBookDTO> parseList(List<EBook> list){
+		List<EBookDTO> listDTO = new ArrayList<EBookDTO>();
+		for(EBook ebook: list) {
+			listDTO.add(new EBookDTO(ebook));
+		}
+		return listDTO;
 	}
 }

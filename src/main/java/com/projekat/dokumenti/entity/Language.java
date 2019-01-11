@@ -21,7 +21,7 @@ public class Language {
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 	
-	@Column(name = "name", unique = false, nullable = false, length = 30)
+	@Column(name = "name", unique = true, nullable = false, length = 30)
 	private String name;
 	
 	@OneToMany(mappedBy = "language", cascade = CascadeType.ALL)

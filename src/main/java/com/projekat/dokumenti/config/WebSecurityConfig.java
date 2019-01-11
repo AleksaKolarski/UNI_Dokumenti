@@ -84,6 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 HttpMethod.GET,
                 "/*.html",
+                "/*.gif", 
                 "/favicon.ico",
                 "/lib/**",
                 "/js/**",

@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "ebooks")
 public class EBook {
@@ -18,7 +20,7 @@ public class EBook {
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 	
-	@Column(name = "title", unique = false, nullable = false, length = 80)
+	@Column(name = "title", unique = true, nullable = false, length = 80)
 	private String title;
 	
 	@Column(name = "author", unique = false, nullable = true, length = 120)
@@ -30,20 +32,23 @@ public class EBook {
 	@Column(name = "publication_year", unique = false, nullable = true)
 	private Integer publicationYear;
 	
-	@Column(name = "filename", unique = false, nullable = false, length = 200)
+	@Column(name = "filename", unique = true, nullable = false, length = 200)
 	private String filename;
 	
 	@Column(name = "mime", unique = false, nullable = true, length = 100)
 	private String mime;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "language_id", referencedColumnName = "id", unique = false, nullable = false)
 	private Language language;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id", unique = false, nullable = false)
 	private Category category;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", unique = false, nullable = false)
 	private User user;

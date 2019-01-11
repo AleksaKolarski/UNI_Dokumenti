@@ -1,14 +1,14 @@
-@mixin users {
-  #id_body_users{
+@mixin books {
+  #id_body_books{
     
-    #id_div_users{
+    #id_div_books{
       margin-top: 20px;
 
-      #id_table_users{
+      #id_table_books{
         width: 100%;
         border-collapse: collapse;
   
-        .class_tr_user{
+        .class_tr_book{
           th{
             border: 1px solid black;
           }

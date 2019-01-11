@@ -1,5 +1,8 @@
 package com.projekat.dokumenti.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.projekat.dokumenti.entity.Category;
 
 public class CategoryDTO {
@@ -43,5 +46,13 @@ public class CategoryDTO {
 				+ "id=" + id + ", "
 				+ "name=" + name
 				+ "]";
+	}
+	
+	public static List<CategoryDTO> parseList(List<Category> list){
+		List<CategoryDTO> listDTO = new ArrayList<CategoryDTO>();
+		for(Category language: list) {
+			listDTO.add(new CategoryDTO(language));
+		}
+		return listDTO;
 	}
 }

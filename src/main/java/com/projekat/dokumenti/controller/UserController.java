@@ -174,23 +174,23 @@ public class UserController {
 	public ResponseEntity<String> delete(@RequestParam("userId") Integer userId){
 		User currentUser = util.getCurrentUser();
 		if(currentUser == null) {
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}		
 		
 		if(userId != currentUser.getId() && !currentUser.checkRole("ROLE_ADMIN")) {
 			// brise tudji profil a nije admin
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
 		User removeUser = userService.findById(userId);
 		
 		if(removeUser == null) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		userService.remove(removeUser);
 		
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	
@@ -199,20 +199,20 @@ public class UserController {
 	public ResponseEntity<String> change_password(@RequestParam("userId") Integer userId, @RequestParam("password") String password){
 		User userEdit = userService.findById(userId);
 		if(userEdit == null) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		User currentUser = util.getCurrentUser();
 		if(currentUser == null) {
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
 		if(userEdit.getId() != currentUser.getId() && currentUser.getIsAdmin() == false) {
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
 		userEdit.setPassword(bCryptPasswordEncoder.encode(password));
 		userService.save(userEdit);
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
