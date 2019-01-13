@@ -203,7 +203,6 @@ public class EBookController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		System.out.println(ebook);
 		ebookService.remove(ebook);
 		
 		return new ResponseEntity<>(HttpStatus.OK);

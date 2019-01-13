@@ -18,7 +18,6 @@ var book_filename;
 var book_documentName;
 
 var edit_book_dugme;
-var edit_book_cancel;
 var edit_book_log;
 
 var form_disable_counter = 0;
@@ -43,7 +42,6 @@ function init_form() {
   edit_book_div_input_root = $('#id_div_input_fields');
   edit_book_form_p = $('#id_form_p');
   edit_book_dugme = $('#id_button_edit_book');
-  edit_book_cancel = $('#id_a_cancel');
   edit_book_log = $('#id_edit_book_log_field');
 
   if (changeType == 'create') {
@@ -146,9 +144,9 @@ function init_form_create(){
     var data = new FormData();
     data.append('doc', file);
     customAjax({
-      method: 'POST',
-      url: 'upload/',
-      data: data,
+      method: 'POST', 
+      url: 'upload/', 
+      data: data, 
       cache: false, 
       contentType: false, 
       processData: false, 

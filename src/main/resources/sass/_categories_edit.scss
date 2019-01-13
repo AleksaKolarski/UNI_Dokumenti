@@ -1,0 +1,55 @@
+@mixin categories_edit{
+  #id_body_categories_edit{
+    width: 200px;
+    margin: auto;
+
+    form{
+      margin-top: 100px;
+      text-align: center;
+
+      p{
+        font-weight: bold;
+      }
+
+      #id_div_input_fields{
+        width: 100%;
+        margin: 5px 0px;
+
+        .class_div_input{
+          text-align: left;
+          margin: 5px 0px;
+
+          p{
+            margin: 0;
+            font-weight: normal;
+            display: inline-block;
+          }
+
+          input{
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+          }
+        }
+      }
+
+      #id_div_form_submit{
+        width: 100%;
+        margin-top: 12px;
+
+        button{
+          margin: 5px;
+        }
+
+        a{
+          margin: 5px;
+        }
+      }
+    }
+
+    > p{
+      text-align: center;
+      font-size: 0.8em;
+    }
+  }
+}

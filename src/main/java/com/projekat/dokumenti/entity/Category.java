@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 @Entity
@@ -24,10 +25,10 @@ public class Category {
 	@Column(name = "name", unique = true, nullable = false, length = 30)
 	private String name;
 	
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
 	private List<EBook> ebooks = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST)
 	private List<User> users = new ArrayList<>();
 	
 	
@@ -72,5 +73,12 @@ public class Category {
 				+ "id=" + id + ", "
 				+ "name=" + name
 				+ "]";
+	}
+	
+	@PreRemove
+	private void preRemove() {
+	    for (User user: users) {
+	        user.setCategory(null);
+	    }
 	}
 }

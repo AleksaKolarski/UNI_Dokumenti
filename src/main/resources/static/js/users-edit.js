@@ -127,6 +127,8 @@ function init_form_edit(){
   add_validation_text(edit_user_lastname, 5, 30);
   add_validation_text(edit_user_username, 5, 10);
 
+  form_disable(true);
+
   // get user to fill input fields
   customAjax({
     method: 'GET',
@@ -137,6 +139,7 @@ function init_form_edit(){
       edit_user_lastname.val(user.lastname);
       edit_user_username.val(user.username);
       edit_user_role_admin.prop('checked', user.isAdmin);
+      form_disable(false);
     }
   });
 
@@ -215,6 +218,8 @@ function init_form_delete(){
   edit_user_username = $('#id_input_username');
   edit_user_role_admin = $('#id_checkbox_role_admin');
 
+  edit_user_dugme.attr('disabled', true);
+
   customAjax({
     method: 'GET',
     url: 'user/getById',
@@ -224,6 +229,7 @@ function init_form_delete(){
       edit_user_lastname.val(user.lastname);
       edit_user_username.val(user.username);
       edit_user_role_admin.prop('checked', user.isAdmin);
+      edit_user_dugme.attr('disabled', false);
     }
   });
 
@@ -335,4 +341,12 @@ function init_form_register(){
     else
       edit_user_log.text('Ime nije odgovarajuce duzine (5 - 30)');
   });
+}
+
+function form_disable(state){
+  edit_user_firstname.attr('disabled', state);
+  edit_user_lastname.attr('disabled', state);
+  edit_user_username.attr('disabled', state);
+  edit_user_role_admin.attr('disabled', state);
+  edit_user_dugme.attr('disabled', state);
 }

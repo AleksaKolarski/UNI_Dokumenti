@@ -271,4 +271,48 @@
   padding-right: 7px;
 }
 
+#id_body_categories_edit {
+  width: 200px;
+  margin: auto;
+}
+#id_body_categories_edit form {
+  margin-top: 100px;
+  text-align: center;
+}
+#id_body_categories_edit form p {
+  font-weight: bold;
+}
+#id_body_categories_edit form #id_div_input_fields {
+  width: 100%;
+  margin: 5px 0px;
+}
+#id_body_categories_edit form #id_div_input_fields .class_div_input {
+  text-align: left;
+  margin: 5px 0px;
+}
+#id_body_categories_edit form #id_div_input_fields .class_div_input p {
+  margin: 0;
+  font-weight: normal;
+  display: inline-block;
+}
+#id_body_categories_edit form #id_div_input_fields .class_div_input input {
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+#id_body_categories_edit form #id_div_form_submit {
+  width: 100%;
+  margin-top: 12px;
+}
+#id_body_categories_edit form #id_div_form_submit button {
+  margin: 5px;
+}
+#id_body_categories_edit form #id_div_form_submit a {
+  margin: 5px;
+}
+#id_body_categories_edit > p {
+  text-align: center;
+  font-size: 0.8em;
+}
+
 /*# sourceMappingURL=style.css.map */

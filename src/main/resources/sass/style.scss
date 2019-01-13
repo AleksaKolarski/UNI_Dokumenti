@@ -6,6 +6,7 @@
 @import "books";
 @import "books_edit";
 @import "categories";
+@import "categories_edit";
 
 @include header;
 @include login;
@@ -15,3 +16,4 @@
 @include books;
 @include books_edit;
 @include categories;
+@include categories_edit;
