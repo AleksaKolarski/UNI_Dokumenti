@@ -4,9 +4,14 @@
 #id_header h3 {
   text-align: center;
 }
+#id_header h5 {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 #id_header #id_header_navigation {
   text-align: center;
-  height: 21px;
+  min-height: 21px;
 }
 
 #id_body_login {
@@ -97,11 +102,17 @@
   margin-top: 20px;
 }
 #id_body_users #id_div_users #id_table_users {
-  width: 100%;
+  margin: auto;
   border-collapse: collapse;
+}
+#id_body_users #id_div_users #id_table_users #id_tr_header th {
+  padding-left: 7px;
+  padding-right: 7px;
 }
 #id_body_users #id_div_users #id_table_users .class_tr_user th {
   border: 1px solid black;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 #id_body_users_edit {
@@ -169,11 +180,17 @@
   margin-top: 20px;
 }
 #id_body_books #id_div_books #id_table_books {
-  width: 100%;
+  margin: auto;
   border-collapse: collapse;
+}
+#id_body_books #id_div_books #id_table_books #id_tr_header th {
+  padding-left: 7px;
+  padding-right: 7px;
 }
 #id_body_books #id_div_books #id_table_books .class_tr_book th {
   border: 1px solid black;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 #id_body_books_edit {
@@ -207,7 +224,6 @@
   display: inline-block;
   margin-left: 10px;
   vertical-align: middle;
-  display: none;
 }
 #id_body_books_edit form #id_div_input_fields .class_div_input {
   text-align: left;
@@ -236,6 +252,23 @@
 #id_body_books_edit > p {
   text-align: center;
   font-size: 0.8em;
+}
+
+#id_body_categories #id_div_categories {
+  margin-top: 20px;
+}
+#id_body_categories #id_div_categories #id_table_categories {
+  margin: auto;
+  border-collapse: collapse;
+}
+#id_body_categories #id_div_categories #id_table_categories #id_tr_header th {
+  padding-left: 7px;
+  padding-right: 7px;
+}
+#id_body_categories #id_div_categories #id_table_categories .class_tr_category th {
+  border: 1px solid black;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 /*# sourceMappingURL=style.css.map */

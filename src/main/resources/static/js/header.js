@@ -10,17 +10,17 @@ $(document).ready(function (e) {
   header = $('#id_header');
   navigation = $('#id_header_navigation');
 
-  // ucitavamo trenutno ulogovanog korisnika
 
   customAjax({
     method: 'GET',
     url: 'user/currentUser',
     success: function (user, status, xhr) {
       // ispisi negde ime ulogovanog korisnika
+      $('#id_h5_logged_in_user').text('Ulogovani korisnik: ' + user.firstname + ' ' + user.lastname + ' (' + user.username + ')');
     }
   });
 
-  // ucitavamo njegove role
+  // ucitavamo role ulogovanog korisnika
   customAjax({
     method: 'GET',
     url: 'role/current-user-roles',
@@ -50,6 +50,10 @@ $(document).ready(function (e) {
       books = $('#id_button_books');
       search = $('#id_button_search');
       logout = $('#id_button_logout');
+
+      categories.on('click', function(event){
+        window.location.href = '/categories.html';
+      });
 
       books.on('click', function(event){
         window.location.href = '/books.html';

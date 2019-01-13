@@ -35,6 +35,9 @@ public class EBook {
 	@Column(name = "filename", unique = true, nullable = false, length = 200)
 	private String filename;
 	
+	@Column(name = "document_name", unique = true, nullable = false, length = 200)
+	private String documentName;
+	
 	@Column(name = "mime", unique = false, nullable = true, length = 100)
 	private String mime;
 	
@@ -104,6 +107,14 @@ public class EBook {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+	
+	public String getDocumentName() {
+		return documentName;
+	}
+
+	public void setDocumentName(String documentName) {
+		this.documentName = documentName;
+	}
 
 	public String getMime() {
 		return mime;
@@ -146,6 +157,7 @@ public class EBook {
 				+ "keywords=" + keywords + ", "
 				+ "publicationYear=" + publicationYear + ", "
 				+ "filename=" + filename + ", "
+				+ "documentName" + documentName + ", "
 				+ "mime=" + mime + ", "
 				+ "language=" + language.getName() + ", "
 				+ "category=" + category.getName() + ", "

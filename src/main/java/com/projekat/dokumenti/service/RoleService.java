@@ -45,6 +45,6 @@ public class RoleService implements RoleServiceInterface {
 
 	@Override
 	public void remove(Role role) {
-		roleRepository.delete(role);
+		roleRepository.deleteById(role.getId());
 	}
 }

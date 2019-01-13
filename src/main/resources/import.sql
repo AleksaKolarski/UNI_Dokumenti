@@ -25,9 +25,9 @@ INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);
 INSERT INTO users_roles (user_id, role_id) VALUES (3, 2);
 INSERT INTO users_roles (user_id, role_id) VALUES (4, 2);
 
-INSERT INTO ebooks (title, author, keywords, publication_year, filename, mime, language_id, category_id, user_id) VALUES ('art0', 'author0', 'keywords0', 1950, 'filename0', 'pdf', 1, 2, 3);
-INSERT INTO ebooks (title, author, keywords, publication_year, filename, mime, language_id, category_id, user_id) VALUES ('art1', 'author1', 'keywords1', 1951, 'filename1', 'pdf', 2, 3, 4);
-INSERT INTO ebooks (title, author, keywords, publication_year, filename, mime, language_id, category_id, user_id) VALUES ('art2', 'author2', 'keywords2', 1952, 'filename2', 'word', 3, 4, 2);
-INSERT INTO ebooks (title, author, keywords, publication_year, filename, mime, language_id, category_id, user_id) VALUES ('art3', 'author3', 'keywords3', 1953, 'filename3', 'word', 4, 1, 3);
-INSERT INTO ebooks (title, author, keywords, publication_year, filename, mime, language_id, category_id, user_id) VALUES ('art4', 'author4', 'keywords4', 1954, 'filename4', 'pdf', 1, 2, 4);
-INSERT INTO ebooks (title, author, keywords, publication_year, filename, mime, language_id, category_id, user_id) VALUES ('art5', 'author5', 'keywords5', 1955, 'filename5', 'word', 2, 3, 2);
+INSERT INTO ebooks (title, author, keywords, publication_year, document_name, filename, mime, language_id, category_id, user_id) VALUES ('art0', 'author0', 'keywords0', 1950, 'documentName0', 'filename0', 'pdf', 1, 2, 3);
+INSERT INTO ebooks (title, author, keywords, publication_year, document_name, filename, mime, language_id, category_id, user_id) VALUES ('art1', 'author1', 'keywords1', 1951, 'documentName1', 'filename1', 'pdf', 2, 3, 4);
+INSERT INTO ebooks (title, author, keywords, publication_year, document_name, filename, mime, language_id, category_id, user_id) VALUES ('art2', 'author2', 'keywords2', 1952, 'documentName2', 'filename2', 'word', 3, 4, 2);
+INSERT INTO ebooks (title, author, keywords, publication_year, document_name, filename, mime, language_id, category_id, user_id) VALUES ('art3', 'author3', 'keywords3', 1953, 'documentName3', 'filename3', 'word', 4, 1, 3);
+INSERT INTO ebooks (title, author, keywords, publication_year, document_name, filename, mime, language_id, category_id, user_id) VALUES ('art4', 'author4', 'keywords4', 1954, 'documentName4', 'filename4', 'pdf', 1, 2, 4);
+INSERT INTO ebooks (title, author, keywords, publication_year, document_name, filename, mime, language_id, category_id, user_id) VALUES ('art5', 'author5', 'keywords5', 1955, 'documentName5', 'filename5', 'word', 2, 3, 2);

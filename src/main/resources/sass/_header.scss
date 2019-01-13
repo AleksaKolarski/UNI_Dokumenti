@@ -8,9 +8,15 @@
       text-align: center;
     }
 
+    h5{
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
     #id_header_navigation{
       text-align: center;
-      height: 21px;
+      min-height: 21px;
     } 
   }
 }

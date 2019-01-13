@@ -1,10 +1,10 @@
-@mixin books {
-  #id_body_books{
+@mixin categories {
+  #id_body_categories{
     
-    #id_div_books{
+    #id_div_categories{
       margin-top: 20px;
-
-      #id_table_books{
+      
+      #id_table_categories{
         margin: auto;
         border-collapse: collapse;
 
@@ -15,7 +15,7 @@
           }
         }
   
-        .class_tr_book{
+        .class_tr_category{
           th{
             border: 1px solid black;
             padding-left: 7px;

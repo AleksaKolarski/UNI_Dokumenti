@@ -13,6 +13,7 @@ public class EBookDTO {
 	private String keywords;
 	private Integer publicationYear;
 	private String filename;
+	private String documentName;
 	private String mime;
 	private String languageName;
 	private String categoryName;
@@ -21,18 +22,19 @@ public class EBookDTO {
 	
 	public EBookDTO() {}
 	
-	public EBookDTO(Integer id, String title, String author, String keywords, Integer publicationYear, String filename, String mime) {
+	public EBookDTO(Integer id, String title, String author, String keywords, Integer publicationYear, String filename, String documentName, String mime) {
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.keywords = keywords;
 		this.publicationYear = publicationYear;
 		this.filename = filename;
+		this.documentName = documentName;
 		this.mime = mime;
 	}
 	
 	public EBookDTO(EBook ebook) {
-		this(ebook.getId(), ebook.getTitle(), ebook.getAuthor(), ebook.getKeywords(), ebook.getPublicationYear(), ebook.getFilename(), ebook.getMime());
+		this(ebook.getId(), ebook.getTitle(), ebook.getAuthor(), ebook.getKeywords(), ebook.getPublicationYear(), ebook.getFilename(), ebook.getDocumentName(), ebook.getMime());
 		this.languageName = ebook.getLanguage().getName();
 		this.categoryName = ebook.getCategory().getName();
 		this.uploaderUsername = ebook.getUser().getUsername();
@@ -87,6 +89,14 @@ public class EBookDTO {
 		this.filename = filename;
 	}
 
+	public String getDocumentName() {
+		return documentName;
+	}
+
+	public void setDocumentName(String documentName) {
+		this.documentName = documentName;
+	}
+
 	public String getMime() {
 		return mime;
 	}
@@ -129,6 +139,7 @@ public class EBookDTO {
 				+ "keywords=" + keywords + ", "
 				+ "publicationYear=" + publicationYear + ", "
 				+ "filename=" + filename + ", "
+				+ "documentName=" + documentName + ", "
 				+ "mime=" + mime + ", "
 				+ "]";
 	}

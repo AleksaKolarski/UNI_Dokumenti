@@ -15,7 +15,7 @@ $(document).ready(function (e) {
     url: "user/all",
     success: function (data, status, xhr) {
       var html = '';
-      html += '<tr>' + 
+      html += '<tr id="id_tr_header">' + 
                 '<th>ID</th>' + 
                 '<th>Firstname</th>' + 
                 '<th>Lastname</th>' + 
@@ -28,7 +28,7 @@ $(document).ready(function (e) {
                 '</th>' + 
               '</tr>';
       data.forEach(user => {
-        html += '<tr data-userId="' + user.id + '" class="class_tr_user">' + 
+        html += '<tr class="class_tr_user">' + 
                   '<th>' + user.id + '</th>' + 
                   '<th>' + user.firstname + '</th>' + 
                   '<th>' + user.lastname + '</th>' + 

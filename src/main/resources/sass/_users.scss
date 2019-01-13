@@ -5,12 +5,21 @@
       margin-top: 20px;
 
       #id_table_users{
-        width: 100%;
+        margin: auto;
         border-collapse: collapse;
+
+        #id_tr_header{
+          th{
+            padding-left: 7px;
+            padding-right: 7px;
+          }
+        }
   
         .class_tr_user{
           th{
             border: 1px solid black;
+            padding-left: 7px;
+            padding-right: 7px;
           }
         }
       }

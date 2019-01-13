@@ -121,12 +121,12 @@ public class UserController {
 	public ResponseEntity<UserDTO> edit(@RequestBody UserDTO userDTO){
 		User currentUser = util.getCurrentUser();
 		if(currentUser == null) {
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
 		if(userDTO.getId() != currentUser.getId() && !currentUser.checkRole("ROLE_ADMIN")) {
 			// menja tudji profil a nije admin
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
 		String firstname = userDTO.getFirstname();
@@ -135,19 +135,19 @@ public class UserController {
 		boolean isAdmin = userDTO.getIsAdmin();
 		
 		if(firstname == null || firstname.length() < 5 || firstname.length() > 30) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		if(lastname == null || lastname.length() < 5 || lastname.length() > 30) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		if(username == null || username.length() < 5 || username.length() > 10) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		User editUser = userService.findById(userDTO.getId());
 		
 		if(editUser == null) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		editUser.setFirstname(firstname);
@@ -163,7 +163,7 @@ public class UserController {
 		editUser = userService.save(editUser);
 		
 		if(editUser == null) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		return new ResponseEntity<>(new UserDTO(editUser), HttpStatus.OK);

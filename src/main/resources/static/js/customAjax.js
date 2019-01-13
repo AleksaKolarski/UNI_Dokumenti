@@ -11,6 +11,9 @@ function customAjax(params){
     cache: params.cache,
     complete: function(xhr, status){
       console.log(params.url + ': Server returned ' + xhr.status + '; status is ' + status);
+      if(params.complete != null){
+        params.complete();
+      }
     },
     contentType: params.contentType,
     data: params.data,

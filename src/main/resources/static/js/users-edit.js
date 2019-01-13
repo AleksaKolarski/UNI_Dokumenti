@@ -153,7 +153,11 @@ function init_form_edit(){
           customAjax({
             method: 'PUT',
             url: 'user/edit',
-            data: JSON.stringify({ 'id': userId, 'firstname': firstname, 'lastname': lastname, 'username': username, 'isAdmin':  isAdmin}),
+            data: JSON.stringify({  'id': userId, 
+                                    'firstname': firstname, 
+                                    'lastname': lastname, 
+                                    'username': username, 
+                                    'isAdmin':  isAdmin}),
             processData: false,
             contentType: 'application/json',
             success: function(data, status, xhr){

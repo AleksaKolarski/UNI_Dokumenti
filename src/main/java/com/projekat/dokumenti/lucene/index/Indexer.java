@@ -14,11 +14,6 @@ import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
 
 import com.projekat.dokumenti.lucene.analysers.SerbianAnalyzer;
-import com.projekat.dokumenti.lucene.index.handler.DocumentHandler;
-import com.projekat.dokumenti.lucene.index.handler.PDFHandler;
-import com.projekat.dokumenti.lucene.index.handler.TextDocHandler;
-import com.projekat.dokumenti.lucene.index.handler.Word2007Handler;
-import com.projekat.dokumenti.lucene.index.handler.WordHandler;
 
 public class Indexer {
 	
@@ -42,8 +37,8 @@ public class Indexer {
 		}
 		
 		try {
-			this.indexDir = new SimpleFSDirectory(new File(path));
-			this.indexWriter = new IndexWriter(this.indexDir, iwc);
+			indexDir = new SimpleFSDirectory(new File(path));
+			indexWriter = new IndexWriter(this.indexDir, iwc);
 		}
 		catch (Exception e) {
 			throw new IllegalArgumentException("Path not correct");
@@ -56,14 +51,14 @@ public class Indexer {
 	}
 	
 	private Indexer() {
-		this(false);
+		this(true);
 	}
 	
 	public boolean add(Document doc) {
 		try {
 			synchronized (this) {
-				this.indexWriter.addDocument(doc);
-				this.indexWriter.commit();
+				indexWriter.addDocument(doc);
+				indexWriter.commit();
 			}
 			return true;
 		}
@@ -76,8 +71,8 @@ public class Indexer {
 		Term delTerm = new Term("filename", filename);
 		try {
 			synchronized (this) {
-				this.indexWriter.deleteDocuments(delTerm);
-				this.indexWriter.commit();
+				indexWriter.deleteDocuments(delTerm);
+				indexWriter.commit();
 			}
 			return true;
 		} catch (IOException e) {
@@ -85,51 +80,21 @@ public class Indexer {
 		}
 	}
 	
-	public void index(File file) {
-		DocumentHandler handler = null;
-		String fileName = null;
-		
+	public boolean index(File file) {
 		try {
-			File[] files;
-			if(file.isDirectory()) {
-				files = file.listFiles();
+			Document doc = DocumentHandler.getDocument(file);
+			if(doc == null) {
+				System.out.println("Nije moguce indeksirati dokument sa nazivom: " + file.getName());
+				return false;
 			}
-			else {
-				files = new File[1];
-				files[0] = file;
-			}
-			for(File newFile: files) {
-				if(newFile.isFile()) {
-					fileName = newFile.getName();
-					handler = getHandler(fileName);
-					if(handler == null) {
-						System.out.println("Nije moguce indeksirati dokument sa nazivom: " + fileName);
-						continue;
-					}
-					this.indexWriter.addDocument(handler.getDocument(newFile));
-				}
-			}
-			this.indexWriter.commit();
-			System.out.println("Indexing done");			
+			indexWriter.addDocument(doc);
+			indexWriter.commit();
+			System.out.println("Indexing done");
+			return true;
 		}
 		catch (IOException e) {
 			System.out.println("Indexing NOT done");
 		}
-	}
-	
-	protected DocumentHandler getHandler(String fileName) {
-		switch (fileName.substring(fileName.lastIndexOf(".") + 1)) {
-		case "txt":
-			return new TextDocHandler();
-		case "pdf":
-			return new PDFHandler();
-		case "doc":
-			return new WordHandler();
-		case "docx":
-			return new Word2007Handler();
-		case "xml":
-			System.out.println("XML HANDLER NOT IMPLEMENTED");
-		}
-		return null;
+		return false;
 	}
 }
