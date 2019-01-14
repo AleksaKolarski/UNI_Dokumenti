@@ -14,6 +14,10 @@ public interface EBookRepository extends JpaRepository<EBook, Integer> {
 	
 	EBook findByTitle(String title);
 	
+	EBook findByFilename(String filename);
+	
+	EBook findByDocumentName(String documentName);
+	
 	List<EBook> findByUser_Id(Integer userId);
 	
 	List<EBook> findByCategory_Name(String categoryName);

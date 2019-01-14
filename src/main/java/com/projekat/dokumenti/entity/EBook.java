@@ -35,7 +35,7 @@ public class EBook {
 	@Column(name = "filename", unique = true, nullable = false, length = 200)
 	private String filename;
 	
-	@Column(name = "document_name", unique = true, nullable = false, length = 200)
+	@Column(name = "document_name", unique = false, nullable = false, length = 200)
 	private String documentName;
 	
 	@Column(name = "mime", unique = false, nullable = true, length = 100)

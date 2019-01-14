@@ -28,6 +28,7 @@ import com.projekat.dokumenti.security.Util;
 import com.projekat.dokumenti.service.CategoryService;
 import com.projekat.dokumenti.service.EBookService;
 import com.projekat.dokumenti.service.LanguageService;
+import com.projekat.dokumenti.storage.FileSystemStorageService;
 
 @RestController
 @RequestMapping("/ebook")
@@ -45,6 +46,9 @@ public class EBookController {
 	private CategoryService categoryService;
 	
 	@Autowired
+	private FileSystemStorageService storageService;
+	
+	@Autowired
 	private Util util;
 	
 	@GetMapping("/all")
@@ -52,12 +56,12 @@ public class EBookController {
 	public List<EBookDTO> getAllEBooks(@RequestParam(name = "filterCategory", required = false) String filterCategory, @RequestParam(name = "sortDirection", required = false) String sortDirection){
 		
 		boolean activeFilterCategory = false;
-		boolean activeSortDirection = true;
+		boolean activeSortDirection = false;
 		
 		if(filterCategory != null && filterCategory.length() > 0) {
 			activeFilterCategory = true;
 		}
-		if(sortDirection != null && (sortDirection.equals("ASC") || sortDirection.equals("DESC"))) {
+		if(sortDirection != null && ((sortDirection.equals("ASC") || sortDirection.equals("DESC")))) {
 			activeSortDirection = true;
 		}
 		
@@ -83,7 +87,6 @@ public class EBookController {
 				return EBookDTO.parseList(ebookService.findAllOrderByTitleDesc());
 			}
 		}
-		
 		
 		return EBookDTO.parseList(ebookService.findAll());
 	}
@@ -237,6 +240,8 @@ public class EBookController {
 		if(ebook == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
+		storageService.delete(ebook.getFilename());
 		
 		ebookService.remove(ebook);
 		

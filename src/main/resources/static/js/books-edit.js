@@ -145,7 +145,7 @@ function init_form_create(){
     data.append('doc', file);
     customAjax({
       method: 'POST', 
-      url: 'upload/', 
+      url: 'file/upload/', 
       data: data, 
       cache: false, 
       contentType: false, 

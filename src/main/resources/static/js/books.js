@@ -66,7 +66,8 @@ function render_table(){
                 '<th>mime</th>' + 
                 '<th>Language</th>' + 
                 '<th>Category</th>' + 
-                '<th>Uploader</th>';
+                '<th>Uploader</th>' + 
+                '<th>Download</th>';
       if(admin){
         html += '<th>' + 
                   '<a href="books-edit.html?changeType=create">' + 
@@ -87,7 +88,8 @@ function render_table(){
                   '<th>' + book.mime + '</th>' + 
                   '<th>' + book.languageName + '</th>' + 
                   '<th>' + book.categoryName + '</th>' + 
-                  '<th>' + book.uploaderUsername + '</th>';
+                  '<th>' + book.uploaderUsername + '</th>' + 
+                  '<th><a id="id_link_download_' + book.id + '" href="#">Download</a></th>';
         if(admin){
           html += '<th>' +
                     '<a href="books-edit.html?changeType=edit&ebookId=' + book.id + '"><button type="button">Edit</button></a>' +
@@ -97,6 +99,17 @@ function render_table(){
         html += '</tr>';
       });
       table.append(html);
+      books.forEach(book => {
+        $('#id_link_download_' + book.id).on('click', function(event){
+          customAjax({
+            method: 'GET',
+            url: 'file/generate-token/' + book.documentName,
+            success: function(token, status, xhr){
+              window.location.href = 'file/download/' + token;
+            }
+          })
+        });
+      });
     }
   });
 }

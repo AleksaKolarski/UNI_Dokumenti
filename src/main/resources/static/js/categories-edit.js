@@ -62,8 +62,14 @@ function init_form_create(){
         contentType: 'application/json',
         success: function(data, status, xhr){
           window.location.href = 'categories.html';
+        },
+        error: function(xhr, status, error){
+          edit_category_log.text('Greska pri kreiranju kategorije');
         }
       });
+    }
+    else{
+      edit_category_log.text('Naziv kategorije nije odgovarajuce duzine (5-30)');
     }
   });
 }
@@ -83,6 +89,7 @@ function init_form_edit(){
   add_validation_text(edit_category_name, 5, 30);
 
   edit_category_dugme.attr('disabled', true);
+  edit_category_name.attr('disabled', true);
   customAjax({
     method: 'GET',
     url: 'category/getById',
@@ -90,6 +97,10 @@ function init_form_edit(){
     success: function(category, status, xhr){
       edit_category_name.val(category.name);
       edit_category_dugme.attr('disabled', false);
+      edit_category_name.attr('disabled', false);
+    },
+    error: function(xhr, status, error){
+      edit_category_log.text('Greska pri dobavljanju informacija o kategoriji');
     }
   });
 
@@ -103,8 +114,14 @@ function init_form_edit(){
         contentType: 'application/json',
         success: function(data, status, xhr){
           window.location.href = 'categories.html';
+        },
+        error: function(xhr, status, error){
+          edit_category_log.text('Greska pri menjanju kategorije');
         }
       });
+    }
+    else{
+      edit_category_log.text('Naziv kategorije nije odgovarajuce duzine (5-30)');
     }
   });
 }
@@ -131,6 +148,9 @@ function init_form_delete(){
     success: function(category, status, xhr){
       edit_category_name.val(category.name);
       edit_category_dugme.attr('disabled', false);
+    },
+    error: function(xhr, status, error){
+      edit_category_log.text('Greska pri dobavljanju informacija o kategoriji');
     }
   });
 
@@ -141,6 +161,9 @@ function init_form_delete(){
       data: { 'categoryId': categoryId },
       success: function(data, status, xhr){
         window.location.href = 'categories.html';
+      },
+      error: function(xhr, status, error){
+        edit_category_log.text('Greska pri brisanju kategorije');
       }
     });
   });

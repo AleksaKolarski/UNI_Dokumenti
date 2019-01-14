@@ -37,12 +37,12 @@ public class CategoryController {
 	
 	@GetMapping("/getById")
 	@PreAuthorize("hasRole('ADMIN')")
-	public CategoryDTO getById(@RequestParam("categoryId") Integer categoryId) {
+	public ResponseEntity<CategoryDTO> getById(@RequestParam("categoryId") Integer categoryId) {
 		Category category = categoryService.findById(categoryId);
 		if(category == null) {
-			return null;
+			return new ResponseEntity<CategoryDTO>(HttpStatus.BAD_REQUEST);
 		}
-		return new CategoryDTO(category);
+		return new ResponseEntity<CategoryDTO>(new CategoryDTO(category), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
