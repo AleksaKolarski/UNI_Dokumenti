@@ -34,20 +34,20 @@ public class RoleController {
 	
 	// getById
 	@GetMapping("/getById")
-	public Role getById(@RequestParam("roleId") Integer roleId) {
-		return roleService.findById(roleId);
+	public ResponseEntity<Role> getById(@RequestParam("roleId") Integer roleId) {
+		return new ResponseEntity<>(roleService.findById(roleId), HttpStatus.OK);
 	}
 	
 	// getAll
 	@GetMapping("/getAll")
-	public List<Role> getAll(){
-		return roleService.findAll();
+	public ResponseEntity<List<Role>> getAll(){
+		return new ResponseEntity<>(roleService.findAll(), HttpStatus.OK);
 	}
 	
 	// getAllByUserId
 	@GetMapping("/getAllByUserId")
-	public List<Role> getAllByUserId(@RequestParam("userId") Integer userId){
-		return roleService.findByUserId(userId);
+	public ResponseEntity<List<Role>> getAllByUserId(@RequestParam("userId") Integer userId){
+		return new ResponseEntity<>(roleService.findByUserId(userId), HttpStatus.OK);
 	}
 	
 	@GetMapping("/current-user-roles")

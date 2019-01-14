@@ -58,14 +58,14 @@ public class UserController {
 	
 	@RequestMapping(value = "/getById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ADMIN')")
-	public User getById(@RequestParam("userId") Integer userId) {
-		return userService.findById(userId);
+	public ResponseEntity<User> getById(@RequestParam("userId") Integer userId) {
+		return new ResponseEntity<>(userService.findById(userId), HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('ADMIN')")
-	public List<User> getAllUsers(){
-		return userService.findAll();
+	public ResponseEntity<List<User>> getAllUsers(){
+		return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

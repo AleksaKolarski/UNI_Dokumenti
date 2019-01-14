@@ -121,6 +121,9 @@ function init_form_create(){
         edit_book_language.append('<option value="' + language.name + '">' + language.name + '</option>');
       });
       form_disable(false);
+    },
+    error: function(xhr, status, error){
+      edit_book_log.text('Greska pri dobavljanju svih jezika');
     }
   });
 
@@ -133,6 +136,9 @@ function init_form_create(){
         edit_book_category.append('<option value="' + category.name + '">' + category.name + '</option>');
       });
       form_disable(false);
+    },
+    error: function(xhr, status, error){
+      edit_book_log.text('Greska pri dobavljanju svih kategorija');
     }
   });
 
@@ -165,6 +171,9 @@ function init_form_create(){
       },
       complete: function(){
         edit_book_gif.css('visibility', 'hidden');
+      },
+      error: function(xhr, status, error){
+        edit_book_log.text('Greska pri uploadu dokumenta');
       }
     });
   });
@@ -197,11 +206,26 @@ function init_form_create(){
               contentType: 'application/json',
               success: function(data, status, xhr){
                 window.location.href = 'books.html';
+              },
+              error: function(xhr, status, error){
+                edit_book_log.text('Greska pri kreiranju dokumenta');
               }
             });
           }
+          else{
+            edit_book_log.text('Godina izdavanja nije odgovarajuca');
+          }
+        }
+        else{
+          edit_book_log.text('Kljucne reci moraju biti krace od 120 karaktera');
         }
       }
+      else{
+        edit_book_log.text('Autor nije odgovarajuce duzine (5-120)');
+      }
+    }
+    else{
+      edit_book_log.text('Naslov nije odgovarajuce duzine (5-80)');
     }
   });
 }
@@ -262,6 +286,9 @@ function init_form_edit(){
       });
       form_disable(false);
       load_book();
+    },
+    error: function(xhr, status, error){
+      edit_book_log.text('Greska pri dobavljanju svih jezika');
     }
   });
 
@@ -275,6 +302,9 @@ function init_form_edit(){
       });
       form_disable(false);
       load_book();
+    },
+    error: function(xhr, status, error){
+      edit_book_log.text('Greska pri dobavljanju svih kategorija');
     }
   });
 
@@ -307,11 +337,26 @@ function init_form_edit(){
               contentType: 'application/json',
               success: function(data, status, xhr){
                 window.location.href = 'books.html';
+              },
+              error: function(xhr, status, error){
+                edit_book_log.text('Greska pri menjanju dokumenta');
               }
             });
           }
+          else{
+            edit_book_log.text('Godina izdavanja nije odgovarajuca');
+          }
+        }
+        else{
+          edit_book_log.text('Kljucne reci moraju biti krace od 120 karaktera');
         }
       }
+      else{
+        edit_book_log.text('Autor nije odgovarajuce duzine (5-120)');
+      }
+    }
+    else{
+      edit_book_log.text('Naslov nije odgovarajuce duzine (5-80)');
     }
   });
 }
@@ -371,6 +416,9 @@ function init_form_delete(){
         edit_book_language.append('<option value="' + ebook.languageName + '">' + ebook.languageName + '</option>');
         edit_book_category.append('<option value="' + ebook.categoryName + '">' + ebook.categoryName + '</option>');
         edit_book_dugme.attr('disabled', false);
+      },
+      error: function(xhr, status, error){
+        edit_book_log.text('Greska pri dobavljanju informacija o dokumentu');
       }
     });
 
@@ -381,6 +429,9 @@ function init_form_delete(){
       data: { 'ebookId': bookId },
       success: function(data, status, xhr){
         window.location.href = 'books.html';
+      },
+      error: function(xhr, status, error){
+        edit_book_log.text('Greska pri brisanju dokumenta');
       }
     });
   });
@@ -420,6 +471,9 @@ function load_book(){
         edit_book_category.val(ebook.categoryName).change();
   
         form_disable(false);
+      },
+      error: function(xhr, status, error){
+        edit_book_log.text('Greska pri dobavljanju dokumenta');
       }
     });
   }

@@ -53,7 +53,7 @@ public class EBookController {
 	
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('USER')")
-	public List<EBookDTO> getAllEBooks(@RequestParam(name = "filterCategory", required = false) String filterCategory, @RequestParam(name = "sortDirection", required = false) String sortDirection){
+	public ResponseEntity<List<EBookDTO>> getAllEBooks(@RequestParam(name = "filterCategory", required = false) String filterCategory, @RequestParam(name = "sortDirection", required = false) String sortDirection){
 		
 		boolean activeFilterCategory = false;
 		boolean activeSortDirection = false;
@@ -70,35 +70,35 @@ public class EBookController {
 		
 		if(activeFilterCategory && activeSortDirection) {
 			if(sortDirection.equals("ASC")) {
-				return EBookDTO.parseList(ebookService.findByCategoryNameOrderByAsc(filterCategory));
+				return new ResponseEntity<>(EBookDTO.parseList(ebookService.findByCategoryNameOrderByAsc(filterCategory)), HttpStatus.OK);
 			}
 			else {
-				return EBookDTO.parseList(ebookService.findByCategoryNameOrderByDesc(filterCategory));
+				return new ResponseEntity<>(EBookDTO.parseList(ebookService.findByCategoryNameOrderByDesc(filterCategory)), HttpStatus.OK);
 			}
 		}
 		else if(activeFilterCategory) {
-			return EBookDTO.parseList(ebookService.findByCategoryName(filterCategory));
+			return new ResponseEntity<>(EBookDTO.parseList(ebookService.findByCategoryName(filterCategory)), HttpStatus.OK);
 		}
 		else if(activeSortDirection) {
 			if(sortDirection.equals("ASC")) {
-				return EBookDTO.parseList(ebookService.findAllOrderByTitleAsc());
+				return new ResponseEntity<>(EBookDTO.parseList(ebookService.findAllOrderByTitleAsc()), HttpStatus.OK);
 			}
 			else {
-				return EBookDTO.parseList(ebookService.findAllOrderByTitleDesc());
+				return new ResponseEntity<>(EBookDTO.parseList(ebookService.findAllOrderByTitleDesc()), HttpStatus.OK);
 			}
 		}
 		
-		return EBookDTO.parseList(ebookService.findAll());
+		return new ResponseEntity<>(EBookDTO.parseList(ebookService.findAll()), HttpStatus.OK);
 	}
 	
 	@GetMapping("/getById")
 	@PreAuthorize("hasRole('USER')")
-	public EBookDTO getById(@RequestParam("ebookId") Integer ebookId) {
+	public ResponseEntity<EBookDTO> getById(@RequestParam("ebookId") Integer ebookId) {
 		EBook ebook = ebookService.findById(ebookId);
 		if(ebook == null) {
-			return null;
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		return new EBookDTO(ebook);
+		return new ResponseEntity<>(new EBookDTO(ebook), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

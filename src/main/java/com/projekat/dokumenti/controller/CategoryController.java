@@ -31,8 +31,8 @@ public class CategoryController {
 	private CategoryService categoryService;
 	
 	@GetMapping("/all")
-	public List<CategoryDTO> getAllCategories(){
-		return CategoryDTO.parseList(categoryService.findAll());
+	public ResponseEntity<List<CategoryDTO>> getAllCategories(){
+		return new ResponseEntity<>(CategoryDTO.parseList(categoryService.findAll()), HttpStatus.OK);
 	}
 	
 	@GetMapping("/getById")
