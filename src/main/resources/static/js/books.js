@@ -2,9 +2,28 @@
 var admin = false;
 var table;
 
+var filterCategory;
+var sortDirection;
+
+var link_sort_asc;
+var link_sort_desc;
+
 $(document).ready(function (e) {
+
+  init_search_params();
   
   table = $('#id_table_books');
+
+  link_sort_asc = $('#id_sort_asc');
+  link_sort_desc = $('#id_sort_desc');
+
+  link_sort_asc.on('click', function(event){
+    window.location.href = 'books.html?filterCategory=' + (filterCategory?filterCategory:'') + '&sortDirection=ASC';
+  });
+
+  link_sort_desc.on('click', function(event){
+    window.location.href = 'books.html?filterCategory=' + (filterCategory?filterCategory:'') + '&sortDirection=DESC';
+  })
 
   customAjax({
     method: 'GET',
@@ -22,10 +41,18 @@ $(document).ready(function (e) {
   });
 });
 
+function init_search_params() {
+  var searchParams;
+  searchParams = new URLSearchParams(window.location.search);
+  filterCategory = searchParams.get('filterCategory');
+  sortDirection = searchParams.get('sortDirection');
+}
+
 function render_table(){
   customAjax({
     method: 'GET',
     url: 'ebook/all',
+    data: { 'filterCategory': filterCategory, 'sortDirection': sortDirection }, 
     success: function (books, status, xhr) {
       var html = '';
       html += '<tr id="id_tr_header">' + 

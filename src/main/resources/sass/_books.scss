@@ -1,11 +1,26 @@
 @mixin books {
   #id_body_books{
-    
+
     #id_div_books{
+      width: fit-content;
       margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+
+      > p {
+        display: inline-block;
+        margin-top: 0px;
+        margin-bottom: 7px;
+
+        a{
+          font-weight: 500;
+          font-size: 1.2em;
+          text-decoration: none;
+          color: inherit;
+        }
+      }
 
       #id_table_books{
-        margin: auto;
         border-collapse: collapse;
 
         #id_tr_header{

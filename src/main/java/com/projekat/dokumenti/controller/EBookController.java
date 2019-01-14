@@ -49,7 +49,42 @@ public class EBookController {
 	
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('USER')")
-	public List<EBookDTO> getAllEBooks(){
+	public List<EBookDTO> getAllEBooks(@RequestParam(name = "filterCategory", required = false) String filterCategory, @RequestParam(name = "sortDirection", required = false) String sortDirection){
+		
+		boolean activeFilterCategory = false;
+		boolean activeSortDirection = true;
+		
+		if(filterCategory != null && filterCategory.length() > 0) {
+			activeFilterCategory = true;
+		}
+		if(sortDirection != null && (sortDirection.equals("ASC") || sortDirection.equals("DESC"))) {
+			activeSortDirection = true;
+		}
+		
+		
+		// Pozive jpa repository metoda izmeniti da se koristi Pageable
+		
+		if(activeFilterCategory && activeSortDirection) {
+			if(sortDirection.equals("ASC")) {
+				return EBookDTO.parseList(ebookService.findByCategoryNameOrderByAsc(filterCategory));
+			}
+			else {
+				return EBookDTO.parseList(ebookService.findByCategoryNameOrderByDesc(filterCategory));
+			}
+		}
+		else if(activeFilterCategory) {
+			return EBookDTO.parseList(ebookService.findByCategoryName(filterCategory));
+		}
+		else if(activeSortDirection) {
+			if(sortDirection.equals("ASC")) {
+				return EBookDTO.parseList(ebookService.findAllOrderByTitleAsc());
+			}
+			else {
+				return EBookDTO.parseList(ebookService.findAllOrderByTitleDesc());
+			}
+		}
+		
+		
 		return EBookDTO.parseList(ebookService.findAll());
 	}
 	

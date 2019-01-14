@@ -21,6 +21,16 @@ public class EBookService implements EBookServiceInterface {
 	}
 
 	@Override
+	public List<EBook> findAllOrderByTitleDesc() {
+		return ebookRepository.findAllByOrderByTitleDesc();
+	}
+
+	@Override
+	public List<EBook> findAllOrderByTitleAsc() {
+		return ebookRepository.findAllByOrderByTitleAsc();
+	}
+	
+	@Override
 	public EBook findByTitle(String title) {
 		return ebookRepository.findByTitle(title);
 	}
@@ -42,6 +52,21 @@ public class EBookService implements EBookServiceInterface {
 	@Override
 	public List<EBook> findByUserId(Integer userId) {
 		return ebookRepository.findByUser_Id(userId);
+	}
+	
+	@Override
+	public List<EBook> findByCategoryName(String categoryName){
+		return ebookRepository.findByCategory_Name(categoryName);
+	}
+	
+	@Override
+	public List<EBook> findByCategoryNameOrderByDesc(String categoryName) {
+		return ebookRepository.findByCategory_NameOrderByTitleDesc(categoryName);
+	}
+
+	@Override
+	public List<EBook> findByCategoryNameOrderByAsc(String categoryName) {
+		return ebookRepository.findByCategory_NameOrderByTitleAsc(categoryName);
 	}
 
 	@Override

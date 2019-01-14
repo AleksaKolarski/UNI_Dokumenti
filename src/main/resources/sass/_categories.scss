@@ -2,10 +2,12 @@
   #id_body_categories{
     
     #id_div_categories{
+      width: fit-content;
       margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
       
       #id_table_categories{
-        margin: auto;
         border-collapse: collapse;
 
         #id_tr_header{
@@ -20,6 +22,10 @@
             border: 1px solid black;
             padding-left: 7px;
             padding-right: 7px;
+
+            a{
+              color: inherit;
+            }
           }
         }
       }

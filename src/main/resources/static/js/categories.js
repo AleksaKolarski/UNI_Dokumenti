@@ -42,7 +42,11 @@ function render_table(){
       categories.forEach(category => {
         html += '<tr class="class_tr_category">' + 
                   '<th>' + category.id + '</th>' + 
-                  '<th>' + category.name + '</th>';
+                  '<th>' + 
+                    '<a href="books.html?filterCategory=' + category.name + '&sortDirection=ASC">' + 
+                      category.name + 
+                    '</a>' + 
+                  '</th>';
         if(admin){
           html += '<th>' +
                     '<a href="categories-edit.html?changeType=edit&categoryId=' + category.id + '"><button type="button">Edit</button></a>' +

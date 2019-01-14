@@ -177,10 +177,23 @@
 }
 
 #id_body_books #id_div_books {
+  width: fit-content;
   margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#id_body_books #id_div_books > p {
+  display: inline-block;
+  margin-top: 0px;
+  margin-bottom: 7px;
+}
+#id_body_books #id_div_books > p a {
+  font-weight: 500;
+  font-size: 1.2em;
+  text-decoration: none;
+  color: inherit;
 }
 #id_body_books #id_div_books #id_table_books {
-  margin: auto;
   border-collapse: collapse;
 }
 #id_body_books #id_div_books #id_table_books #id_tr_header th {
@@ -255,10 +268,12 @@
 }
 
 #id_body_categories #id_div_categories {
+  width: fit-content;
   margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 #id_body_categories #id_div_categories #id_table_categories {
-  margin: auto;
   border-collapse: collapse;
 }
 #id_body_categories #id_div_categories #id_table_categories #id_tr_header th {
@@ -269,6 +284,9 @@
   border: 1px solid black;
   padding-left: 7px;
   padding-right: 7px;
+}
+#id_body_categories #id_div_categories #id_table_categories .class_tr_category th a {
+  color: inherit;
 }
 
 #id_body_categories_edit {
