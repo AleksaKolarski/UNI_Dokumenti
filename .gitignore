@@ -2,6 +2,7 @@
 !.mvn/wrapper/maven-wrapper.jar
 *.log
 /upload-dir/
+/indexDir/
 .map
 
 ### STS ###

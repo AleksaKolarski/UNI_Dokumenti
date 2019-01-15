@@ -62,7 +62,7 @@ function init_form_create(){
             '<input id="id_button_file_chooser" type="file" name="doc" value="Choose file"/>' + 
             '<div>' + 
               '<input id="id_button_upload" type="button" value="Upload">' +
-              '<img id="id_gif_loading" src="loading.gif" style="visibility: hidden;">' +  
+              '<img id="id_gif_loading" src="img/loading.gif" style="visibility: hidden;">' +  
             '</div>' + 
           '</div>' + 
           '<div class="class_div_input">' + 

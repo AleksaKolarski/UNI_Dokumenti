@@ -10,7 +10,7 @@ import org.apache.lucene.analysis.core.StopFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.util.Version;
 
-import com.projekat.dokumenti.lucene.filters.CyrillicToLatinFilter;
+import com.projekat.dokumenti.lucene.filters.SerbianToEnglishFilter;
 
 public class SerbianAnalyzer extends Analyzer {
 	
@@ -25,11 +25,11 @@ public class SerbianAnalyzer extends Analyzer {
 
 	@Override
 	protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
-		Tokenizer source = new StandardTokenizer(Version.LUCENE_40,reader);
+		Tokenizer source = new StandardTokenizer(Version.LUCENE_40, reader);
 		TokenStream result;
-		result = new CyrillicToLatinFilter(source);
+		result = new SerbianToEnglishFilter(source);
 	    result = new LowerCaseFilter(Version.LUCENE_40, result);
-	    result = new StopFilter(Version.LUCENE_40,result, StopFilter.makeStopSet(Version.LUCENE_40, STOP_WORDS));
+	    result = new StopFilter(Version.LUCENE_40, result, StopFilter.makeStopSet(Version.LUCENE_40, STOP_WORDS));
 		return new TokenStreamComponents(source, result);
 	}
 

@@ -7,6 +7,15 @@
 @import "books_edit";
 @import "categories";
 @import "categories_edit";
+@import "search";
+
+
+
+input{
+  box-sizing: border-box;
+}
+
+
 
 @include header;
 @include login;
@@ -17,3 +26,4 @@
 @include books_edit;
 @include categories;
 @include categories_edit;
+@include search;

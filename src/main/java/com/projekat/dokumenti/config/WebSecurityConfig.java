@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 	.antMatchers("/auth/login").permitAll()
                 	.antMatchers("/user/register").permitAll()
                 	.antMatchers("/file/download/*").permitAll()
+                	.antMatchers("/search/**").permitAll()
                 	//svaki zahtev mora biti autorizovan
                 	.anyRequest().authenticated().and()
                 //presretni svaki zahtev filterom
@@ -85,8 +86,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 HttpMethod.GET,
                 "/*.html",
-                "/*.gif", 
                 "/favicon.ico",
+                "/img/**",
                 "/lib/**",
                 "/js/**",
                 "/css/**"

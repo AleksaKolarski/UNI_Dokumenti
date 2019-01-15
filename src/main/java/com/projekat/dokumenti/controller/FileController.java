@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.entity.EBook;
 import com.projekat.dokumenti.entity.User;
+import com.projekat.dokumenti.lucene.index.Indexer;
 import com.projekat.dokumenti.parser.CustomDocumentParser;
 import com.projekat.dokumenti.parser.CustomParsedDocument;
 import com.projekat.dokumenti.security.Util;
@@ -70,7 +71,11 @@ public class FileController {
 		
 		customParsedDocument.setDocumentName(documentFilename);
 		
-		System.out.println(customParsedDocument);
+		Boolean indexSuccessful;
+		indexSuccessful = Indexer.getInstance().index(storedFile);
+		if(indexSuccessful == false) {
+			return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+		}
 		
 		return new ResponseEntity<>(customParsedDocument, HttpStatus.OK);
 	}

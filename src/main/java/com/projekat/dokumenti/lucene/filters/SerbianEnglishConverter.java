@@ -1,12 +1,13 @@
 package com.projekat.dokumenti.lucene.filters;
 
-public class CyrillicLatinConverter {
-	
-	public static String cir2lat(String text) {
+public class SerbianEnglishConverter {
+	public static String srb2eng(String text) {
 		String ret = "";
 		for (int i = 0; i < text.length(); i++) {
 			char c=text.charAt(i);
 			switch(c){
+			
+				// cirilica u engleski
 				case '\u0430': ret+="a"; break;
 				case '\u0431': ret+="b"; break;
 				case '\u0446': ret+="c"; break;
@@ -51,22 +52,35 @@ public class CyrillicLatinConverter {
 				case '\u0423': ret+="U"; break;
 				case '\u0412': ret+="V"; break;
 				case '\u0417': ret+="Z"; break;
-				case '\u045B': ret+="\u0107"; break;
-				case '\u0447': ret+="\u010D"; break;
-				case '\u0452': ret+="\u0111"; break;
-				case '\u0448': ret+="\u0161"; break;
-				case '\u0436': ret+="\u017E"; break;
-				case '\u040B': ret+="\u0106"; break;
-				case '\u0427': ret+="\u010C"; break;
-				case '\u0402': ret+="\u0110"; break;
-				case '\u0428': ret+="\u0160"; break;
-				case '\u0416': ret+="\u017D"; break;
-				case '\u045F': ret+="d\u017E";break;
+				case '\u045B': ret+="c"; break;
+				case '\u0447': ret+="c"; break;
+				case '\u0452': ret+="dj"; break;
+				case '\u0448': ret+="s"; break;
+				case '\u0436': ret+="z"; break;
+				case '\u040B': ret+="C"; break;
+				case '\u0427': ret+="C"; break;
+				case '\u0402': ret+="Dj"; break;
+				case '\u0428': ret+="S"; break;
+				case '\u0416': ret+="Z"; break;
+				case '\u045F': ret+="dz";break;
 				case '\u0459': ret+="lj";break;
 				case '\u045A': ret+="nj";break;
-				case '\u040F': ret+="D\u017E";break;
+				case '\u040F': ret+="Dz";break;
 				case '\u0409': ret+="Lj";break;
 				case '\u040A': ret+="Nj";break;
+				
+				// latinica u engleski
+				case '\u010C': ret+="C";break;
+				case '\u010D': ret+="c";break;
+				case '\u0106': ret+="C";break;
+				case '\u0107': ret+="c";break;
+				case '\u0110': ret+="Dj";break;
+				case '\u0111': ret+="dj";break;
+				case '\u0160': ret+="S";break;
+				case '\u0161': ret+="s";break;
+				case '\u017D': ret+="Z";break;
+				case '\u017E': ret+="z";break;
+				
 				default : ret+=c;
 			}
 		}

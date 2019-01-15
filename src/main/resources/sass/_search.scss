@@ -1,0 +1,56 @@
+@mixin search {
+  #id_body_search{
+
+    #id_div_search{
+      width: fit-content;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+
+
+      #id_form_search{
+        text-align: center;
+
+        #id_input_search{
+          width: 400px;
+        }
+        #id_button_search{
+          width: 60px;
+        }
+      }
+
+      // sort
+      > p {
+        display: inline-block;
+        margin-top: 0px;
+        margin-bottom: 7px;
+
+        a{
+          font-weight: 500;
+          font-size: 1.2em;
+          text-decoration: none;
+          color: inherit;
+        }
+      }
+
+      #id_table_search{
+        border-collapse: collapse;
+
+        #id_tr_header{
+          th{
+            padding-left: 7px;
+            padding-right: 7px;
+          }
+        }
+  
+        .class_tr_book{
+          th{
+            border: 1px solid black;
+            padding-left: 7px;
+            padding-right: 7px;
+          }
+        }
+      }
+    }
+  }
+}

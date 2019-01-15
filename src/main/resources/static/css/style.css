@@ -1,3 +1,7 @@
+input {
+  box-sizing: border-box;
+}
+
 #id_header h1 {
   text-align: center;
 }
@@ -141,7 +145,6 @@
 }
 #id_body_users_edit form #id_div_input_fields div input {
   width: 100%;
-  box-sizing: border-box;
 }
 #id_body_users_edit form #id_div_input_fields div #id_checkbox_role_admin {
   width: auto;
@@ -331,6 +334,45 @@
 #id_body_categories_edit > p {
   text-align: center;
   font-size: 0.8em;
+}
+
+#id_body_search #id_div_search {
+  width: fit-content;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#id_body_search #id_div_search #id_form_search {
+  text-align: center;
+}
+#id_body_search #id_div_search #id_form_search #id_input_search {
+  width: 400px;
+}
+#id_body_search #id_div_search #id_form_search #id_button_search {
+  width: 60px;
+}
+#id_body_search #id_div_search > p {
+  display: inline-block;
+  margin-top: 0px;
+  margin-bottom: 7px;
+}
+#id_body_search #id_div_search > p a {
+  font-weight: 500;
+  font-size: 1.2em;
+  text-decoration: none;
+  color: inherit;
+}
+#id_body_search #id_div_search #id_table_search {
+  border-collapse: collapse;
+}
+#id_body_search #id_div_search #id_table_search #id_tr_header th {
+  padding-left: 7px;
+  padding-right: 7px;
+}
+#id_body_search #id_div_search #id_table_search .class_tr_book th {
+  border: 1px solid black;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 /*# sourceMappingURL=style.css.map */

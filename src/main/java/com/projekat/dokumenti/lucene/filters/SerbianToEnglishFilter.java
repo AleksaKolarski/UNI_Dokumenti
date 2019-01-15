@@ -6,11 +6,11 @@ import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
-public class CyrillicToLatinFilter extends TokenFilter {
+public class SerbianToEnglishFilter extends TokenFilter {
 	
 	private CharTermAttribute termAttribute;
-	
-	public CyrillicToLatinFilter(TokenStream input) {
+
+	public SerbianToEnglishFilter(TokenStream input) {
 		super(input);
 		termAttribute = (CharTermAttribute) input.addAttribute(CharTermAttribute.class);
 	}
@@ -20,7 +20,8 @@ public class CyrillicToLatinFilter extends TokenFilter {
 		if(input.incrementToken()) {
 			String text = termAttribute.toString();
 			termAttribute.setEmpty();
-			termAttribute.append(CyrillicLatinConverter.cir2lat(text));
+			termAttribute.append(SerbianEnglishConverter.srb2eng(text));
+			return true;
 		}
 		return false;
 	}

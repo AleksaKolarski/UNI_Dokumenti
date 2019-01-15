@@ -59,6 +59,10 @@ $(document).ready(function (e) {
         window.location.href = '/books.html';
       });
 
+      search.on('click', function(event){
+        window.location.href = 'search.html';
+      })
+
       logout.on('click', function (event) {
         localStorage.removeItem('jwt');
         window.location.href = '/login.html';
