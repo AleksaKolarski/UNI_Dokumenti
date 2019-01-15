@@ -19,7 +19,6 @@ public class DocumentHandler {
 			Document doc = new Document();
 			if(customParsedDoc.getText() != null) {
 				doc.add(new TextField("text", customParsedDoc.getText(), Store.NO));
-				System.out.println(customParsedDoc.getText());
 			}
 			if(customParsedDoc.getTitle() != null) {
 				doc.add(new TextField("title", customParsedDoc.getTitle(), Store.YES));
