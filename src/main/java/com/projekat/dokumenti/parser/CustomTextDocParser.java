@@ -5,21 +5,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-public class CustomTextDocParser implements CustomDocumentParserInterface {
+public class CustomTextDocParser {
 
-	@Override
-	public CustomParsedDocument parseDocument(File file) {
-		CustomParsedDocument parsedDoc = new CustomParsedDocument();
+	public String parseDocumentText(File file) {
 		
 		try {
 			FileInputStream fis = new FileInputStream(file);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
 			
 			// Title
-			parsedDoc.setTitle("" + reader.readLine());
+			reader.readLine();
 			
 			// Keywords
-			parsedDoc.setKeywords("" + reader.readLine());
+			reader.readLine();
 			
 			// Text
 			String fullText = "";
@@ -30,12 +28,9 @@ public class CustomTextDocParser implements CustomDocumentParserInterface {
 				}
 				fullText += " " + line;
 			}
-			parsedDoc.setText(fullText);
-					
-			// Filename
-			parsedDoc.setFilename(file.getName());
 			
-			return parsedDoc;
+			reader.close();
+			return fullText;
 		}
 		catch (Exception e) {
 			System.out.println("Greska pri parsiranju pdf dokumenta");
@@ -44,7 +39,6 @@ public class CustomTextDocParser implements CustomDocumentParserInterface {
 		return null;
 	}
 
-	@Override
 	public CustomParsedDocument parseMetadata(File file) {
 		CustomParsedDocument parsedDoc = new CustomParsedDocument();
 		
@@ -60,6 +54,8 @@ public class CustomTextDocParser implements CustomDocumentParserInterface {
 					
 			// Filename
 			parsedDoc.setFilename(file.getName());
+			
+			reader.close();
 			
 			return parsedDoc;
 		}

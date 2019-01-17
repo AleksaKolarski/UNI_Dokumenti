@@ -9,44 +9,18 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.util.PDFTextStripper;
 
-public class CustomPDFParser implements CustomDocumentParserInterface {
+public class CustomPDFParser {
 
-	@Override
-	public CustomParsedDocument parseDocument(File file) {
-		CustomParsedDocument parsedDoc = new CustomParsedDocument();
+	public String parseDocumentText(File file) {
 		
 		try {
 			PDFParser parser = new PDFParser(new FileInputStream(file));
 			parser.parse();
-			
-			PDDocument pdf = parser.getPDDocument();
-			PDDocumentInformation info = pdf.getDocumentInformation();
-			
+						
 			PDFTextStripper textStripper = new PDFTextStripper("utf-8");
 			
-			
 			// Text
-			parsedDoc.setText("" + textStripper.getText(parser.getPDDocument()));
-			
-			// Filename
-			parsedDoc.setFilename(file.getName());
-			
-			// Title
-			parsedDoc.setTitle("" + info.getTitle());
-			
-			// Author
-			parsedDoc.setAuthor("" + info.getAuthor());
-			
-			// Keywords
-			parsedDoc.setKeywords("" + info.getKeywords());
-			
-			// Publication year
-			parsedDoc.setPublicationYear(info.getCreationDate().getTime().getYear());
-			
-			
-			pdf.close();
-			
-			return parsedDoc;
+			return textStripper.getText(parser.getPDDocument());
 		}
 		catch (Exception e) {
 			System.out.println("Greska pri parsiranju pdf dokumenta");
@@ -55,7 +29,6 @@ public class CustomPDFParser implements CustomDocumentParserInterface {
 		return null;
 	}
 
-	@Override
 	public CustomParsedDocument parseMetadata(File file) {
 		CustomParsedDocument parsedDoc = new CustomParsedDocument();
 		

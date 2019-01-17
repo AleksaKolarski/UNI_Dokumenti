@@ -19,35 +19,23 @@
         }
       }
 
-      // sort
-      > p {
-        display: inline-block;
-        margin-top: 0px;
-        margin-bottom: 7px;
+      #id_div_search_results{
 
-        a{
-          font-weight: 500;
-          font-size: 1.2em;
-          text-decoration: none;
-          color: inherit;
-        }
-      }
+        margin-top: 15px;
 
-      #id_table_search{
-        border-collapse: collapse;
+        .class_div_search_result{
+          width: 570px;
+          margin-bottom: 6px;
+          border: 1px solid black;
+          padding: 5px;
 
-        #id_tr_header{
-          th{
-            padding-left: 7px;
-            padding-right: 7px;
+          .class_div_search_result_title{
+            margin: 0px 0px 5px 0px;
+            font-weight: 500;
           }
-        }
-  
-        .class_tr_book{
-          th{
-            border: 1px solid black;
-            padding-left: 7px;
-            padding-right: 7px;
+
+          .class_div_search_result_highlight{
+            margin: 0px;
           }
         }
       }

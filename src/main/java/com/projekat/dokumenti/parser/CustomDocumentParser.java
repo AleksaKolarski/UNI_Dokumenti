@@ -4,18 +4,18 @@ import java.io.File;
 
 public class CustomDocumentParser {
 	
-	public static CustomParsedDocument parseDocument(File file) {
+	public static String parseDocumentText(File file) {
 		
 		String extension = file.getName().substring(file.getName().lastIndexOf(".") + 1);
 		switch (extension) {
 		case "txt":
-			return new CustomTextDocParser().parseDocument(file);
+			return new CustomTextDocParser().parseDocumentText(file);
 		case "pdf":
-			return new CustomPDFParser().parseDocument(file);
+			return new CustomPDFParser().parseDocumentText(file);
 		case "doc":
-			return new CustomWordParser().parseDocument(file);
+			return new CustomWordParser().parseDocumentText(file);
 		case "docx":
-			return new CustomWord2007Parser().parseDocument(file);
+			return new CustomWord2007Parser().parseDocumentText(file);
 		case "xml":
 			System.out.println("XML HANDLER NOT IMPLEMENTED");
 		}

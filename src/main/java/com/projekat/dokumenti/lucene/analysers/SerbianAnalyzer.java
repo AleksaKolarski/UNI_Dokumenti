@@ -23,6 +23,7 @@ public class SerbianAnalyzer extends Analyzer {
     {
     }
 
+	
 	@Override
 	protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
 		Tokenizer source = new StandardTokenizer(Version.LUCENE_40, reader);
@@ -32,5 +33,4 @@ public class SerbianAnalyzer extends Analyzer {
 	    result = new StopFilter(Version.LUCENE_40, result, StopFilter.makeStopSet(Version.LUCENE_40, STOP_WORDS));
 		return new TokenStreamComponents(source, result);
 	}
-
 }

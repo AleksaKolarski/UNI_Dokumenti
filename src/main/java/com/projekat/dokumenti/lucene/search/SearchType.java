@@ -1,8 +1,8 @@
 package com.projekat.dokumenti.lucene.search;
 
 public enum SearchType {
-	Normal,
+	Term,
 	Boolean,
-	Phraze,
+	Phrase,
 	Fuzzy
 }

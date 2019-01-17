@@ -351,28 +351,21 @@ input {
 #id_body_search #id_div_search #id_form_search #id_button_search {
   width: 60px;
 }
-#id_body_search #id_div_search > p {
-  display: inline-block;
-  margin-top: 0px;
-  margin-bottom: 7px;
+#id_body_search #id_div_search #id_div_search_results {
+  margin-top: 15px;
 }
-#id_body_search #id_div_search > p a {
-  font-weight: 500;
-  font-size: 1.2em;
-  text-decoration: none;
-  color: inherit;
-}
-#id_body_search #id_div_search #id_table_search {
-  border-collapse: collapse;
-}
-#id_body_search #id_div_search #id_table_search #id_tr_header th {
-  padding-left: 7px;
-  padding-right: 7px;
-}
-#id_body_search #id_div_search #id_table_search .class_tr_book th {
+#id_body_search #id_div_search #id_div_search_results .class_div_search_result {
+  width: 570px;
+  margin-bottom: 6px;
   border: 1px solid black;
-  padding-left: 7px;
-  padding-right: 7px;
+  padding: 5px;
+}
+#id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_title {
+  margin: 0px 0px 5px 0px;
+  font-weight: 500;
+}
+#id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_highlight {
+  margin: 0px;
 }
 
 /*# sourceMappingURL=style.css.map */

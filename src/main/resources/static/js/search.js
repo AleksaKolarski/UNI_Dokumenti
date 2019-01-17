@@ -2,8 +2,11 @@
 var searchType;
 var id_form_search;
 
-// normal search
-var normalSearchTarget;
+var searchTarget1;
+var searchParam1;
+var searchTarget2;
+var searchParam2;
+var booleanOperation;
 
 
 $(document).ready(function (e) {
@@ -14,56 +17,91 @@ $(document).ready(function (e) {
   
   init_search_form();
 
+  fill_search_results();
 });
 
 function init_search_params() {
   var searchParams;
   searchParams = new URLSearchParams(window.location.search);
   searchType = searchParams.get('searchType');
+  if(searchType == null){
+    searchType = 'Phrase';
+  }
 
   // normal search
-  normalSearchTarget = searchParams.get('normalSearchTarget');
+  searchTarget1 = searchParams.get('searchTarget1');
+  if(searchTarget1 == null){
+    searchTarget1 = 'title';
+  }
+  searchParam1 = searchParams.get('searchParam1');
+  if(searchParam1 == null){
+    searchParam1 = '';
+  }
 
-}
-
-
-function init_search_form(){
-  switch (searchType) {
-    case 'Normal':
-      init_search_form_normal();
-      break;
-    case 'BooleanQuery':
-      init_search_form_boolean();
-      break;
-    case 'PhrazeQuery':
-      init_search_form_phraze();
-      break;
-    case 'FuzzyQuery':
-      init_search_form_fuzzy();
-      break;
-    default:
-      init_search_form_normal();
-      break;
+  searchTarget2 = searchParams.get('searchTarget2');
+  if(searchTarget2 == null){
+    searchTarget2 = 'title';
+  }
+  searchParam2 = searchParams.get('searchParam2');
+  if(searchParam2 == null){
+    searchParam2 = '';
+  }
+  booleanOperation = searchParams.get('booleanOperation');
+  if(booleanOperation == null){
+    booleanOperation = '';
   }
 }
 
-function init_search_form_normal(){
+function init_search_form(){
   var html =  '<input id="id_input_search" type="text">' +
-              '<select>' + 
-                '<option id="" value="Normal">Normal</option>' + 
-                '<option id="" value="BooleanQuery">BooleanQuery</option>' + 
-                '<option id="" value="PhrazeQuery">PhrazeQuery</option>' + 
-                '<option id="" value="FuzzyQuery">FuzzyQuery</option>' + 
+              '<select id="id_select_search_type">' + 
+                '<option value="Term">TermQuery</option>' + 
+                '<option value="Boolean">BooleanQuery</option>' + 
+                '<option value="Phrase">PhraseQuery</option>' + 
+                '<option value="Fuzzy">FuzzyQuery</option>' + 
               '</select>' + 
-              '<input id="id_button_search" type="button" value="Search"></input>' + 
+              '<button id="id_button_search" type="button">Search</button>' + 
               '<div id="id_div_radio">' + 
-                '<input id="id_checkbox_search_title" name="radio_normal" type="radio" value="Title" ' + (normalSearchTarget=='Title'?'checked':'') + '> Title' + 
-                '<input id="id_checkbox_search_author" name="radio_normal" type="radio" value="Author" ' + (normalSearchTarget=='Author'?'checked':'') + '> Author' + 
-                '<input id="id_checkbox_search_keywords" name="radio_normal" type="radio" value="Keywords" ' + (normalSearchTarget=='Keywords'?'checked':'') + '> Keywords' + 
-                '<input id="id_checkbox_search_content" name="radio_normal" type="radio" value="Content" ' + (normalSearchTarget=='Content'?'checked':'') + '> Content' + 
-                '<input id="id_checkbox_search_language" name="radio_normal" type="radio" value="Language" ' + (normalSearchTarget=='Language'?'checked':'') + '> Language' + 
+                '<input id="id_checkbox_search_title" name="radio_normal" type="radio" value="title" ' + (searchTarget1=='title'?'checked':'') + '> Title' + 
+                '<input id="id_checkbox_search_author" name="radio_normal" type="radio" value="author" ' + (searchTarget1=='author'?'checked':'') + '> Author' + 
+                '<input id="id_checkbox_search_keywords" name="radio_normal" type="radio" value="keywords" ' + (searchTarget1=='keywords'?'checked':'') + '> Keywords' + 
+                '<input id="id_checkbox_search_content" name="radio_normal" type="radio" value="text" ' + (searchTarget1=='text'?'checked':'') + '> Content' + 
+                '<input id="id_checkbox_search_language" name="radio_normal" type="radio" value="language" ' + (searchTarget1=='language'?'checked':'') + '> Language' + 
               '</div>';
   id_form_search.html(html);
 
-  console.log($('input[name=radio_normal]:checked', id_form_search).val());
+  $('#id_select_search_type').val(searchType);
+  $('#id_input_search').val(searchParam1);
+
+  $('#id_button_search').on('click', function(event){
+    search();
+  });
+}
+
+function search(){  
+  searchType = $('#id_select_search_type').val();
+  searchParam1 = $('#id_input_search').val();
+  searchTarget1 = $('input[name=radio_normal]:checked', id_form_search).val();
+  console.log(searchType);
+  window.location.href = 'search.html?searchType='+ searchType +'&searchTarget1='+ searchTarget1 +'&searchParam1=' + searchParam1 + '&searchTarget2=' + searchTarget2 + '&searchParam2='+ searchParam2 + '&booleanOperation=' + booleanOperation;
+}
+
+function fill_search_results(){
+  customAjax({
+    method: 'GET',
+    url: 'search/search',
+    data: { 'searchType': searchType, 'searchTarget1': searchTarget1, 'searchParam1': searchParam1, 'searchTarget2': searchTarget2, 'searchParam2': searchParam2, 'booleanOperation': booleanOperation },
+    success: function(results, status, xhr){
+      var div_search_results = $('#id_div_search_results');
+      var html;
+      results.forEach(result => {
+        html =  '<div class="class_div_search_result">' +
+                  '<p class="class_div_search_result_title">'+ result.filename +'</p>' +
+                  '<p class="class_div_search_result_highlight">...'+ result.highlight +'...</p>' +
+                '</div>';
+
+        div_search_results.append(html);
+      });
+    }
+  });
 }

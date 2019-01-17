@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.lucene.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +25,8 @@ import com.projekat.dokumenti.entity.Category;
 import com.projekat.dokumenti.entity.EBook;
 import com.projekat.dokumenti.entity.Language;
 import com.projekat.dokumenti.entity.User;
+import com.projekat.dokumenti.lucene.index.Indexer;
+import com.projekat.dokumenti.lucene.search.ResultRetriever;
 import com.projekat.dokumenti.security.Util;
 import com.projekat.dokumenti.service.CategoryService;
 import com.projekat.dokumenti.service.EBookService;
@@ -65,9 +68,7 @@ public class EBookController {
 			activeSortDirection = true;
 		}
 		
-		
 		// Pozive jpa repository metoda izmeniti da se koristi Pageable
-		
 		if(activeFilterCategory && activeSortDirection) {
 			if(sortDirection.equals("ASC")) {
 				return new ResponseEntity<>(EBookDTO.parseList(ebookService.findByCategoryNameOrderByAsc(filterCategory)), HttpStatus.OK);
@@ -105,19 +106,20 @@ public class EBookController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EBookDTO> createEBook(@RequestBody(required = true) EBookDTO ebookDTO){
 		
-		Path path = Paths.get("upload-dir", ebookDTO.getFilename());
+		String filename = ebookDTO.getFilename().replaceAll(" ", "_");
+		
+		Path path = Paths.get("upload-dir", filename);
 		if(!path.toFile().isFile()) {
-			System.out.println("nije pronadjen fajl sa nazivom " + ebookDTO.getFilename());
+			System.out.println("nije pronadjen fajl sa nazivom " + filename);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		System.out.println(ebookDTO);
 		EBook ebook = new EBook();
 		ebook.setTitle(ebookDTO.getTitle());
 		ebook.setAuthor(ebookDTO.getAuthor());
 		ebook.setKeywords(ebookDTO.getKeywords());
 		ebook.setPublicationYear(ebookDTO.getPublicationYear());
-		ebook.setFilename(ebookDTO.getFilename());
+		ebook.setFilename(filename);
 		ebook.setDocumentName(ebookDTO.getDocumentName());
 		//ebook.setMime(); // odluci sta s MIME
 		
@@ -145,6 +147,17 @@ public class EBookController {
 		if(ebook == null) {
 			logger.info("Greska pri cuvanju ebook-a, verovatno vec postoji ebook sa istim nazivom");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Boolean indexSuccessful;
+		indexSuccessful = Indexer.getInstance().index(ebook);
+		if(indexSuccessful == false) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		List<Document> documents = ResultRetriever.getAllIndexedDocuments();
+		for(Document document: documents) {
+			System.out.println(document);
 		}
 		
 		return new ResponseEntity<>(new EBookDTO(ebook), HttpStatus.OK);
@@ -187,7 +200,7 @@ public class EBookController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(keywords == null || keywords.length() < 5 || keywords.length() > 120) {
+		if(keywords == null || keywords.length() > 120) {
 			logger.info("keywords not good");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -224,6 +237,15 @@ public class EBookController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		if(!Indexer.getInstance().update(ebook)) {
+			System.out.println("COULD NOT UPDATE");
+		}
+		
+		List<Document> documents = ResultRetriever.getAllIndexedDocuments();
+		for(Document document: documents) {
+			System.out.println(document);
+		}
+		
 		return new ResponseEntity<>(new EBookDTO(ebook), HttpStatus.OK);
 	}
 	
@@ -242,6 +264,8 @@ public class EBookController {
 		}
 		
 		storageService.delete(ebook.getFilename());
+		
+		Indexer.getInstance().delete(ebook);
 		
 		ebookService.remove(ebook);
 		

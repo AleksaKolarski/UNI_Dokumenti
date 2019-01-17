@@ -31,7 +31,7 @@ public class FileSystemStorageService implements StorageService {
             return null;
         }
         try {   
-            Path path = this.rootLocation.resolve(System.currentTimeMillis() + "-" + file.getOriginalFilename());
+            Path path = this.rootLocation.resolve(System.currentTimeMillis() + "-" + file.getOriginalFilename().replaceAll(" ", "_"));
             Files.copy(file.getInputStream(), path);
             return path.toFile();
         } catch (IOException e) {

@@ -71,12 +71,6 @@ public class FileController {
 		
 		customParsedDocument.setDocumentName(documentFilename);
 		
-		Boolean indexSuccessful;
-		indexSuccessful = Indexer.getInstance().index(storedFile);
-		if(indexSuccessful == false) {
-			return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-		}
-		
 		return new ResponseEntity<>(customParsedDocument, HttpStatus.OK);
 	}
 	
