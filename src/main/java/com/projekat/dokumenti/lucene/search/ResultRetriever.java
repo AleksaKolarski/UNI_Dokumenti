@@ -19,14 +19,31 @@ import org.apache.lucene.search.highlight.Highlighter;
 import org.apache.lucene.search.highlight.QueryScorer;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
+import org.springframework.stereotype.Component;
 
 import com.projekat.dokumenti.lucene.analysers.SerbianAnalyzer;
 import com.projekat.dokumenti.parser.CustomDocumentParser;
 
+@Component
 public class ResultRetriever {
 	
 	//private static File path = new File(ResourceBundle.getBundle("luceneindex").getString("indexDir"));
 	private static Path path = Paths.get("indexdir");
+	private static Directory indexDir;
+	private static DirectoryReader reader;
+	private static IndexSearcher is;
+	
+	static {
+		try {
+			indexDir = new SimpleFSDirectory(path.toFile());
+			reader = DirectoryReader.open(indexDir);
+			is = new IndexSearcher(reader);
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError("Could not initialize ResultRetriever");
+		}
+	}
+	
 	
 	public static List<ResultData> getResults(Query query){
 		if(query == null) {
@@ -35,11 +52,7 @@ public class ResultRetriever {
 		List<ResultData> results = new ArrayList<ResultData>();
 		
 		try {
-			Directory indexDir = new SimpleFSDirectory(path.toFile());
-			DirectoryReader reader = DirectoryReader.open(indexDir);
-			IndexSearcher is = new IndexSearcher(reader);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(10, true);
-		
 			is.search(query, collector);
 			
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
@@ -51,20 +64,21 @@ public class ResultRetriever {
 			
 			for(ScoreDoc sd: hits) {
 				doc = is.doc(sd.doc);
-				System.out.println(doc.toString());
 				String filename = doc.get("filename");
 								
-				String highlight = "";
-				
 				hl = new Highlighter(new QueryScorer(query, reader, "text"));
 				
-				highlight += hl.getBestFragment(sa, "text", "" + getDocumentText(filename));
+				String docText = getDocumentText(filename);
+				String highlight = hl.getBestFragment(sa, "text", docText);
+				
+				if(highlight == null) {
+					highlight = docText.substring(0, 120);
+				}
 				
 				rd = new ResultData(filename, highlight);
 				results.add(rd);
 			}
 			
-			reader.close();
 		} catch (Exception e) {
 		}
 		
@@ -73,9 +87,6 @@ public class ResultRetriever {
 	
 	public static Document getDocumentByFilename(String filename){
 		try {
-			Directory indexDir = new SimpleFSDirectory(path.toFile());
-			DirectoryReader reader = DirectoryReader.open(indexDir);
-			IndexSearcher is = new IndexSearcher(reader);
 			Query query = new TermQuery(new Term("filename", filename));
 			TopScoreDocCollector collector = TopScoreDocCollector.create(10, true);
 			is.search(query, collector);
@@ -95,9 +106,6 @@ public class ResultRetriever {
 	public static List<Document> getAllIndexedDocuments(){
 		List<Document> documents = new ArrayList<Document>();
 		try {
-			Directory indexDir = new SimpleFSDirectory(path.toFile());
-			DirectoryReader reader = DirectoryReader.open(indexDir);
-			IndexSearcher is = new IndexSearcher(reader);
 			Query query = new MatchAllDocsQuery();
 			TopScoreDocCollector collector = TopScoreDocCollector.create(10, true);
 			is.search(query, collector);

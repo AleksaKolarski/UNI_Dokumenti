@@ -361,8 +361,37 @@ input {
   padding: 5px;
 }
 #id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_title {
+  margin: 0px 0px 3px 0px;
+  font-weight: 600;
+}
+#id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_author {
+  display: inline-block;
   margin: 0px 0px 5px 0px;
-  font-weight: 500;
+  font-size: 0.8em;
+}
+#id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_publication_year {
+  display: inline-block;
+  margin: 0px 0px 5px 10px;
+  font-size: 0.8em;
+}
+#id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_publication_year {
+  display: inline-block;
+  margin: 0px 0px 5px 10px;
+  font-size: 0.8em;
+}
+#id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_language_name {
+  display: inline-block;
+  margin: 0px 0px 5px 10px;
+  font-size: 0.8em;
+}
+#id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_category_name {
+  display: inline-block;
+  margin: 0px 0px 5px 10px;
+  font-size: 0.8em;
+}
+#id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_document_name {
+  margin: 0px 0px 5px 0px;
+  display: inline;
 }
 #id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_highlight {
   margin: 0px;

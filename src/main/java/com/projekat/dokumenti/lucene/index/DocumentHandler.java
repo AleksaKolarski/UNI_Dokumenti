@@ -35,6 +35,9 @@ public class DocumentHandler {
 		if(ebook.getPublicationYear() != null) {
 			doc.add(new IntField("publicationYear", ebook.getPublicationYear(), Store.YES));
 		}
+		if(ebook.getPublicationYear() != null) {
+			doc.add(new TextField("language", ebook.getLanguage().getName(), Store.YES));
+		}
 		if(ebook.getFilename() != null) {
 			doc.add(new StringField("filename", ebook.getFilename(), Store.YES));
 		}

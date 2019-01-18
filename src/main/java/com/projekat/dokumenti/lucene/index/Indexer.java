@@ -108,6 +108,7 @@ public class Indexer {
 			fields.add(new TextField("keyword", keyword, Store.YES));
 		}
 		fields.add(new IntField("publicationYear", ebook.getPublicationYear(), Store.YES));
+		fields.add(new TextField("language", ebook.getLanguage().getName(), Store.YES));
 		fields.add(new StringField("filename", ebook.getFilename(), Store.YES));
 		fields.add(new TextField("text", CustomDocumentParser.parseDocumentText(new File(Paths.get("upload-dir", ebook.getFilename()).toString())), Store.NO));
 		

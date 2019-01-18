@@ -30,8 +30,43 @@
           padding: 5px;
 
           .class_div_search_result_title{
+            margin: 0px 0px 3px 0px;
+            font-weight: 600;
+          }
+
+          .class_div_search_result_author{
+            display: inline-block;
             margin: 0px 0px 5px 0px;
-            font-weight: 500;
+            font-size: 0.8em;
+          }
+
+          .class_div_search_result_publication_year{
+            display: inline-block;
+            margin: 0px 0px 5px 10px;
+            font-size: 0.8em;
+          }
+
+          .class_div_search_result_publication_year{
+            display: inline-block;
+            margin: 0px 0px 5px 10px;
+            font-size: 0.8em;
+          }
+
+          .class_div_search_result_language_name{
+            display: inline-block;
+            margin: 0px 0px 5px 10px;
+            font-size: 0.8em;
+          }
+
+          .class_div_search_result_category_name{
+            display: inline-block;
+            margin: 0px 0px 5px 10px;
+            font-size: 0.8em;
+          }
+
+          .class_div_search_result_document_name{
+            margin: 0px 0px 5px 0px;
+            display: inline;
           }
 
           .class_div_search_result_highlight{

@@ -25,7 +25,7 @@ function init_search_params() {
   searchParams = new URLSearchParams(window.location.search);
   searchType = searchParams.get('searchType');
   if(searchType == null){
-    searchType = 'Phrase';
+    searchType = 'Term';
   }
 
   // normal search
@@ -64,7 +64,7 @@ function init_search_form(){
               '<div id="id_div_radio">' + 
                 '<input id="id_checkbox_search_title" name="radio_normal" type="radio" value="title" ' + (searchTarget1=='title'?'checked':'') + '> Title' + 
                 '<input id="id_checkbox_search_author" name="radio_normal" type="radio" value="author" ' + (searchTarget1=='author'?'checked':'') + '> Author' + 
-                '<input id="id_checkbox_search_keywords" name="radio_normal" type="radio" value="keywords" ' + (searchTarget1=='keywords'?'checked':'') + '> Keywords' + 
+                '<input id="id_checkbox_search_keywords" name="radio_normal" type="radio" value="keyword" ' + (searchTarget1=='keyword'?'checked':'') + '> Keywords' + 
                 '<input id="id_checkbox_search_content" name="radio_normal" type="radio" value="text" ' + (searchTarget1=='text'?'checked':'') + '> Content' + 
                 '<input id="id_checkbox_search_language" name="radio_normal" type="radio" value="language" ' + (searchTarget1=='language'?'checked':'') + '> Language' + 
               '</div>';
@@ -82,7 +82,6 @@ function search(){
   searchType = $('#id_select_search_type').val();
   searchParam1 = $('#id_input_search').val();
   searchTarget1 = $('input[name=radio_normal]:checked', id_form_search).val();
-  console.log(searchType);
   window.location.href = 'search.html?searchType='+ searchType +'&searchTarget1='+ searchTarget1 +'&searchParam1=' + searchParam1 + '&searchTarget2=' + searchTarget2 + '&searchParam2='+ searchParam2 + '&booleanOperation=' + booleanOperation;
 }
 
@@ -95,12 +94,26 @@ function fill_search_results(){
       var div_search_results = $('#id_div_search_results');
       var html;
       results.forEach(result => {
+        var ebook = result.ebookDTO;
         html =  '<div class="class_div_search_result">' +
-                  '<p class="class_div_search_result_title">'+ result.filename +'</p>' +
+                  '<p class="class_div_search_result_title">'+ ebook.title +'</p>' +
+                  '<p class="class_div_search_result_author">'+ ebook.author +'</p>' +
+                  '<p class="class_div_search_result_publication_year">('+ ebook.publicationYear +',</p>' +
+                  '<p class="class_div_search_result_language_name">'+ ebook.languageName +',</p>' +
+                  '<p class="class_div_search_result_category_name">'+ ebook.categoryName +')</p>' +
                   '<p class="class_div_search_result_highlight">...'+ result.highlight +'...</p>' +
+                  '<a id="id_link_download_' + ebook.id + '" href="#"><p class="class_div_search_result_document_name">'+ ebook.documentName +'</p></a>' +
                 '</div>';
-
         div_search_results.append(html);
+        $('#id_link_download_' + ebook.id).on('click', function(event){
+          customAjax({
+            method: 'GET',
+            url: 'file/generate-token/' + ebook.documentName,
+            success: function(token, status, xhr){
+              window.location.href = 'file/download/' + token;
+            }
+          });
+        });
       });
     }
   });

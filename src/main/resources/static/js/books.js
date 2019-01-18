@@ -107,7 +107,7 @@ function render_table(){
             success: function(token, status, xhr){
               window.location.href = 'file/download/' + token;
             }
-          })
+          });
         });
       });
     }
