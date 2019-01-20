@@ -48,11 +48,6 @@ public class EBookService implements EBookServiceInterface {
 	public EBook findByFilename(String filename) {
 		return ebookRepository.findByFilename(filename);
 	}
-	
-	@Override
-	public EBook findByDocumentName(String documentName) {
-		return ebookRepository.findByDocumentName(documentName);
-	}
 
 	@Override
 	public List<EBook> findByUserId(Integer userId) {

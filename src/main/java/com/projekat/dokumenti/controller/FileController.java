@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -76,7 +77,7 @@ public class FileController {
 	
 	@GetMapping("/generate-token/{documentName}")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<String> generateToken(@PathVariable("documentName") String documentName) {
+	public ResponseEntity<String> generateToken(@PathVariable("documentName") String filename) {
 		 
 		User user = util.getCurrentUser();
 		
@@ -84,7 +85,7 @@ public class FileController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		EBook ebook = ebookService.findByDocumentName(documentName);
+		EBook ebook = ebookService.findByFilename(filename);
 		
 		if(ebook == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -105,7 +106,7 @@ public class FileController {
 		Random random = new Random();
 		Integer code = random.nextInt();
 		
-		fileAccessTokens.put(user.getUsername() + ":" + code, ebook.getDocumentName());
+		fileAccessTokens.put(user.getUsername() + ":" + code, filename);
 				
 		return new ResponseEntity<>(user.getUsername() + ":" + code, HttpStatus.OK);
 	}
@@ -114,25 +115,31 @@ public class FileController {
 	@ResponseBody
 	public ResponseEntity<Resource> serveFile(@PathVariable("token") String token){
 		
-		String documentName;
+		String filename;
 		
-		documentName = fileAccessTokens.get(token);
+		filename = fileAccessTokens.get(token);
 		
-		if(documentName == null) {
+		if(filename == null) {
 			return new ResponseEntity<Resource>(HttpStatus.BAD_REQUEST);
 		}
 		
-		EBook ebook = ebookService.findByDocumentName(documentName);
+		EBook ebook = ebookService.findByFilename(filename);
 		
 		if(ebook == null) {
 			return new ResponseEntity<Resource>(HttpStatus.BAD_REQUEST);
 		}
-		
-		String filename = ebook.getFilename();
-		 
+				 
 		Resource file = storageService.loadAsResource(filename);
 		
 		fileAccessTokens.remove(token);
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+		
+        if(ebook.getMime() == null) {
+        	return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        }
+        else {
+        	HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", ebook.getMime());
+        	return new ResponseEntity<>(file, headers, HttpStatus.OK);
+        }
 	}
 }

@@ -8,6 +8,8 @@ var searchTarget2;
 var searchParam2;
 var booleanOperation;
 
+var user;
+
 
 $(document).ready(function (e) {
 
@@ -134,9 +136,10 @@ function fill_search_results(){
   customAjax({
     method: 'GET',
     url: 'user/currentUser',
-    success: function(user, status, xhr){
-      admin = user.isAdmin;
-      userCategory = user.categoryName;
+    success: function(userDTO, status, xhr){
+      user = userDTO;
+      admin = userDTO.isAdmin;
+      userCategory = userDTO.categoryName;
     },
     complete: function(){
       customAjax({
@@ -148,7 +151,6 @@ function fill_search_results(){
           var html;
           results.forEach(result => {
             var ebook = result.ebookDTO;
-            console.log(userCategory);
             html =  '<div class="class_div_search_result">' +
                       '<p class="class_div_search_result_title">'+ ebook.title +'</p>' +
                       '<p class="class_div_search_result_author">'+ ebook.author +'</p>' +
@@ -156,10 +158,12 @@ function fill_search_results(){
                       '<p class="class_div_search_result_language_name">'+ ebook.languageName +',</p>' +
                       '<p class="class_div_search_result_category_name">'+ ebook.categoryName +')</p>' +
                       '<p class="class_div_search_result_highlight">...'+ result.highlight +'...</p>';
-            if(admin == true || userCategory == ebook.categoryName){
-              html += '<a id="id_link_download_' + ebook.id + '" href="#"><p class="class_div_search_result_document_name">'+ ebook.documentName +'</p></a>';
+            if(user != null){
+              if(admin == true || userCategory == ebook.categoryName || userCategory == null){
+                html += '<a id="id_link_download_' + ebook.id + '" href="#"><p class="class_div_search_result_document_name">'+ ebook.documentName +'</p></a>';
+              }
             }
-            if(admin == false && userCategory == null){
+            if(user == null){
               html += 'Register to download';
             }
             html += '</div>';
@@ -167,7 +171,7 @@ function fill_search_results(){
             $('#id_link_download_' + ebook.id).on('click', function(event){
               customAjax({
                 method: 'GET',
-                url: 'file/generate-token/' + ebook.documentName,
+                url: 'file/generate-token/' + ebook.filename,
                 success: function(token, status, xhr){
                   window.location.href = 'file/download/' + token;
                 }

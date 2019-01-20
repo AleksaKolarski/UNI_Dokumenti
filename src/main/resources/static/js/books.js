@@ -88,7 +88,7 @@ function render_table(){
                   '<th>' + book.uploaderUsername + '</th>';
         html += '<th>';
         if(user != null){
-          if(book.categoryName == user.categoryName || admin == true){
+          if(book.categoryName == user.categoryName || admin == true || user.categoryName == null){
             html += '<a id="id_link_download_' + book.id + '" href="#">Download</a>';
           }
         }
@@ -109,7 +109,7 @@ function render_table(){
         $('#id_link_download_' + book.id).on('click', function(event){
           customAjax({
             method: 'GET',
-            url: 'file/generate-token/' + book.documentName,
+            url: 'file/generate-token/' + book.filename,
             success: function(token, status, xhr){
               window.location.href = 'file/download/' + token;
             }

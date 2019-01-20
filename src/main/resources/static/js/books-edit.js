@@ -16,6 +16,7 @@ var edit_book_category;
 
 var book_filename;
 var book_documentName;
+var book_mime;
 
 var edit_book_dugme;
 var edit_book_log;
@@ -164,6 +165,7 @@ function init_form_create(){
         edit_book_publication_year.val(metadata.publicationYear);
         book_filename = metadata.filename;
         book_documentName = metadata.documentName;
+        book_mime = metadata.mime;
         form_disable(false);
 
         edit_book_button_upload.attr("disabled", true);
@@ -199,6 +201,7 @@ function init_form_create(){
                                       'keywords': keywords, 
                                       'publicationYear': publicationYear, 
                                       'filename': book_filename, 
+                                      'mime': book_mime, 
                                       'documentName': book_documentName, 
                                       'languageName': languageName, 
                                       'categoryName': categoryName }),

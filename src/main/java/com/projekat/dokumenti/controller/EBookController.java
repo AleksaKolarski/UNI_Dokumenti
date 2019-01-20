@@ -125,7 +125,7 @@ public class EBookController {
 		ebook.setPublicationYear(ebookDTO.getPublicationYear());
 		ebook.setFilename(filename);
 		ebook.setDocumentName(ebookDTO.getDocumentName());
-		//ebook.setMime(); // odluci sta s MIME
+		ebook.setMime(ebookDTO.getMime());
 		
 		Language language = languageService.findByName(ebookDTO.getLanguageName());
 		if(language == null) {
@@ -144,7 +144,6 @@ public class EBookController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		ebook.setUser(user);
-		
 		
 		ebook = ebookService.save(ebook);
 		

@@ -47,6 +47,9 @@ public class CustomWord2007Parser {
 			// Publication year
 			parsedDoc.setPublicationYear(props.getCoreProperties().getCreated().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear());
 			
+			// MIME
+			parsedDoc.setMime("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+			
 			return parsedDoc;
 		}
 		catch (Exception e) {

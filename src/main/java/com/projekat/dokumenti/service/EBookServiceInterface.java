@@ -17,9 +17,7 @@ public interface EBookServiceInterface {
 	EBook findById(Integer id);
 	
 	EBook findByFilename(String filename);
-	
-	EBook findByDocumentName(String documentName);
-	
+		
 	List<EBook> findByUserId(Integer userId);
 	
 	List<EBook> findByCategoryName(String categoryName);

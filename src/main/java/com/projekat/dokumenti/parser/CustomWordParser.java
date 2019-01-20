@@ -49,6 +49,9 @@ public class CustomWordParser {
 			// Publication year
 			parsedDoc.setPublicationYear(si.getCreateDateTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear());
 			
+			// MIME
+			parsedDoc.setMime("application/msword");
+			
 			return parsedDoc;
 		}
 		catch (Exception e) {

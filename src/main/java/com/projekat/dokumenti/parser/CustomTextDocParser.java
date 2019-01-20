@@ -55,6 +55,9 @@ public class CustomTextDocParser {
 			// Filename
 			parsedDoc.setFilename(file.getName());
 			
+			// MIME
+			parsedDoc.setMime("text/plain");
+			
 			reader.close();
 			
 			return parsedDoc;

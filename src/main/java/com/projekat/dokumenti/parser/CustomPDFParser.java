@@ -59,6 +59,8 @@ public class CustomPDFParser {
 			// Publication year
 			parsedDoc.setPublicationYear(info.getCreationDate().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear());
 			
+			// MIME
+			parsedDoc.setMime("application/pdf");
 			
 			pdf.close();
 			
