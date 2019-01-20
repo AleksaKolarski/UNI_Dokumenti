@@ -23,10 +23,10 @@ public class DocumentHandler {
 			doc.add(new TextField("text", parsedText, Store.NO));
 		}
 		if(ebook.getTitle() != null) {
-			doc.add(new TextField("title", ebook.getTitle(), Store.YES));
+			doc.add(new TextField("title", ebook.getTitle().trim(), Store.YES));
 		}
 		if(ebook.getAuthor() != null) {
-			doc.add(new TextField("author", ebook.getAuthor(), Store.YES));
+			doc.add(new TextField("author", ebook.getAuthor().trim(), Store.YES));
 		}
 		String[] splittedKeywords = ebook.getKeywords().split("[;, ]+");
 		for(String keyword: splittedKeywords) {

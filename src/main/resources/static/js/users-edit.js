@@ -65,7 +65,7 @@ function init_form_password() {
           '</div>';
   edit_user_div_input_root.html(html);
   edit_user_dugme.html('Confirm');
-  edit_user_cancel.attr('href', ((changeRole == 'admin')?'users.html':'login.html'));
+  edit_user_cancel.attr('href', ((changeRole == 'admin')?'users.html':'index.html'));
   
 
   edit_user_password1 = $('#id_input_password1');
@@ -116,7 +116,7 @@ function init_form_edit(){
   }
   edit_user_div_input_root.html(html);
   edit_user_dugme.html('Confirm');
-  edit_user_cancel.attr('href', ((changeRole == 'admin')?'users.html':'user.html'));
+  edit_user_cancel.attr('href', ((changeRole == 'admin')?'users.html':'index.html'));
 
   edit_user_firstname = $('#id_input_firstname');
   edit_user_lastname = $('#id_input_lastname');
@@ -164,7 +164,7 @@ function init_form_edit(){
             processData: false,
             contentType: 'application/json',
             success: function(data, status, xhr){
-              window.location.href = ((changeRole == 'admin')?'users.html':'user.html');
+              window.location.href = ((changeRole == 'admin')?'users.html':'index.html');
             },
             error: function(xhr, status, error){
               if (xhr.status == 409) {
@@ -211,7 +211,7 @@ function init_form_delete(){
   }
   edit_user_div_input_root.html(html);
   edit_user_dugme.html('Confirm');
-  edit_user_cancel.attr('href', ((changeRole == 'admin')?'users.html':'user.html'));
+  edit_user_cancel.attr('href', ((changeRole == 'admin')?'users.html':'index.html'));
 
   edit_user_firstname = $('#id_input_firstname');
   edit_user_lastname = $('#id_input_lastname');

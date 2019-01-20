@@ -41,17 +41,14 @@ public class EBook {
 	@Column(name = "mime", unique = false, nullable = true, length = 100)
 	private String mime;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "language_id", referencedColumnName = "id", unique = false, nullable = false)
 	private Language language;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id", unique = false, nullable = false)
 	private Category category;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", unique = false, nullable = false)
 	private User user;

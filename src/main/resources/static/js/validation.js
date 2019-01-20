@@ -97,7 +97,6 @@ function check_password_match(field1, field2, min, max) {
 
 function check_number(field, min, max){
     var content = parseInt(field.val());
-    console.log(content);
     if(Number.isInteger(content) && content >= min && content <= max){
         field.css('border', '1px solid #ccc');
         return true;

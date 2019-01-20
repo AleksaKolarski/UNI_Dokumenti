@@ -1,4 +1,4 @@
-
+var user;
 var admin = false;
 var table;
 
@@ -27,13 +27,10 @@ $(document).ready(function (e) {
 
   customAjax({
     method: 'GET',
-    url: 'role/current-user-roles',
-    success: function(roles, status, xhr){
-      roles.forEach(role => {
-        if(role.name == 'ROLE_ADMIN'){
-          admin = true;
-        }
-      });
+    url: 'user/currentUser',
+    success: function(userDTO, status, xhr){
+      admin = userDTO.isAdmin;
+      user = userDTO;
     },
     complete: function(){
       render_table();
@@ -88,8 +85,17 @@ function render_table(){
                   '<th>' + book.mime + '</th>' + 
                   '<th>' + book.languageName + '</th>' + 
                   '<th>' + book.categoryName + '</th>' + 
-                  '<th>' + book.uploaderUsername + '</th>' + 
-                  '<th><a id="id_link_download_' + book.id + '" href="#">Download</a></th>';
+                  '<th>' + book.uploaderUsername + '</th>';
+        html += '<th>';
+        if(user != null){
+          if(book.categoryName == user.categoryName || admin == true){
+            html += '<a id="id_link_download_' + book.id + '" href="#">Download</a>';
+          }
+        }
+        else{
+          html += 'registruj se';
+        }
+        html += '</th>';
         if(admin){
           html += '<th>' +
                     '<a href="books-edit.html?changeType=edit&ebookId=' + book.id + '"><button type="button">Edit</button></a>' +

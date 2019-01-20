@@ -136,6 +136,7 @@ public class Indexer {
 				System.out.println("Nije moguce indeksirati dokument sa nazivom: " + file.getName());
 				return false;
 			}
+			System.out.println(doc);
 			indexWriter.addDocument(doc);
 			indexWriter.commit();
 			System.out.println("Indexing done");

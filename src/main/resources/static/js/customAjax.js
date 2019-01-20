@@ -18,7 +18,15 @@ function customAjax(params){
     contentType: params.contentType,
     data: params.data,
     dataType: params.dataType,
-    error: params.error,
+    error: function(xhr, status, error){
+      if(xhr.status == 401){
+        localStorage.removeItem('jwt');
+        window.location.href = 'login.html';
+      }
+      if(params.error != null){
+        params.error();
+      }
+    },
     method: params.method,
     mimeType: params.mimeType,
     processData: params.processData,

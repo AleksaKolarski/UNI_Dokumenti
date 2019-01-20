@@ -44,28 +44,39 @@ public class UserController {
 	
 	@Autowired
 	private Util util;
-		
+	
 	
 	@GetMapping("/currentUser")
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<User> getCurrentUser() {
+	public ResponseEntity<UserDTO> getCurrentUser() {
 		User user = util.getCurrentUser();
 		if (user == null) {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+		
+		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/getById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<User> getById(@RequestParam("userId") Integer userId) {
-		return new ResponseEntity<>(userService.findById(userId), HttpStatus.OK);
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<UserDTO> getById(@RequestParam("userId") Integer userId) {
+		
+		User currentUser = util.getCurrentUser();
+		if(currentUser.getIsAdmin() == false && currentUser.getId() != userId) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
+		
+		User user = userService.findById(userId);
+		if(user == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<List<User>> getAllUsers(){
-		return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<UserDTO>> getAllUsers(){
+		return new ResponseEntity<>(UserDTO.parseList(userService.findAll()), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

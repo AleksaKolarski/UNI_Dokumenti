@@ -18,12 +18,11 @@ input {
   min-height: 21px;
 }
 
-#id_body_login {
-  width: 200px;
-  margin: auto;
-}
 #id_body_login form {
-  margin-top: 100px;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
   text-align: center;
 }
 #id_body_login form p {
@@ -208,6 +207,10 @@ input {
   padding-left: 7px;
   padding-right: 7px;
 }
+#id_body_books #id_div_books #id_table_books .class_tr_book th a {
+  text-decoration: none;
+  color: #00f;
+}
 
 #id_body_books_edit {
   width: 200px;
@@ -345,8 +348,14 @@ input {
 #id_body_search #id_div_search #id_form_search {
   text-align: center;
 }
+#id_body_search #id_div_search #id_form_search div {
+  display: inline-block;
+}
 #id_body_search #id_div_search #id_form_search #id_input_search {
-  width: 400px;
+  width: 160px;
+}
+#id_body_search #id_div_search #id_form_search #id_input_search2 {
+  width: 160px;
 }
 #id_body_search #id_div_search #id_form_search #id_button_search {
   width: 60px;
@@ -392,6 +401,7 @@ input {
 #id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_document_name {
   margin: 0px 0px 5px 0px;
   display: inline;
+  color: #00f;
 }
 #id_body_search #id_div_search #id_div_search_results .class_div_search_result .class_div_search_result_highlight {
   margin: 0px;

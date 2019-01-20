@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -27,22 +28,10 @@ import com.projekat.dokumenti.parser.CustomDocumentParser;
 @Component
 public class ResultRetriever {
 	
-	//private static File path = new File(ResourceBundle.getBundle("luceneindex").getString("indexDir"));
-	private static Path path = Paths.get("indexdir");
+	private static File file = new File(ResourceBundle.getBundle("luceneindex").getString("indexDir"));
 	private static Directory indexDir;
 	private static DirectoryReader reader;
 	private static IndexSearcher is;
-	
-	static {
-		try {
-			indexDir = new SimpleFSDirectory(path.toFile());
-			reader = DirectoryReader.open(indexDir);
-			is = new IndexSearcher(reader);
-		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError("Could not initialize ResultRetriever");
-		}
-	}
 	
 	
 	public static List<ResultData> getResults(Query query){
@@ -52,6 +41,14 @@ public class ResultRetriever {
 		List<ResultData> results = new ArrayList<ResultData>();
 		
 		try {
+			
+			if(!file.exists()) {
+				file.mkdir();
+			}
+			indexDir = new SimpleFSDirectory(file);
+			reader = DirectoryReader.open(indexDir);
+			is = new IndexSearcher(reader);
+			
 			TopScoreDocCollector collector = TopScoreDocCollector.create(10, true);
 			is.search(query, collector);
 			
@@ -87,6 +84,14 @@ public class ResultRetriever {
 	
 	public static Document getDocumentByFilename(String filename){
 		try {
+			
+			if(!file.exists()) {
+				file.mkdir();
+			}
+			indexDir = new SimpleFSDirectory(file);
+			reader = DirectoryReader.open(indexDir);
+			is = new IndexSearcher(reader);
+			
 			Query query = new TermQuery(new Term("filename", filename));
 			TopScoreDocCollector collector = TopScoreDocCollector.create(10, true);
 			is.search(query, collector);
@@ -106,6 +111,14 @@ public class ResultRetriever {
 	public static List<Document> getAllIndexedDocuments(){
 		List<Document> documents = new ArrayList<Document>();
 		try {
+			
+			if(!file.exists()) {
+				file.mkdir();
+			}
+			indexDir = new SimpleFSDirectory(file);
+			reader = DirectoryReader.open(indexDir);
+			is = new IndexSearcher(reader);
+			
 			Query query = new MatchAllDocsQuery();
 			TopScoreDocCollector collector = TopScoreDocCollector.create(10, true);
 			is.search(query, collector);

@@ -11,9 +11,18 @@
       #id_form_search{
         text-align: center;
 
-        #id_input_search{
-          width: 400px;
+        div{
+          display: inline-block;
         }
+
+        #id_input_search{
+          width: 160px;
+        }
+
+        #id_input_search2{
+          width: 160px;
+        }
+
         #id_button_search{
           width: 60px;
         }
@@ -67,6 +76,7 @@
           .class_div_search_result_document_name{
             margin: 0px 0px 5px 0px;
             display: inline;
+            color: #00f;
           }
 
           .class_div_search_result_highlight{

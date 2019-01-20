@@ -42,20 +42,16 @@ public class User implements UserDetails {
 	@Column(name = "username", unique = true, nullable = false, length = 10)
 	private String username;
 	
-	@JsonIgnore
 	@Column(name = "password", unique = false, nullable = false, length = 65)
 	private String password;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<EBook> ebooks = new ArrayList<>();
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id", unique = false, nullable = true)
 	private Category category;
 	
-	@JsonIgnore
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.MERGE}, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles;

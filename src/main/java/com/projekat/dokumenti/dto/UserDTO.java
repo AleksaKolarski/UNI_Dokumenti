@@ -1,16 +1,19 @@
 package com.projekat.dokumenti.dto;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.projekat.dokumenti.entity.Category;
 import com.projekat.dokumenti.entity.User;
 
-public class UserDTO implements Serializable {
+public class UserDTO {
 
 	private Integer id;
 	private String firstname;
 	private String lastname;
 	private String username;
 	private String password;
+	private String categoryName;
 	private Boolean isAdmin;
 	
 	public UserDTO() {}
@@ -25,6 +28,11 @@ public class UserDTO implements Serializable {
 	
 	public UserDTO(User user) {
 		this(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername(), user.getIsAdmin());
+		
+		Category category = user.getCategory();
+		if(category != null) {
+			this.categoryName = user.getCategory().getName();
+		}
 	}
 	
 
@@ -68,6 +76,14 @@ public class UserDTO implements Serializable {
 		this.password = password;
 	}
 	
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
 	public Boolean getIsAdmin() {
 		return isAdmin;
 	}
@@ -84,6 +100,16 @@ public class UserDTO implements Serializable {
 				+ "lastname=" + lastname + ", "
 				+ "username=" + username + ", "
 				+ "password=" + password + ", "
+				+ "categoryName=" + categoryName + ", " 
+				+ "isAdmin=" + isAdmin
 				+ "]";
+	}
+	
+	public static List<UserDTO> parseList(List<User> list){
+		List<UserDTO> listDTO = new ArrayList<UserDTO>();
+		for(User user: list) {
+			listDTO.add(new UserDTO(user));
+		}
+		return listDTO;
 	}
 }

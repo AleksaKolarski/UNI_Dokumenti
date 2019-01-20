@@ -90,6 +90,18 @@ public class FileController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		
+		if(user.getIsAdmin() == false) {
+			if(user.getCategory() != null) {
+				if(user.getCategory().getId() != ebook.getCategory().getId()) {
+					return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+				}
+			}
+			else {
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
+		}
+		
 		Random random = new Random();
 		Integer code = random.nextInt();
 		

@@ -55,7 +55,6 @@ public class EBookController {
 	private Util util;
 	
 	@GetMapping("/all")
-	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<List<EBookDTO>> getAllEBooks(@RequestParam(name = "filterCategory", required = false) String filterCategory, @RequestParam(name = "sortDirection", required = false) String sortDirection){
 		
 		boolean activeFilterCategory = false;
@@ -87,6 +86,11 @@ public class EBookController {
 			else {
 				return new ResponseEntity<>(EBookDTO.parseList(ebookService.findAllOrderByTitleDesc()), HttpStatus.OK);
 			}
+		}
+		
+		List<Document> documents = ResultRetriever.getAllIndexedDocuments();
+		for(Document document: documents) {
+			System.out.println(document);
 		}
 		
 		return new ResponseEntity<>(EBookDTO.parseList(ebookService.findAll()), HttpStatus.OK);

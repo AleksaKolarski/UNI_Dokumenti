@@ -42,12 +42,14 @@ public class SearchController {
 													@RequestParam("searchParam2") String value2,
 													@RequestParam("booleanOperation") String booleanOperation){
 		
+		/*
 		System.out.println(	  "searchType: "+ searchType +
 							"\nsearchTarget1: "+ field1 +
 							"\nsearchParam1: " + value1 + 
 							"\nsearchTarget2: " + field2 + 
 							"\nsearchParam2: " + value2 + 
 							"\nbooleanOperation: " + booleanOperation);
+		 */
 		
 		if(field1.equals("") || value1.equals("")) {
 			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
@@ -61,13 +63,16 @@ public class SearchController {
 		List<ResultData> resultData = ResultRetriever.getResults(query);
 		
 		List<ResultDataDTO> resultDataDTOList = new ArrayList<>();
-		for(ResultData result: resultData) {
-			EBook ebook = ebookService.findByFilename(result.getFilename());
-			if(ebook == null) {
-				continue;
+		
+		if(resultData != null) {
+			for(ResultData result: resultData) {
+				EBook ebook = ebookService.findByFilename(result.getFilename());
+				if(ebook == null) {
+					continue;
+				}
+				ResultDataDTO resultDataDTO = new ResultDataDTO(new EBookDTO(ebook), result.getHighlight());
+				resultDataDTOList.add(resultDataDTO);
 			}
-			ResultDataDTO resultDataDTO = new ResultDataDTO(new EBookDTO(ebook), result.getHighlight());
-			resultDataDTOList.add(resultDataDTO);
 		}
 		
 		return new ResponseEntity<>(resultDataDTOList, HttpStatus.OK);

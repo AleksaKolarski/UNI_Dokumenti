@@ -8,13 +8,9 @@ $(document).ready(function (e) {
 
   customAjax({
     method: 'GET',
-    url: 'role/current-user-roles',
-    success: function(roles, status, xhr){
-      roles.forEach(role => {
-        if(role.name == 'ROLE_ADMIN'){
-          admin = true;
-        }
-      });
+    url: 'user/currentUser',
+    success: function(user, status, xhr){
+        admin = user.isAdmin;
     },
     complete: function(){
       render_table();

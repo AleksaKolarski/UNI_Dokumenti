@@ -18,9 +18,14 @@ public class CustomPDFParser {
 			parser.parse();
 						
 			PDFTextStripper textStripper = new PDFTextStripper("utf-8");
+
+			PDDocument pdf = parser.getPDDocument();
 			
-			// Text
-			return textStripper.getText(parser.getPDDocument());
+			String text = textStripper.getText(pdf);
+			
+			pdf.close();
+			
+			return text;
 		}
 		catch (Exception e) {
 			System.out.println("Greska pri parsiranju pdf dokumenta");

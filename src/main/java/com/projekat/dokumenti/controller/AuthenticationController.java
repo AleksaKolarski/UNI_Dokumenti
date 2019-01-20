@@ -72,19 +72,6 @@ public class AuthenticationController {
 		return new ResponseEntity<String>(jws, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER')")
-	@GetMapping(value = "/current-user")
-	public ResponseEntity<User> getCurrentUser(Principal principal) {
-		if (principal == null) {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		}
-		User user = userService.findByUsername(principal.getName());
-		if (user == null) {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<User>(user, HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "/change-password", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
