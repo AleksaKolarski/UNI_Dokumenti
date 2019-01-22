@@ -17,6 +17,25 @@
     #id_header_navigation{
       text-align: center;
       min-height: 21px;
-    } 
+    }
+    
+    #id_header_div_language{
+      display: inline-block; 
+      position: absolute;
+      top: 0px;
+      left: 0px;
+
+      a{
+        display: inline-block;
+        text-decoration: none;
+        color: inherit;
+        margin: 10px 3px 0px 3px;
+
+        p{
+          display: inline-block;
+          margin: 0px;
+        }
+      }
+    }
   }
 }

@@ -9,6 +9,7 @@ var edit_category_dugme;
 var edit_category_log;
 
 $(document).ready(function(e){
+
   init_search_params();
 
   init_form();
@@ -27,6 +28,8 @@ function init_form() {
   edit_category_dugme = $('#id_button_edit_category');
   edit_category_log = $('#id_edit_category_log_field');
 
+  $('#id_a_cancel').text(translation('Cancel'));
+
   if (changeType == 'create') {
     init_form_create();
   }
@@ -39,14 +42,15 @@ function init_form() {
 }
 
 function init_form_create(){
-  edit_category_form_p.text('Create new category');
+  $('#id_page_title').text(translation('Create new category'));
+  edit_category_form_p.text(translation('Create new category'));
   var html;
   html =  '<div class="class_div_input">' + 
-            '<p>Name:</p>' + 
+            '<p>'+ translation('Name') +':</p>' + 
             '<input id="id_input_name" type="text">' + 
           '</div>';
   edit_category_div_input_root.html(html);
-  edit_category_dugme.html('Confirm');
+  edit_category_dugme.html(translation('Confirm'));
 
   edit_category_name = $('#id_input_name');
 
@@ -64,25 +68,26 @@ function init_form_create(){
           window.location.href = 'categories.html';
         },
         error: function(xhr, status, error){
-          edit_category_log.text('Greska pri kreiranju kategorije');
+          edit_category_log.text(translation('Error while creating category'));
         }
       });
     }
     else{
-      edit_category_log.text('Naziv kategorije nije odgovarajuce duzine (5-30)');
+      edit_category_log.text(translation('Category name length not valid (5-30)'));
     }
   });
 }
 
 function init_form_edit(){
-  edit_category_form_p.text('Edit category');
+  $('#id_page_title').text(translation('Edit category'));
+  edit_category_form_p.text(translation('Edit category'));
   var html;
   html =  '<div class="class_div_input">' + 
-            '<p>Name:</p>' + 
+            '<p>'+ translation('Name') +':</p>' + 
             '<input id="id_input_name" type="text">' + 
           '</div>';
   edit_category_div_input_root.html(html);
-  edit_category_dugme.html('Confirm');
+  edit_category_dugme.html(translation('Confirm'));
 
   edit_category_name = $('#id_input_name');
 
@@ -100,7 +105,7 @@ function init_form_edit(){
       edit_category_name.attr('disabled', false);
     },
     error: function(xhr, status, error){
-      edit_category_log.text('Greska pri dobavljanju informacija o kategoriji');
+      edit_category_log.text(translation('Error while getting category info'));
     }
   });
 
@@ -121,20 +126,21 @@ function init_form_edit(){
       });
     }
     else{
-      edit_category_log.text('Naziv kategorije nije odgovarajuce duzine (5-30)');
+      edit_category_log.text(translation('Category name length not valid (5-30)'));
     }
   });
 }
 
 function init_form_delete(){
-  edit_category_form_p.text('Edit category');
+  $('#id_page_title').text(translation('Delete category'));
+  edit_category_form_p.text(translation('Delete category'));
   var html;
   html =  '<div class="class_div_input">' + 
-            '<p>Name:</p>' + 
+            '<p>'+ translation('Name') +':</p>' + 
             '<input id="id_input_name" type="text">' + 
           '</div>';
   edit_category_div_input_root.html(html);
-  edit_category_dugme.html('Confirm');
+  edit_category_dugme.html(translation('Confirm'));
 
   edit_category_name = $('#id_input_name');
 
@@ -150,7 +156,7 @@ function init_form_delete(){
       edit_category_dugme.attr('disabled', false);
     },
     error: function(xhr, status, error){
-      edit_category_log.text('Greska pri dobavljanju informacija o kategoriji');
+      edit_category_log.text(translation('Error while getting category info'));
     }
   });
 
@@ -163,7 +169,7 @@ function init_form_delete(){
         window.location.href = 'categories.html';
       },
       error: function(xhr, status, error){
-        edit_category_log.text('Greska pri brisanju kategorije');
+        edit_category_log.text(translation('Error while deleting category'));
       }
     });
   });

@@ -10,10 +10,13 @@ var link_sort_desc;
 
 $(document).ready(function (e) {
 
+  $('#id_page_title').text(translation('Books'));
+
   init_search_params();
   
   table = $('#id_table_books');
 
+  $('#id_a_sort').text(translation('Sort'))
   link_sort_asc = $('#id_sort_asc');
   link_sort_desc = $('#id_sort_desc');
 
@@ -54,21 +57,21 @@ function render_table(){
       var html = '';
       html += '<tr id="id_tr_header">' + 
                 '<th>ID</th>' + 
-                '<th>Title</th>' + 
-                '<th>Author</th>' + 
-                '<th>Keywords</th>' + 
-                '<th>Publication year</th>' + 
-                '<th>Document name</th>' + 
-                '<th>Filename</th>' + 
+                '<th>' + translation('Title') + '</th>' + 
+                '<th>' + translation('Author') + '</th>' + 
+                '<th>' + translation('Keywords') + '</th>' + 
+                '<th>' + translation('Publication year') + '</th>' + 
+                '<th>' + translation('Document name') + '</th>' + 
+                '<th>' + translation('Filename') + '</th>' + 
                 '<th>mime</th>' + 
-                '<th>Language</th>' + 
-                '<th>Category</th>' + 
-                '<th>Uploader</th>' + 
-                '<th>Download</th>';
+                '<th>' + translation('Language') + '</th>' + 
+                '<th>' + translation('Category') + '</th>' + 
+                '<th>' + translation('Uploader') + '</th>' + 
+                '<th>' + translation('Download') + '</th>';
       if(admin){
         html += '<th>' + 
                   '<a href="books-edit.html?changeType=create">' + 
-                    '<button type="button">Add new book</button>' + 
+                    '<button type="button">' + translation('Add new book') + '</button>' + 
                   '</a>' + 
                 '</th>';
       }
@@ -89,17 +92,17 @@ function render_table(){
         html += '<th>';
         if(user != null){
           if(book.categoryName == user.categoryName || admin == true || user.categoryName == null){
-            html += '<a id="id_link_download_' + book.id + '" href="#">Download</a>';
+            html += '<a id="id_link_download_' + book.id + '" href="#">' + translation('Download') + '</a>';
           }
         }
         else{
-          html += 'registruj se';
+          html += translation('Register first');
         }
         html += '</th>';
         if(admin){
           html += '<th>' +
-                    '<a href="books-edit.html?changeType=edit&ebookId=' + book.id + '"><button type="button">Edit</button></a>' +
-                    '<a href="books-edit.html?changeType=delete&ebookId=' + book.id + '"><button type="button">Delete</button></a>' +
+                    '<a href="books-edit.html?changeType=edit&ebookId=' + book.id + '"><button type="button">' + translation('Edit') + '</button></a>' +
+                    '<a href="books-edit.html?changeType=delete&ebookId=' + book.id + '"><button type="button">' + translation('Delete') + '</button></a>' +
                   '</th>';
         } 
         html += '</tr>';

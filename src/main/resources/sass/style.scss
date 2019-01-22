@@ -9,13 +9,9 @@
 @import "categories_edit";
 @import "search";
 
-
-
 input{
   box-sizing: border-box;
 }
-
-
 
 @include header;
 @include login;

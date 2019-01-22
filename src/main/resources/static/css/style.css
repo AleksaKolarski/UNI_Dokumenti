@@ -17,6 +17,22 @@ input {
   text-align: center;
   min-height: 21px;
 }
+#id_header #id_header_div_language {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#id_header #id_header_div_language a {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  margin: 10px 3px 0px 3px;
+}
+#id_header #id_header_div_language a p {
+  display: inline-block;
+  margin: 0px;
+}
 
 #id_body_login form {
   width: 200px;

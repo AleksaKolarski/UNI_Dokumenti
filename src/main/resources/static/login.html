@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Login</title>
+  <title id="id_page_title"></title>
 
   <meta charset="utf-8">
 
@@ -11,6 +11,7 @@
 
   <!-- Custom files -->
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="js/translations.js"></script>
   <script src="js/customAjax.js"></script>
   <script src="js/validation.js"></script>
   <script src="js/header.js"></script>
@@ -18,10 +19,9 @@
 </head>
 
 <body id="id_body_login">
-
   <header id="id_header">
     <h1>Dokumenti2018</h1>
-    <h3>Ovaj servis skladisti i omogucava pretragu elektronskih dokumenata.</h3>
+    <h3 id="id_h3"></h3>
     <h5 id="id_h5_logged_in_user"></h5>
     <div id="id_header_navigation">
       <!-- Filled by javascript -->
@@ -29,20 +29,20 @@
   </header>
 
   <form>
-    <p>Login</p>
+    <p id="id_p_login"></p>
     <div id="div_input_fields">
       <div>
-        <p>Username:</p>
+        <p id="id_p_username"></p>
         <input id="id_input_username" type="text" name="username">
       </div>
       <div>
-        <p>Password:</p>
+        <p id="id_p_password">:</p>
         <input id="id_input_password" type="password" name="password">
       </div>
     </div>
     <div id="div_form_submit">
-      <button id="id_button_login" type="button">Login</button>
-      <a href="users-edit.html?changeType=register&changeRole=visitor">Register</a>
+      <button id="id_button_login" type="button"></button>
+      <a id="id_login_register" href="users-edit.html?changeType=register&changeRole=visitor">Register</a>
     </div>
   </form>
   <p id="id_login_log_field"></p>

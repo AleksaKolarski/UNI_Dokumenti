@@ -13,6 +13,8 @@ var user;
 
 $(document).ready(function (e) {
 
+  $('#id_page_title').text(translation('Search'));
+
   id_form_search = $('#id_form_search');
 
   init_search_params();
@@ -55,28 +57,28 @@ function init_search_form(){
   var html =  '<div>' + 
                 '<input id="id_input_search" type="text">' +
                 '<select id="id_select_search_target">' +
-                  '<option value="title">Title</option>' + 
-                  '<option value="author">Author</option>' + 
-                  '<option value="keyword">Keyword</option>' + 
-                  '<option value="text">Content</option>' + 
-                  '<option value="language">Language</option>' + 
+                  '<option value="title">'+ translation('Title') +'</option>' + 
+                  '<option value="author">'+ translation('Author') +'</option>' + 
+                  '<option value="keyword">'+ translation('Keyword') +'</option>' + 
+                  '<option value="text">'+ translation('Content') +'</option>' + 
+                  '<option value="language">'+ translation('Language') +'</option>' + 
                 '</select>' + 
               '</div>'; 
 
   if(searchType == 'Boolean'){
     html += '<select id="id_select_boolean">' + 
-              '<option value="AND">AND</option>' + 
-              '<option value="OR">OR</option>' + 
-              '<option value="NOT">NOT</option>' + 
+              '<option value="AND">'+ translation('I') +'</option>' + 
+              '<option value="OR">'+ translation('ILI') +'</option>' + 
+              '<option value="NOT">'+ translation('NE') +'</option>' + 
             '</select>' +        
             '<div>' + 
               '<input id="id_input_search2" type="text">' +
               '<select id="id_select_search_target2">' +
-                '<option value="title">Title</option>' + 
-                '<option value="author">Author</option>' + 
-                '<option value="keyword">Keyword</option>' + 
-                '<option value="text">Content</option>' + 
-                '<option value="language">Language</option>' + 
+                '<option value="title">'+ translation('Title') +'</option>' + 
+                '<option value="author">'+ translation('Author') +'</option>' + 
+                '<option value="keyword">'+ translation('Keyword') +'</option>' + 
+                '<option value="text">'+ translation('Content') +'</option>' + 
+                '<option value="language">'+ translation('Language') +'</option>' + 
               '</select>' +
             '</div>';
   }
@@ -87,7 +89,7 @@ function init_search_form(){
             '<option value="Phrase">PhraseQuery</option>' + 
             '<option value="Fuzzy">FuzzyQuery</option>' + 
           '</select>' + 
-          '<button id="id_button_form_search" type="button">Search</button>';
+          '<button id="id_button_form_search" type="button">'+ translation('Search') +'</button>';
   id_form_search.html(html);
 
   $('#id_select_search_type').val(searchType);
@@ -164,7 +166,7 @@ function fill_search_results(){
               }
             }
             if(user == null){
-              html += 'Register to download';
+              html += translation('Register to download');
             }
             html += '</div>';
             div_search_results.append(html);

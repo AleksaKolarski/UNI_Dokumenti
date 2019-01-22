@@ -1,15 +1,24 @@
 $(document).ready(function(e){
   localStorage.removeItem('jwt');
 
+  $('#id_page_title').text(translation('Login'));
+
   var login_username;
   var login_password;
   var login_dugme;
   var login_log;
 
+  $('#id_p_login').text(translation('Login'));
+  $('#id_p_username').text(translation('Username:'));
+  $('#id_p_password').text(translation('Password:'));
+  $('#id_login_register').text(translation('Register'));
+
   login_username = $("#id_input_username");
   login_password = $("#id_input_password");
   login_dugme = $("#id_button_login");
   login_log = $("#id_login_log_field");
+
+  login_dugme.text(translation('Login'));
 
   add_validation_text(login_username, 5, 10);
   add_validation_text(login_password, 5, 20);
@@ -30,7 +39,7 @@ $(document).ready(function(e){
         }
       },
       error: function(xhr, status, error){
-        login_log.text("Pogresni podaci");
+        login_log.text(translation('Wrong credentials'));
       }
     });
   });

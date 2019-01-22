@@ -3,6 +3,8 @@ var admin = false;
 var table;
 
 $(document).ready(function (e) {
+
+  $('#id_page_title').text(translation('Categories'));
   
   table = $('#id_table_categories');
 
@@ -26,11 +28,11 @@ function render_table(){
       var html = '';
       html += '<tr id="id_tr_header">' + 
                 '<th>ID</th>' + 
-                '<th>Name</th>';
+                '<th>'+ translation('Name') +'</th>';
       if(admin){
         html += '<th>' + 
                   '<a href="categories-edit.html?changeType=create">' + 
-                    '<button type="button">Add new category</button>' + 
+                    '<button type="button">'+ translation('Add new category') +'</button>' + 
                   '</a>' + 
                 '</th>';
       }
@@ -45,8 +47,8 @@ function render_table(){
                   '</th>';
         if(admin){
           html += '<th>' +
-                    '<a href="categories-edit.html?changeType=edit&categoryId=' + category.id + '"><button type="button">Edit</button></a>' +
-                    '<a href="categories-edit.html?changeType=delete&categoryId=' + category.id + '"><button type="button">Delete</button></a>' +
+                    '<a href="categories-edit.html?changeType=edit&categoryId=' + category.id + '"><button type="button">'+ translation('Edit') +'</button></a>' +
+                    '<a href="categories-edit.html?changeType=delete&categoryId=' + category.id + '"><button type="button">'+ translation('Delete') +'</button></a>' +
                   '</th>';
         } 
         html += '</tr>';

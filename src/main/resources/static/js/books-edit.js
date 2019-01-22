@@ -20,9 +20,37 @@ var book_mime;
 
 var edit_book_dugme;
 var edit_book_log;
+var edit_book_cancel;
 
 var form_disable_counter = 0;
 var load_book_counter = 0;
+
+var html_template =   '<div class="class_div_input">' + 
+                        '<p>' + translation('Title') + ':</p>' + 
+                        '<input id="id_input_title" type="text">' + 
+                      '</div>' + 
+                      '<div class="class_div_input">' + 
+                        '<p>' + translation('Author') + ':</p>' + 
+                        '<input id="id_input_author" type="text">' + 
+                      '</div>' + 
+                      '<div class="class_div_input">' + 
+                        '<p>' + translation('Keywords') + ':</p>' + 
+                        '<input id="id_input_keywords" type="text">' + 
+                      '</div>' + 
+                      '<div class="class_div_input">' + 
+                        '<p>' + translation('Publication year') + ':</p>' + 
+                        '<input id="id_input_publication_year" type="number" min="0" max="2099" step="1" value="2019">' + 
+                      '</div>' + 
+                      '<div class="class_div_input">' + 
+                        '<p>' + translation('Language') + ':</p>' + 
+                        '<select id="id_input_language">' + 
+                        '</select>' + 
+                      '</div>' + 
+                      '<div class="class_div_input">' + 
+                        '<p>' + translation('Category') + ':</p>' + 
+                        '<select id="id_input_category">' + 
+                        '</select>' + 
+                      '</div>';
 
 $(document).ready(function (e) {
 
@@ -44,6 +72,9 @@ function init_form() {
   edit_book_form_p = $('#id_form_p');
   edit_book_dugme = $('#id_button_edit_book');
   edit_book_log = $('#id_edit_book_log_field');
+  edit_book_cancel = $('#id_a_cancel');
+
+  edit_book_cancel.html(translation('Cancel'));
 
   if (changeType == 'create') {
     init_form_create();
@@ -57,43 +88,19 @@ function init_form() {
 }
 
 function init_form_create(){
-  edit_book_form_p.text('Upload new book');
+  $('#id_page_title').text(translation('Upload new book'));
+  edit_book_form_p.text(translation('Upload new book'));
   var html;
   html =  '<div id="id_div_file_chooser">' + 
-            '<input id="id_button_file_chooser" type="file" name="doc" value="Choose file"/>' + 
+            '<input id="id_button_file_chooser" type="file" name="doc"/>' + 
             '<div>' + 
-              '<input id="id_button_upload" type="button" value="Upload">' +
+              '<input id="id_button_upload" type="button" value="' + translation('Upload') + '">' +
               '<img id="id_gif_loading" src="img/loading.gif" style="visibility: hidden;">' +  
             '</div>' + 
           '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Title:</p>' + 
-            '<input id="id_input_title" type="text">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Author:</p>' + 
-            '<input id="id_input_author" type="text">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Keywords:</p>' + 
-            '<input id="id_input_keywords" type="text">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Publication year:</p>' + 
-            '<input id="id_input_publication_year" type="number" min="0" max="2099" step="1" value="2019">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Language:</p>' + 
-            '<select id="id_input_language">' + 
-            '</select>' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Category:</p>' + 
-            '<select id="id_input_category">' + 
-            '</select>' + 
-          '</div>';
+          html_template;
   edit_book_div_input_root.html(html);
-  edit_book_dugme.html('Confirm');
+  edit_book_dugme.html(translation('Confirm'));
 
   edit_book_choose_upload = $('#id_button_file_chooser');
   edit_book_button_upload = $('#id_button_upload');
@@ -124,7 +131,7 @@ function init_form_create(){
       form_disable(false);
     },
     error: function(xhr, status, error){
-      edit_book_log.text('Greska pri dobavljanju svih jezika');
+      edit_book_log.text(translate('Error while getting all languages'));
     }
   });
 
@@ -139,7 +146,7 @@ function init_form_create(){
       form_disable(false);
     },
     error: function(xhr, status, error){
-      edit_book_log.text('Greska pri dobavljanju svih kategorija');
+      edit_book_log.text(translation('Error while getting all categories'));
     }
   });
 
@@ -175,7 +182,7 @@ function init_form_create(){
         edit_book_gif.css('visibility', 'hidden');
       },
       error: function(xhr, status, error){
-        edit_book_log.text('Greska pri uploadu dokumenta');
+        edit_book_log.text(translation('Error while uploading document'));
       }
     });
   });
@@ -211,59 +218,35 @@ function init_form_create(){
                 window.location.href = 'books.html';
               },
               error: function(xhr, status, error){
-                edit_book_log.text('Greska pri kreiranju dokumenta');
+                edit_book_log.text(translation('Error while creating document'));
               }
             });
           }
           else{
-            edit_book_log.text('Godina izdavanja nije odgovarajuca');
+            edit_book_log.text(translation('Publication year not valid'));
           }
         }
         else{
-          edit_book_log.text('Kljucne reci moraju biti krace od 120 karaktera');
+          edit_book_log.text(translation('Keyword length must be less than 120'));
         }
       }
       else{
-        edit_book_log.text('Autor nije odgovarajuce duzine (5-120)');
+        edit_book_log.text(translation('Author length not valid (5-120)'));
       }
     }
     else{
-      edit_book_log.text('Naslov nije odgovarajuce duzine (5-80)');
+      edit_book_log.text(translation('Title length not valid (5-80)'));
     }
   });
 }
 
 function init_form_edit(){
-  edit_book_form_p.text('Edit book');
+  $('#id_page_title').text(translation('Edit book'));
+  edit_book_form_p.text(translation('Edit book'));
   var html;
-  html =  '<div class="class_div_input">' + 
-            '<p>Title:</p>' + 
-            '<input id="id_input_title" type="text">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Author:</p>' + 
-            '<input id="id_input_author" type="text">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Keywords:</p>' + 
-            '<input id="id_input_keywords" type="text">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Publication year:</p>' + 
-            '<input id="id_input_publication_year" type="number" min="0" max="2099" step="1" value="2019">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Language:</p>' + 
-            '<select id="id_input_language">' + 
-            '</select>' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Category:</p>' + 
-            '<select id="id_input_category">' + 
-            '</select>' + 
-          '</div>';
+  html = html_template;
   edit_book_div_input_root.html(html);
-  edit_book_dugme.html('Confirm');
+  edit_book_dugme.html(translation('Confirm'));
 
   edit_book_title = $('#id_input_title');
   edit_book_author = $('#id_input_author');
@@ -291,7 +274,7 @@ function init_form_edit(){
       load_book();
     },
     error: function(xhr, status, error){
-      edit_book_log.text('Greska pri dobavljanju svih jezika');
+      edit_book_log.text(translate('Error while getting all languages'));
     }
   });
 
@@ -307,7 +290,7 @@ function init_form_edit(){
       load_book();
     },
     error: function(xhr, status, error){
-      edit_book_log.text('Greska pri dobavljanju svih kategorija');
+      edit_book_log.text(translate('Error while getting all categories'));
     }
   });
 
@@ -342,59 +325,35 @@ function init_form_edit(){
                 window.location.href = 'books.html';
               },
               error: function(xhr, status, error){
-                edit_book_log.text('Greska pri menjanju dokumenta');
+                edit_book_log.text(translation('Error while editing document'));
               }
             });
           }
           else{
-            edit_book_log.text('Godina izdavanja nije odgovarajuca');
+            edit_book_log.text(translation('Publication year not valid'));
           }
         }
         else{
-          edit_book_log.text('Kljucne reci moraju biti krace od 120 karaktera');
+          edit_book_log.text(translation('Keyword length must be less than 120'));
         }
       }
       else{
-        edit_book_log.text('Autor nije odgovarajuce duzine (5-120)');
+        edit_book_log.text(translation('Author length not valid (5-120)'));
       }
     }
     else{
-      edit_book_log.text('Naslov nije odgovarajuce duzine (5-80)');
+      edit_book_log.text(translation('Title length not valid (5-80)'));
     }
   });
 }
 
 function init_form_delete(){
-  edit_book_form_p.text('Delete book');
+  $('#id_page_title').text(translation('Delete book'));
+  edit_book_form_p.text(translation('Delete book'));
   var html;
-  html =  '<div class="class_div_input">' + 
-            '<p>Title:</p>' + 
-            '<input id="id_input_title" type="text">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Author:</p>' + 
-            '<input id="id_input_author" type="text">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Keywords:</p>' + 
-            '<input id="id_input_keywords" type="text">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Publication year:</p>' + 
-            '<input id="id_input_publication_year" type="number" min="0" max="2099" step="1" value="2019">' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Language:</p>' + 
-            '<select id="id_input_language">' + 
-            '</select>' + 
-          '</div>' + 
-          '<div class="class_div_input">' + 
-            '<p>Category:</p>' + 
-            '<select id="id_input_category">' + 
-            '</select>' + 
-          '</div>';
+  html = html_template;
   edit_book_div_input_root.html(html);
-  edit_book_dugme.html('Confirm');
+  edit_book_dugme.html(translation('Confirm'));
 
   edit_book_title = $('#id_input_title');
   edit_book_author = $('#id_input_author');
@@ -421,7 +380,7 @@ function init_form_delete(){
         edit_book_dugme.attr('disabled', false);
       },
       error: function(xhr, status, error){
-        edit_book_log.text('Greska pri dobavljanju informacija o dokumentu');
+        edit_book_log.text(translation('Error while getting document information'));
       }
     });
 
@@ -434,7 +393,7 @@ function init_form_delete(){
         window.location.href = 'books.html';
       },
       error: function(xhr, status, error){
-        edit_book_log.text('Greska pri brisanju dokumenta');
+        edit_book_log.text(translation('Error while deleting document'));
       }
     });
   });
@@ -444,7 +403,6 @@ function form_disable(state){
   if(state == false){
     form_disable_counter++;
   }
-
   if(state == true || form_disable_counter == 3){
     edit_book_title.attr('disabled', state);
     edit_book_author.attr('disabled', state);
@@ -472,11 +430,10 @@ function load_book(){
         book_documentName = ebook.documentName;
         edit_book_language.val(ebook.languageName).change();
         edit_book_category.val(ebook.categoryName).change();
-  
         form_disable(false);
       },
       error: function(xhr, status, error){
-        edit_book_log.text('Greska pri dobavljanju dokumenta');
+        edit_book_log.text(translation('Error while getting document information'));
       }
     });
   }
