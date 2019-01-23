@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.dto.UserDTO;
 import com.projekat.dokumenti.entity.Role;
 import com.projekat.dokumenti.entity.User;
@@ -31,7 +30,7 @@ import com.projekat.dokumenti.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 	
-	private final Logger logger = LogManager.getLogger(DokumentiApplication.class);
+	private final Logger logger = LogManager.getLogger(UserController.class);
 
 	@Autowired
 	private UserService userService;
@@ -50,9 +49,9 @@ public class UserController {
 	public ResponseEntity<UserDTO> getCurrentUser() {
 		User user = util.getCurrentUser();
 		if (user == null) {
+			logger.info("/user/currentUser | current user is not logged in");
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 	}
 	
@@ -62,12 +61,13 @@ public class UserController {
 		
 		User currentUser = util.getCurrentUser();
 		if(currentUser.getIsAdmin() == false && currentUser.getId() != userId) {
+			logger.info("/user/getById | non admin user is trying to load someone else by id");
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
-		
 		User user = userService.findById(userId);
 		if(user == null) {
+			logger.info("/user/getById | could not find user with id=" + userId);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
@@ -82,6 +82,7 @@ public class UserController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDTO> register(@RequestBody UserDTO userDTO) {
 		if(userDTO == null) {
+			logger.info("/user/register | userDTO = null");
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 				
@@ -92,19 +93,23 @@ public class UserController {
 		Boolean isAdmin = userDTO.getIsAdmin();
 		
 		if(firstname == null || firstname.length() < 5 || firstname.length() > 30) {
+			logger.info("/user/register | firstname not valid");
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		if(lastname == null || lastname.length() < 5 || lastname.length() > 30) {
+			logger.info("/user/register | lastname not valid");
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		if(username == null || username.length() < 5 || username.length() > 10) {
+			logger.info("/user/register | username not valid");
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		if(password == null || password.length() < 5) {
+			logger.info("/user/register | password not valid");
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		if(userService.findByUsername(username) != null) {
-			logger.debug("User tried to register with existing username.");
+			logger.info("/user/register | user with same username already exists");
 			return new ResponseEntity<>(null, HttpStatus.CONFLICT);
 		}
 		
@@ -123,7 +128,13 @@ public class UserController {
 		}
 		user.setRoles(roles);
 		
-		userService.save(user);
+		user = userService.save(user);
+		
+		if(user == null) {
+			logger.info("/user/register | could not save user");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.CREATED);
 	}
 	
@@ -132,11 +143,13 @@ public class UserController {
 	public ResponseEntity<UserDTO> edit(@RequestBody UserDTO userDTO){
 		User currentUser = util.getCurrentUser();
 		if(currentUser == null) {
+			logger.info("/user/edit | current user not logged in");
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
 		if(userDTO.getId() != currentUser.getId() && !currentUser.checkRole("ROLE_ADMIN")) {
 			// menja tudji profil a nije admin
+			logger.info("/user/edit | non admin user is changing someone else");
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
@@ -146,18 +159,22 @@ public class UserController {
 		boolean isAdmin = userDTO.getIsAdmin();
 		
 		if(firstname == null || firstname.length() < 5 || firstname.length() > 30) {
+			logger.info("/user/edit | firstname not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		if(lastname == null || lastname.length() < 5 || lastname.length() > 30) {
+			logger.info("/user/edit | lastname not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		if(username == null || username.length() < 5 || username.length() > 10) {
+			logger.info("/user/edit | username not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		User editUser = userService.findById(userDTO.getId());
 		
 		if(editUser == null) {
+			logger.info("/user/edit | could not find user to edit with id=" + userDTO.getId());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -174,6 +191,7 @@ public class UserController {
 		editUser = userService.save(editUser);
 		
 		if(editUser == null) {
+			logger.info("/user/edit | could not save user");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -185,17 +203,20 @@ public class UserController {
 	public ResponseEntity<String> delete(@RequestParam("userId") Integer userId){
 		User currentUser = util.getCurrentUser();
 		if(currentUser == null) {
+			logger.info("/user/delete | current user not logged in");
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}		
 		
 		if(userId != currentUser.getId() && !currentUser.checkRole("ROLE_ADMIN")) {
 			// brise tudji profil a nije admin
+			logger.info("/user/delete | non admin user trying to change someone else");
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
 		User removeUser = userService.findById(userId);
 		
 		if(removeUser == null) {
+			logger.info("/user/delete | could not find user with id=" + userId);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -210,15 +231,18 @@ public class UserController {
 	public ResponseEntity<String> change_password(@RequestParam("userId") Integer userId, @RequestParam("password") String password){
 		User userEdit = userService.findById(userId);
 		if(userEdit == null) {
+			logger.info("/user/change-password | could not find user with id=" + userId);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		User currentUser = util.getCurrentUser();
 		if(currentUser == null) {
+			logger.info("/user/change-password | current user not logged in");
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
 		if(userEdit.getId() != currentUser.getId() && currentUser.getIsAdmin() == false) {
+			logger.info("/user/change-password | non admin user changing password for someone else");
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		

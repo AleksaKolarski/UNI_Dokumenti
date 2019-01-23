@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,41 +30,38 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private AuthenticationManager authenticationManager;
     
-    //Funkcija koja na osnovu username-a iz baze vraca objekat User-a
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
         	logger.info("Could not find user with username '" + username + "'");
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+        	return null;
         } else {
             return user;
         }
     }
 
-    //Funkcija pomocu koje korisnik menja svoju lozinku
-    public void changePassword(String oldPassword, String newPassword) {
-
+    public boolean changePassword(String oldPassword, String newPassword) {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = currentUser.getName();
-
         if (authenticationManager != null) {
-        	logger.debug("Re-authenticating user '"+ username + "' for password change request.");
-
+        	logger.info("Re-authenticating user '"+ username + "' for password change request.");
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
         } else {
-        	logger.debug("No authentication manager set. can't change Password!");
-
-            return;
+        	logger.info("No authentication manager set. can't change Password!");
+            return false;
         }
-
-        logger.debug("Changing password for user '"+ username + "'");
-
+        logger.info("Changing password for user '"+ username + "'");
         User user = (User) loadUserByUsername(username);
-
-        //pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati
-        //ne zelimo da u bazi cuvamo lozinke u plain text formatu
+        if(user == null) {
+        	return false;
+        }
         user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
+        user = userRepository.save(user);
+        if(user == null) {
+        	logger.info("Could not change password!");
+        	return false;
+        }
+        return true;
     }
 }

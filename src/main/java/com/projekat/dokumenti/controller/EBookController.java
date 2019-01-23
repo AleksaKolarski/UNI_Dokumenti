@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.lucene.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,14 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.dto.EBookDTO;
 import com.projekat.dokumenti.entity.Category;
 import com.projekat.dokumenti.entity.EBook;
 import com.projekat.dokumenti.entity.Language;
 import com.projekat.dokumenti.entity.User;
 import com.projekat.dokumenti.lucene.index.Indexer;
-import com.projekat.dokumenti.lucene.search.ResultRetriever;
 import com.projekat.dokumenti.security.Util;
 import com.projekat.dokumenti.service.CategoryService;
 import com.projekat.dokumenti.service.EBookService;
@@ -37,7 +34,7 @@ import com.projekat.dokumenti.storage.FileSystemStorageService;
 @RequestMapping("/ebook")
 public class EBookController {
 	
-	private final Logger logger = LogManager.getLogger(DokumentiApplication.class);
+	private final Logger logger = LogManager.getLogger(EBookController.class);
 	
 	@Autowired
 	private EBookService ebookService;
@@ -88,11 +85,6 @@ public class EBookController {
 			}
 		}
 		
-		List<Document> documents = ResultRetriever.getAllIndexedDocuments();
-		for(Document document: documents) {
-			System.out.println(document);
-		}
-		
 		return new ResponseEntity<>(EBookDTO.parseList(ebookService.findAll()), HttpStatus.OK);
 	}
 	
@@ -101,6 +93,7 @@ public class EBookController {
 	public ResponseEntity<EBookDTO> getById(@RequestParam("ebookId") Integer ebookId) {
 		EBook ebook = ebookService.findById(ebookId);
 		if(ebook == null) {
+			logger.info("/ebook/getById | could not find ebook with id=" + ebookId);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(new EBookDTO(ebook), HttpStatus.OK);
@@ -114,7 +107,7 @@ public class EBookController {
 		
 		Path path = Paths.get("upload-dir", filename);
 		if(!path.toFile().isFile()) {
-			System.out.println("nije pronadjen fajl sa nazivom " + filename);
+			logger.info("/ebook/create | could not find file=" + filename);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -129,18 +122,21 @@ public class EBookController {
 		
 		Language language = languageService.findByName(ebookDTO.getLanguageName());
 		if(language == null) {
+			logger.info("/ebook/create | could not find language with name " + ebookDTO.getLanguageName());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		ebook.setLanguage(language);
 		
 		Category category = categoryService.findByName(ebookDTO.getCategoryName());
 		if(category == null) {
+			logger.info("/ebook/create | could not find category with name " + ebookDTO.getCategoryName());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		ebook.setCategory(category);
 		
 		User user = util.getCurrentUser();
 		if(user == null) {
+			logger.info("/ebook/create | current user not logged in");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		ebook.setUser(user);
@@ -148,19 +144,15 @@ public class EBookController {
 		ebook = ebookService.save(ebook);
 		
 		if(ebook == null) {
-			logger.info("Greska pri cuvanju ebook-a, verovatno vec postoji ebook sa istim nazivom");
+			logger.info("/ebook/create | could not save ebook");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		Boolean indexSuccessful;
 		indexSuccessful = Indexer.getInstance().index(ebook);
 		if(indexSuccessful == false) {
+			logger.info("/ebook/create | could not index ebook with filename=" + ebook.getFilename());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
-		List<Document> documents = ResultRetriever.getAllIndexedDocuments();
-		for(Document document: documents) {
-			System.out.println(document);
 		}
 		
 		return new ResponseEntity<>(new EBookDTO(ebook), HttpStatus.OK);
@@ -175,14 +167,14 @@ public class EBookController {
 		Integer id = ebookDTO.getId();
 		
 		if(id == null) {
-			logger.info("id = null");
+			logger.info("/ebook/edit | ebookDTO ID = null");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		ebook = ebookService.findById(id);
 		
 		if(ebook == null) {
-			logger.info("ebook = null");
+			logger.info("/ebook/edit | could not find ebook with id=" + id);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -194,27 +186,27 @@ public class EBookController {
 		String categoryName = ebookDTO.getCategoryName();
 		
 		if(title == null || title.length() < 5 || title.length() > 80) {
-			logger.info("title not good");
+			logger.info("/ebook/edit | title not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		if(author == null || author.length() < 5 || author.length() > 120) {
-			logger.info("author not good");
+			logger.info("/ebook/edit | author not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		if(keywords == null || keywords.length() > 120) {
-			logger.info("keywords not good");
+			logger.info("/ebook/edit | keywords not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		if(publicationYear == null || publicationYear < 0 || publicationYear > 2099) {
-			logger.info("publicationYear not good");
+			logger.info("/ebook/edit | publicationYear not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		if(languageName == null || categoryName == null) {
-			logger.info("languageName or categoryName not good");
+			logger.info("/ebook/edit | languageName or categoryName not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -222,7 +214,7 @@ public class EBookController {
 		Category category = categoryService.findByName(categoryName);
 		
 		if(language == null || category == null) {
-			logger.info("language or category not good");
+			logger.info("/ebook/edit | language or category not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -236,17 +228,12 @@ public class EBookController {
 		ebook = ebookService.save(ebook);
 		
 		if(ebook == null) {
-			logger.info("could not save ebook");
+			logger.info("/ebook/edit | could not save ebook");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		if(!Indexer.getInstance().update(ebook)) {
-			System.out.println("COULD NOT UPDATE");
-		}
-		
-		List<Document> documents = ResultRetriever.getAllIndexedDocuments();
-		for(Document document: documents) {
-			System.out.println(document);
+			logger.info("/ebook/edit | could not reindex ebook with filename=" + ebook.getFilename());
 		}
 		
 		return new ResponseEntity<>(new EBookDTO(ebook), HttpStatus.OK);
@@ -257,12 +244,14 @@ public class EBookController {
 	public ResponseEntity<String> delete(@RequestParam("ebookId") Integer ebookId){
 		
 		if(ebookId == null) {
+			logger.info("/ebook/delete | ebookId not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		EBook ebook = ebookService.findById(ebookId);
 		
 		if(ebook == null) {
+			logger.info("/ebook/delete | could not find ebook with id=" + ebookId);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		

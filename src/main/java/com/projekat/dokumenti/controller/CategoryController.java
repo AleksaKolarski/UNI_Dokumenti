@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.dto.CategoryDTO;
 import com.projekat.dokumenti.entity.Category;
 import com.projekat.dokumenti.service.CategoryService;
@@ -25,7 +24,7 @@ import com.projekat.dokumenti.service.CategoryService;
 @RequestMapping("/category")
 public class CategoryController {
 	
-	private final Logger logger = LogManager.getLogger(DokumentiApplication.class);
+	private final Logger logger = LogManager.getLogger(CategoryController.class);
 	
 	@Autowired
 	private CategoryService categoryService;
@@ -40,6 +39,7 @@ public class CategoryController {
 	public ResponseEntity<CategoryDTO> getById(@RequestParam("categoryId") Integer categoryId) {
 		Category category = categoryService.findById(categoryId);
 		if(category == null) {
+			logger.info("/category/getById | could not find category with id=" + categoryId);
 			return new ResponseEntity<CategoryDTO>(HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<CategoryDTO>(new CategoryDTO(category), HttpStatus.OK);
@@ -49,13 +49,10 @@ public class CategoryController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<CategoryDTO> create(@RequestBody(required = true) CategoryDTO categoryDTO){
 		
-		if(categoryDTO == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
 		String name = categoryDTO.getName();
 		
 		if(name == null || name.length() < 5 || name.length() > 30) {
+			logger.info("/category/create | name not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -65,6 +62,7 @@ public class CategoryController {
 		category = categoryService.save(category);
 		
 		if(category == null) {
+			logger.info("/category/create | could not save category");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -76,22 +74,24 @@ public class CategoryController {
 	public ResponseEntity<CategoryDTO> edit(@RequestBody(required = true) CategoryDTO categoryDTO){
 		
 		Category category;
-		
 		Integer id = categoryDTO.getId();
 		
 		if(id == null) {
+			logger.info("/category/edit | ID not present");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		category = categoryService.findById(id);
 		
 		if(category == null) {
+			logger.info("/category/edit | could not find category with id=" + id);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		String name = categoryDTO.getName();
 		
 		if(name == null || name.length() < 5 || name.length() > 30) {
+			logger.info("/category/edit | name not valid");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -100,6 +100,7 @@ public class CategoryController {
 		category = categoryService.save(category);
 		
 		if(category == null) {
+			logger.info("/category/edit | could not save category");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -110,10 +111,12 @@ public class CategoryController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<String> delete(@RequestParam("categoryId") Integer categoryId){
 		if(categoryId == null) {
+			logger.info("/category/delete |  ID not present");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		Category category = categoryService.findById(categoryId);
 		if(category == null) {
+			logger.info("/category/delete | could not find category with id=" + categoryId);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		categoryService.remove(category);

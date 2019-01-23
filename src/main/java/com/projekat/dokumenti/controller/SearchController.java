@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.dto.EBookDTO;
 import com.projekat.dokumenti.dto.ResultDataDTO;
 import com.projekat.dokumenti.entity.EBook;
@@ -28,7 +27,7 @@ import com.projekat.dokumenti.lucene.search.SearchType;
 @RequestMapping("/search")
 public class SearchController {
 
-	private final Logger logger = LogManager.getLogger(DokumentiApplication.class);
+	private final Logger logger = LogManager.getLogger(SearchController.class);
 	
 	
 	@Autowired
@@ -42,19 +41,12 @@ public class SearchController {
 													@RequestParam("searchParam2") String value2,
 													@RequestParam("booleanOperation") String booleanOperation){
 		
-		/*
-		System.out.println(	  "searchType: "+ searchType +
-							"\nsearchTarget1: "+ field1 +
-							"\nsearchParam1: " + value1 + 
-							"\nsearchTarget2: " + field2 + 
-							"\nsearchParam2: " + value2 + 
-							"\nbooleanOperation: " + booleanOperation);
-		 */
-		
 		if(field1.equals("") || value1.equals("")) {
+			logger.info("/search/search | field1 or value1 are empty");
 			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
 		}
 		if(searchType == SearchType.Boolean && (field2.equals("") || value2.equals("") || booleanOperation.equals(""))) {
+			logger.info("/search/search | field2 or value2 or booleanOperation are not valid");
 			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
 		}
 		
