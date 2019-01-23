@@ -15,11 +15,7 @@ import com.projekat.dokumenti.lucene.analysers.SerbianAnalyzer;
 
 public class CustomQueryBuilder {
 
-	public static Query buildQuery(SearchType searchType, String field, String value) {
-		return buildQuery(searchType, field, value, null, null, null);
-	}
-
-	public static Query buildQuery(SearchType searchType, String field1, String value1, String field2, String value2, String boolOperation) {
+	public static Query buildQuery(SearchType searchType, String field1, String value1, String field2, String value2, String boolOperation, Integer fuzzyPhraseParam) {
 
 		if (field1 == null || field1.equals("")) {
 			return null;
@@ -43,7 +39,7 @@ public class CustomQueryBuilder {
 				System.out.println("\nPhraseQuery");
 				String[] words = value1.split(" ");
 				PhraseQuery phraseQuery = new PhraseQuery();
-				phraseQuery.setSlop(1);
+				phraseQuery.setSlop(fuzzyPhraseParam);
 				for (String word : words) {
 					phraseQuery.add(new Term(field1, word));
 				}
@@ -72,7 +68,7 @@ public class CustomQueryBuilder {
 				return queryParser.parse(booleanQuery.toString());
 			case Fuzzy:
 				System.out.println("\nFuzzyQuery");
-				FuzzyQuery fuzzyQuery = new FuzzyQuery(new Term(field1, value1), 1);
+				FuzzyQuery fuzzyQuery = new FuzzyQuery(new Term(field1, value1), fuzzyPhraseParam);
 				System.out.println("Query (preParse): " + fuzzyQuery);
 				System.out.println("Query.toString(field1): " + fuzzyQuery.toString(field1));
 				System.out.println("Query (afterParse): " + analyzingQueryParser.parse(fuzzyQuery.toString(field1)));
@@ -81,6 +77,7 @@ public class CustomQueryBuilder {
 				break;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

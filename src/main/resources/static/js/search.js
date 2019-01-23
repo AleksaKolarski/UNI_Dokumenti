@@ -7,6 +7,7 @@ var searchParam1;
 var searchTarget2;
 var searchParam2;
 var booleanOperation;
+var fuzzyPhraseParam;
 
 var user;
 
@@ -51,6 +52,13 @@ function init_search_params() {
   if(booleanOperation == null || booleanOperation == ''){
     booleanOperation = 'AND';
   }
+  fuzzyPhraseParam = searchParams.get('fuzzyPhraseParam');
+  if(fuzzyPhraseParam == null || fuzzyPhraseParam < 0){
+    fuzzyPhraseParam = 1;
+  }
+  if(searchType == 'Fuzzy' && fuzzyPhraseParam > 2){
+    fuzzyPhraseParam = 1;
+  }
 }
 
 function init_search_form(){
@@ -82,6 +90,15 @@ function init_search_form(){
               '</select>' +
             '</div>';
   }
+  if(searchType == 'Fuzzy' || searchType == 'Phrase'){
+    if(searchType == 'Fuzzy'){
+      html += 'maxEdits';
+    }
+    else{
+      html += 'slop';
+    }
+    html += '<input id="id_input_fuzzy_phrase_param" type="number" min="0" '+ ((searchType=='Fuzzy')?'max="2"':'') +' step="1">';
+  }
 
   html += '<select id="id_select_search_type">' + 
             '<option value="Term">TermQuery</option>' + 
@@ -98,6 +115,7 @@ function init_search_form(){
   $('#id_input_search').val(searchParam1);
   $('#id_input_search2').val(searchParam2);
   $('#id_select_boolean').val(booleanOperation);
+  $('#id_input_fuzzy_phrase_param').val(fuzzyPhraseParam);
 
   $('#id_select_search_type').on('change', function(event){
     searchType = this.value;
@@ -124,10 +142,16 @@ function search(){
       booleanOperation = '';
     }
   }
+  if(searchType == 'Fuzzy' || searchType == 'Phrase'){
+    fuzzyPhraseParam = $('#id_input_fuzzy_phrase_param').val();
+    if(fuzzyPhraseParam == undefined){
+      fuzzyPhraseParam = 1;
+    }
+  }
   searchType = $('#id_select_search_type').val();
   searchTarget1 = $('#id_select_search_target').val();
   searchParam1 = $('#id_input_search').val();
-  window.location.href = 'search.html?searchType='+ searchType +'&searchTarget1='+ searchTarget1 +'&searchParam1=' + searchParam1 + '&searchTarget2=' + searchTarget2 + '&searchParam2='+ searchParam2 + '&booleanOperation=' + booleanOperation;
+  window.location.href = 'search.html?searchType='+ searchType +'&searchTarget1='+ searchTarget1 +'&searchParam1=' + searchParam1 + '&searchTarget2=' + searchTarget2 + '&searchParam2='+ searchParam2 + '&booleanOperation=' + booleanOperation + '&fuzzyPhraseParam=' + fuzzyPhraseParam;
 }
 
 function fill_search_results(){
@@ -147,7 +171,7 @@ function fill_search_results(){
       customAjax({
         method: 'GET',
         url: 'search/search',
-        data: { 'searchType': searchType, 'searchTarget1': searchTarget1, 'searchParam1': searchParam1, 'searchTarget2': searchTarget2, 'searchParam2': searchParam2, 'booleanOperation': booleanOperation },
+        data: { 'searchType': searchType, 'searchTarget1': searchTarget1, 'searchParam1': searchParam1, 'searchTarget2': searchTarget2, 'searchParam2': searchParam2, 'booleanOperation': booleanOperation, 'fuzzyPhraseParam': fuzzyPhraseParam },
         success: function(results, status, xhr){
           var div_search_results = $('#id_div_search_results');
           var html;

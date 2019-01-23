@@ -35,11 +35,12 @@ public class SearchController {
 	
 	@GetMapping("/search")
 	public ResponseEntity<List<ResultDataDTO>> search(	@RequestParam("searchType") SearchType searchType, 
-													@RequestParam("searchTarget1") String field1, 
-													@RequestParam("searchParam1") String value1, 
-													@RequestParam("searchTarget2") String field2,
-													@RequestParam("searchParam2") String value2,
-													@RequestParam("booleanOperation") String booleanOperation){
+														@RequestParam("searchTarget1") String field1, 
+														@RequestParam("searchParam1") String value1, 
+														@RequestParam("searchTarget2") String field2,
+														@RequestParam("searchParam2") String value2,
+														@RequestParam("booleanOperation") String booleanOperation, 
+														@RequestParam("fuzzyPhraseParam") Integer fuzzyPhraseParam){
 		
 		if(field1.equals("") || value1.equals("")) {
 			logger.info("/search/search | field1 or value1 are empty");
@@ -50,7 +51,16 @@ public class SearchController {
 			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
 		}
 		
-		Query query = CustomQueryBuilder.buildQuery(searchType, field1, value1, field2, value2, booleanOperation);
+		if(searchType == SearchType.Fuzzy || searchType == SearchType.Phrase) {
+			if(fuzzyPhraseParam == null || fuzzyPhraseParam < 0) {
+				return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+			}
+			if(searchType == SearchType.Fuzzy && fuzzyPhraseParam > 2) {
+				return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+			}
+		}
+		
+		Query query = CustomQueryBuilder.buildQuery(searchType, field1, value1, field2, value2, booleanOperation, fuzzyPhraseParam);
 		
 		List<ResultData> resultData = ResultRetriever.getResults(query);
 		
