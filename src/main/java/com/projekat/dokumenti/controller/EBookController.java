@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.dto.EBookDTO;
 import com.projekat.dokumenti.entity.Category;
 import com.projekat.dokumenti.entity.EBook;
@@ -34,7 +35,7 @@ import com.projekat.dokumenti.storage.FileSystemStorageService;
 @RequestMapping("/ebook")
 public class EBookController {
 	
-	private final Logger logger = LogManager.getLogger(EBookController.class);
+	private final Logger logger = LogManager.getLogger(DokumentiApplication.class);
 	
 	@Autowired
 	private EBookService ebookService;

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.entity.User;
 import com.projekat.dokumenti.security.CustomUserDetailsService;
 import com.projekat.dokumenti.security.TokenHelper;
@@ -28,7 +29,7 @@ import com.projekat.dokumenti.security.TokenHelper;
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
 
-	protected final Logger logger = LogManager.getLogger(AuthenticationController.class);
+	protected final Logger logger = LogManager.getLogger(DokumentiApplication.class);
 
 	@Autowired
 	TokenHelper tokenHelper;
@@ -50,7 +51,6 @@ public class AuthenticationController {
 			logger.info("/auth/login | Someone tried to log in with wrong credentials");
 			return new ResponseEntity<String>("Wrong username/password.", HttpStatus.FORBIDDEN);
 		}
-
 		// Ubaci username + password u kontext
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 

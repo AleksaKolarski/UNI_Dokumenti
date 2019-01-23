@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.entity.EBook;
 import com.projekat.dokumenti.entity.User;
 import com.projekat.dokumenti.parser.CustomDocumentParser;
@@ -35,7 +36,7 @@ import com.projekat.dokumenti.storage.FileSystemStorageService;
 @RequestMapping("/file")
 public class FileController {
 	
-	private final Logger logger = LogManager.getLogger(FileController.class);
+	private final Logger logger = LogManager.getLogger(DokumentiApplication.class);
 	
 	private static Map<String, String> fileAccessTokens = new HashMap<String, String>();
 	

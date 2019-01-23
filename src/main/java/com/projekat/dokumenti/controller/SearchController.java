@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.dto.EBookDTO;
 import com.projekat.dokumenti.dto.ResultDataDTO;
 import com.projekat.dokumenti.entity.EBook;
@@ -27,7 +28,7 @@ import com.projekat.dokumenti.lucene.search.SearchType;
 @RequestMapping("/search")
 public class SearchController {
 
-	private final Logger logger = LogManager.getLogger(SearchController.class);
+	private final Logger logger = LogManager.getLogger(DokumentiApplication.class);
 	
 	
 	@Autowired

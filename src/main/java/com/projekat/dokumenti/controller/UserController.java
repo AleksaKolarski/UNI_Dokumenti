@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.dto.UserDTO;
 import com.projekat.dokumenti.entity.Role;
 import com.projekat.dokumenti.entity.User;
@@ -30,7 +31,7 @@ import com.projekat.dokumenti.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 	
-	private final Logger logger = LogManager.getLogger(UserController.class);
+	private final Logger logger = LogManager.getLogger(DokumentiApplication.class);
 
 	@Autowired
 	private UserService userService;

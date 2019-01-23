@@ -2,7 +2,7 @@
 <Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
     <Appenders>
         <!-- File Appender -->
-        <File name="FILE" fileName="logs/logfile.log" append="true">
+        <File name="FILE" fileName="logs/logfile.log" append="false">
             <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
         </File>
         <!-- Console Appender -->
@@ -14,10 +14,11 @@
     	<!-- additivity je dal da i u tom logeru i u root logeru prikaze istu stvar -->
     	<Logger name="com.projekat.dokumenti" level="DEBUG" additivity="false">
             <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="FILE" />
         </Logger>
         <Root level="INFO">
             <AppenderRef ref="STDOUT" />
-            <AppenderRef ref="FILE" />
+            <!-- <AppenderRef ref="FILE" /> -->
         </Root>
     </Loggers>
 </Configuration>

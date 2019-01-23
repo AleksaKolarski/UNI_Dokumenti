@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projekat.dokumenti.DokumentiApplication;
 import com.projekat.dokumenti.dto.CategoryDTO;
 import com.projekat.dokumenti.entity.Category;
 import com.projekat.dokumenti.service.CategoryService;
@@ -24,7 +25,7 @@ import com.projekat.dokumenti.service.CategoryService;
 @RequestMapping("/category")
 public class CategoryController {
 	
-	private final Logger logger = LogManager.getLogger(CategoryController.class);
+	private final Logger logger = LogManager.getLogger(DokumentiApplication.class);
 	
 	@Autowired
 	private CategoryService categoryService;
