@@ -17,7 +17,7 @@
         </Logger>
         <Root level="INFO">
             <AppenderRef ref="STDOUT" />
-            <!-- <AppenderRef ref="FILE" />  -->
+            <AppenderRef ref="FILE" />
         </Root>
     </Loggers>
 </Configuration>
