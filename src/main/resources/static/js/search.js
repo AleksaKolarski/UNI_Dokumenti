@@ -67,9 +67,9 @@ function init_search_form(){
 
   if(searchType == 'Boolean'){
     html += '<select id="id_select_boolean">' + 
-              '<option value="AND">'+ translation('I') +'</option>' + 
-              '<option value="OR">'+ translation('ILI') +'</option>' + 
-              '<option value="NOT">'+ translation('NE') +'</option>' + 
+              '<option value="AND">'+ translation('AND') +'</option>' + 
+              '<option value="OR">'+ translation('OR') +'</option>' + 
+              '<option value="NOT">'+ translation('NOT') +'</option>' + 
             '</select>' +        
             '<div>' + 
               '<input id="id_input_search2" type="text">' +

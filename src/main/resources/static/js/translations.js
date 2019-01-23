@@ -356,6 +356,18 @@ var translationJSON = [
   {
     "source": "Password",
     "target_rs": "Lozinka"
+  },
+  {
+    "source": "AND",
+    "target_rs": "I"
+  },
+  {
+    "source": "OR",
+    "target_rs": "ILI"
+  },
+  {
+    "source": "NOT",
+    "target_rs": "NE"
   }
 ];
 

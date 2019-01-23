@@ -1,7 +1,8 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 *.log
-/upload-dir/
+/upload-dir/*
+!/upload-dir/do-not-delete
 /indexDir/
 .map
 
