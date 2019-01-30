@@ -167,7 +167,7 @@ function fill_search_results(){
       admin = userDTO.isAdmin;
       userCategory = userDTO.categoryName;
     },
-    complete: function(){
+    complete: function(xhr, status){
       customAjax({
         method: 'GET',
         url: 'search/search',

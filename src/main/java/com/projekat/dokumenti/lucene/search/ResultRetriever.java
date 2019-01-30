@@ -95,9 +95,7 @@ public class ResultRetriever {
 			Query query = new TermQuery(new Term("filename", filename));
 			TopScoreDocCollector collector = TopScoreDocCollector.create(10, true);
 			is.search(query, collector);
-			System.out.println("QUERY: " + query);
 			ScoreDoc[] scoreDocs = collector.topDocs().scoreDocs;
-			System.out.println("SCOREDOCS.length= " + scoreDocs.length);
 			if(scoreDocs.length > 0) {
 				int docId = scoreDocs[0].doc;
 				return is.doc(docId);

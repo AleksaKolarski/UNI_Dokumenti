@@ -14,7 +14,7 @@ $(document).ready(function (e) {
     success: function(user, status, xhr){
         admin = user.isAdmin;
     },
-    complete: function(){
+    complete: function(xhr, status){
       render_table();
     }
   });

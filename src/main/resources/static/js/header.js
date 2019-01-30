@@ -97,7 +97,7 @@ $(document).ready(function (e) {
         window.location.href = '/login.html';
       });
     },
-    error: function(){
+    error: function(xhr, status, error){
       var login;
       var register;
 

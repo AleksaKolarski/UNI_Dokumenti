@@ -12,7 +12,7 @@ function customAjax(params){
     complete: function(xhr, status){
       console.log(params.url + ': Server returned ' + xhr.status + '; status is ' + status);
       if(params.complete != null){
-        params.complete();
+        params.complete(xhr, status);
       }
     },
     contentType: params.contentType,
@@ -24,7 +24,7 @@ function customAjax(params){
         window.location.href = 'login.html';
       }
       if(params.error != null){
-        params.error();
+        params.error(xhr, status, error);
       }
     },
     method: params.method,
@@ -35,6 +35,9 @@ function customAjax(params){
     beforeSend: function (xhr) {
       if(jwt != null){
         xhr.setRequestHeader("Authorization", 'Bearer '+ jwt)
+      }
+      if(params.beforeSend != null){
+        params.beforeSend(xhr);
       }
     }
   });

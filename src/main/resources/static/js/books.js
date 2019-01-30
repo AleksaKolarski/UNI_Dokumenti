@@ -35,7 +35,7 @@ $(document).ready(function (e) {
       admin = userDTO.isAdmin;
       user = userDTO;
     },
-    complete: function(){
+    complete: function(xhr, status){
       render_table();
     }
   });

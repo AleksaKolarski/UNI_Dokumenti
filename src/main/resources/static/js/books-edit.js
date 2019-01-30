@@ -178,7 +178,7 @@ function init_form_create(){
         edit_book_button_upload.attr("disabled", true);
         edit_book_choose_upload.attr("disabled", true);
       },
-      complete: function(){
+      complete: function(xhr, status){
         edit_book_gif.css('visibility', 'hidden');
       },
       error: function(xhr, status, error){
